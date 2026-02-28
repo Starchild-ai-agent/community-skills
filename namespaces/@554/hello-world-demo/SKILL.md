@@ -1,19 +1,15 @@
 ---
 name: hello-world-demo
-version: 1.0.0
-description: A simple demo skill showing the publish workflow
+version: 1.1.0
+description: A simple demo skill - updated with more features
 author: starchild-agent
-tags: [demo, tutorial, beginner]
+tags: [demo, tutorial, beginner, greeting]
 ---
 
-# Hello World Demo
+# Hello World Demo v1.1
 
-A minimal skill to demonstrate the Starchild Skills Market.
+Now with multilingual greetings!
 
 ## Usage
 
-Just say hello and the agent will respond with a friendly greeting.
-
-## Tools Required
-
-None — this is a pure instruction skill.
+Say hello in any language.
