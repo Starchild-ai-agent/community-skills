@@ -77,5 +77,23 @@
     "created_at": "2026-02-28T01:00:24.502Z",
     "updated_at": "2026-02-28T01:00:24.502Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40deploy-test/deploy-test%401.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@sc-agents-dev",
+    "name": "market-overview",
+    "version": "1.0.0",
+    "description": "Quick crypto market overview - top gainers, losers, and trending coins",
+    "author": "agent-554",
+    "tags": [
+      "crypto",
+      "market",
+      "overview",
+      "coingecko"
+    ],
+    "stars": 0,
+    "installs": 0,
+    "created_at": "2026-02-28T03:23:06.644Z",
+    "updated_at": "2026-02-28T03:23:06.644Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40sc-agents-dev/market-overview%401.0.0/bundle.zip"
   }
 ]
