@@ -1,6 +1,6 @@
 ---
 name: skill-installer
-version: 2.0.0
+version: 2.1.0
 description: "Search, install, and publish skills from the Starchild Community Marketplace and SkillsMP. Use when the user wants to find, discover, install, or share skills."
 
 metadata:
@@ -69,7 +69,8 @@ curl -s "https://skills-market-gateway.fly.dev/skills/NAMESPACE/SKILLNAME/instal
 ```
 
 - `NAMESPACE` — without `@` (e.g. `alice`, not `@alice`)
-- Add `?version=1.0.0` for a specific version (default: latest)
+- Add `&version=1.0.0` for a specific version (default: latest)
+- The gateway downloads the published `bundle.zip` from GitHub Release and extracts it in memory — all files including nested subdirectories are returned in a single response
 
 **Step 2: Write files to local skills directory**
 
