@@ -1,1 +1,1 @@
-print("Hello from the skill!")
+print("Hello v1.1!")
