@@ -9,5 +9,26 @@
     "created_at": "2026-02-28T04:15:08.443Z",
     "updated_at": "2026-02-28T04:42:00.000Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/skill-installer%402.1.0/bundle.zip"
+  },
+  {
+    "namespace": "@1365",
+    "name": "across-bridge",
+    "version": "1.0.0",
+    "description": "Fast cross-chain bridging via Across protocol. Use when user wants to bridge tokens between chains (ETH, USDC, USDT, WETH, etc.) with fast settlement times and low fees.",
+    "author": "Star Child",
+    "tags": [
+      "defi",
+      "bridge",
+      "cross-chain",
+      "across",
+      "ethereum",
+      "arbitrum",
+      "base",
+      "optimism",
+      "polygon"
+    ],
+    "created_at": "2026-02-28T12:47:43.369Z",
+    "updated_at": "2026-02-28T12:47:43.369Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401365/across-bridge%401.0.0/bundle.zip"
   }
 ]
