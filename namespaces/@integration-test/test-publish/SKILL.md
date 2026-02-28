@@ -1,11 +1,9 @@
 ---
 name: test-publish
-version: 1.1.0
-description: Updated integration test
+version: 2.0.0
+description: Major update
 author: integration-test
-tags: [test, ci, updated]
+tags: [test, v2]
 ---
 
-# Test Publish v1.1.0
-
-Updated version.
+# Test v2.0.0
