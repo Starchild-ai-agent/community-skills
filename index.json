@@ -35,17 +35,18 @@
   {
     "namespace": "@integration-test",
     "name": "test-publish",
-    "version": "1.0.0",
-    "description": "Integration test skill",
+    "version": "1.1.0",
+    "description": "Updated integration test",
     "author": "integration-test",
     "tags": [
       "test",
-      "ci"
+      "ci",
+      "updated"
     ],
     "stars": 0,
     "installs": 0,
     "created_at": "2026-02-28T00:44:50.006Z",
-    "updated_at": "2026-02-28T00:44:50.006Z",
-    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40integration-test/test-publish%401.0.0/bundle.zip"
+    "updated_at": "2026-02-28T00:48:07.410Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40integration-test/test-publish%401.1.0/bundle.zip"
   }
 ]
