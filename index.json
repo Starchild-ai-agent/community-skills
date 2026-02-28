@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "namespace": "@test-user",
+    "name": "hello-world",
+    "version": "1.0.0",
+    "description": "A test skill for greeting",
+    "author": "test-user",
+    "tags": [
+      "test",
+      "greeting"
+    ],
+    "stars": 0,
+    "installs": 0,
+    "created_at": "2026-02-28T00:39:32.241Z",
+    "updated_at": "2026-02-28T00:39:32.241Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40test-user/hello-world%401.0.0/bundle.zip"
+  }
+]
