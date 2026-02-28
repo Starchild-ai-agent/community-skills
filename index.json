@@ -145,5 +145,18 @@
     "created_at": "2026-02-28T04:10:37.631Z",
     "updated_at": "2026-02-28T04:10:37.631Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/nested-demo%401.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@554",
+    "name": "skill-installer",
+    "version": "2.0.0",
+    "description": "Search, install, and publish skills from the Starchild Community Marketplace and SkillsMP. Use when the user wants to find, discover, install, or share skills.",
+    "author": "",
+    "tags": [],
+    "stars": 0,
+    "installs": 0,
+    "created_at": "2026-02-28T04:15:08.443Z",
+    "updated_at": "2026-02-28T04:15:08.443Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/skill-installer%402.0.0/bundle.zip"
   }
 ]
