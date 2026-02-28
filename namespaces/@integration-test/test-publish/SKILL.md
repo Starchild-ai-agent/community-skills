@@ -1,11 +1,11 @@
 ---
 name: test-publish
-version: 1.0.0
-description: Integration test skill
+version: 1.1.0
+description: Updated integration test
 author: integration-test
-tags: [test, ci]
+tags: [test, ci, updated]
 ---
 
-# Test Publish
+# Test Publish v1.1.0
 
-This is a test skill created during integration testing.
+Updated version.
