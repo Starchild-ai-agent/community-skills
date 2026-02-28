@@ -110,5 +110,22 @@
     "created_at": "2026-02-28T04:02:32.660Z",
     "updated_at": "2026-02-28T04:02:32.660Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/oidc-auth-test%401.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@554",
+    "name": "hello-world-demo",
+    "version": "1.0.0",
+    "description": "A simple demo skill showing the publish workflow",
+    "author": "starchild-agent",
+    "tags": [
+      "demo",
+      "tutorial",
+      "beginner"
+    ],
+    "stars": 0,
+    "installs": 0,
+    "created_at": "2026-02-28T04:04:51.069Z",
+    "updated_at": "2026-02-28T04:04:51.069Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/hello-world-demo%401.0.0/bundle.zip"
   }
 ]
