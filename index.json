@@ -30,5 +30,22 @@
     "created_at": "2026-02-28T12:47:43.369Z",
     "updated_at": "2026-02-28T12:47:43.369Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401365/across-bridge%401.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@349",
+    "name": "starchild-strategies",
+    "version": "2.0.0",
+    "description": "Library of algorithmic trading strategies for perpetual futures. Organized into three families - mean reversion, momentum & trend, and market neutral. Use when a user wants to run a trading strategy, asks what strategies are available, or describes a trading idea that matches one of these patterns.",
+    "author": "Star Child",
+    "tags": [
+      "trading",
+      "strategies",
+      "perpetual-futures",
+      "algorithms",
+      "backtesting"
+    ],
+    "created_at": "2026-03-02T05:58:55.808Z",
+    "updated_at": "2026-03-02T05:58:55.808Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40349/starchild-strategies%402.0.0/bundle.zip"
   }
 ]
