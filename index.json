@@ -47,5 +47,21 @@
     "created_at": "2026-03-02T05:58:55.808Z",
     "updated_at": "2026-03-02T05:58:55.808Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40349/starchild-strategies%402.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@554",
+    "name": "better-skill-creator",
+    "version": "1.0.0",
+    "description": "Create high-quality skills that reliably trigger, complete workflows cleanly, and work well with other skills. Use when the user asks to build a new capability, integrate a new API, or extend the system with a repeatable workflow. Improvement on the default skill-creator with use-case design, behavioral testing, and success criteria.",
+    "author": "starchild",
+    "tags": [
+      "meta",
+      "skill",
+      "tooling",
+      "development"
+    ],
+    "created_at": "2026-03-02T07:11:55.697Z",
+    "updated_at": "2026-03-02T07:11:55.697Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/better-skill-creator%401.0.0/bundle.zip"
   }
 ]
