@@ -1,0 +1,28 @@
+{
+  "strategy_id": "grid-bot",
+  "name": "Grid Bot",
+  "description": "Places buy/sell limit orders at fixed intervals across a price range",
+  "category": "market-neutral",
+  "parameters": {
+    "symbol": "BTC/USDT",
+    "grid_spacing_pct": 2,
+    "num_grids": 10,
+    "base_order_size": 100,
+    "price_range_lower_pct": -15,
+    "price_range_upper_pct": 15,
+    "rebalance_threshold_pct": 20,
+    "position_size_pct": 20
+  },
+  "risk_management": {
+    "stop_loss_pct": 25,
+    "take_profit_pct": null,
+    "max_drawdown_pct": 15,
+    "daily_loss_limit_pct": 3
+  },
+  "execution": {
+    "order_type": "limit",
+    "grid_update_interval": 3600,
+    "min_spread_bps": 10,
+    "max_slippage_bps": 20
+  }
+}

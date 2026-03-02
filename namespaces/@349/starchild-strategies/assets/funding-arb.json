@@ -1,0 +1,27 @@
+{
+  "strategy_id": "funding-arb",
+  "name": "Funding Rate Arbitrage",
+  "description": "Delta-neutral cross-venue funding rate capture",
+  "category": "market-neutral",
+  "parameters": {
+    "min_funding_spread_bps": 5,
+    "target_symbols": ["BTC", "ETH", "SOL"],
+    "venues": ["hyperliquid", "dydx", "gmx"],
+    "rebalance_frequency": 8,
+    "max_positions": 3,
+    "position_size_pct": 15,
+    "hedge_ratio": 1.0
+  },
+  "risk_management": {
+    "max_basis_risk_pct": 2,
+    "stop_loss_pct": 3,
+    "max_drawdown_pct": 8,
+    "correlation_limit": 0.9
+  },
+  "execution": {
+    "min_liquidity_ratio": 0.1,
+    "execution_delay_seconds": 30,
+    "hedge_slippage_tolerance": 0.2,
+    "funding_collection_buffer": 300
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "name": "Starchild Strategy Library",
+  "version": "1.0.0",
+  "description": "Curated trading strategies for Starchild agents. Organized by trading style so agents can navigate from broad category to specific strategy.",
+  "tree": {
+    "mean-reversion": {
+      "label": "mean reversion",
+      "description": "Strategies that bet on prices returning to a historical norm. Best in range-bound, choppy markets. Underperform during sustained trends.",
+      "strategies": [
+        {
+          "id": "rsi-reversal",
+          "name": "rsi reversal",
+          "file": "rsi-reversal.md",
+          "summary": "Long oversold assets, short overbought assets using RSI thresholds. Mean reversion, daily timeframe.",
+          "complexity": "beginner",
+          "holding_period": "hours to days",
+          "min_capital": 500
+        },
+        {
+          "id": "zscore-reversion",
+          "name": "zscore reversion",
+          "file": "zscore-reversion.md",
+          "summary": "Statistical pairs trading on z-score deviation between two correlated assets. Enter at extremes, exit at mean.",
+          "complexity": "intermediate",
+          "holding_period": "hours to days",
+          "min_capital": 1000
+        },
+        {
+          "id": "convergence-trade",
+          "name": "convergence trade",
+          "file": "convergence-trade.md",
+          "summary": "Pairs trading on correlated assets that diverge beyond 2 standard deviations. Market-neutral when balanced.",
+          "complexity": "intermediate",
+          "holding_period": "days to weeks",
+          "min_capital": 2000
+        }
+      ]
+    },
+    "momentum": {
+      "label": "momentum and trend",
+      "description": "Strategies that follow price direction. Best in trending markets with clear directional moves. Underperform in sideways chop.",
+      "strategies": [
+        {
+          "id": "rsi-rotation",
+          "name": "rsi rotation",
+          "file": "rsi-rotation.md",
+          "summary": "Ranks assets by momentum over 3-6 months. Long the leaders, short the laggards. Monthly rebalance.",
+          "complexity": "intermediate",
+          "holding_period": "weeks to months",
+          "min_capital": 3000
+        },
+        {
+          "id": "volatility-breakout",
+          "name": "volatility breakout",
+          "file": "volatility-breakout.md",
+          "summary": "Enters positions after periods of compressed volatility. Catches the start of big moves.",
+          "complexity": "intermediate",
+          "holding_period": "hours to days",
+          "min_capital": 1000
+        },
+        {
+          "id": "gap-continuation",
+          "name": "gap continuation",
+          "file": "gap-continuation.md",
+          "summary": "Trades continuation after large opening gaps confirmed by volume. Intraday timeframe.",
+          "complexity": "beginner",
+          "holding_period": "hours",
+          "min_capital": 500
+        }
+      ]
+    },
+    "market-neutral": {
+      "label": "market neutral and yield",
+      "description": "Strategies with zero or near-zero directional exposure. Profit from structural inefficiencies rather than price direction. Lower returns but more consistent.",
+      "strategies": [
+        {
+          "id": "grid-bot",
+          "name": "grid bot",
+          "file": "grid-bot.md",
+          "summary": "Places buy/sell limit orders at fixed intervals across a price range. Profits from oscillation.",
+          "complexity": "beginner",
+          "holding_period": "continuous",
+          "min_capital": 1500
+        },
+        {
+          "id": "funding-arb",
+          "name": "funding rate arbitrage",
+          "file": "funding-arb.md",
+          "summary": "Delta-neutral cross-venue funding rate capture. Short high-funding venue, long low-funding venue.",
+          "complexity": "advanced",
+          "holding_period": "days to weeks",
+          "min_capital": 5000
+        },
+        {
+          "id": "overnight-drift",
+          "name": "overnight drift",
+          "file": "overnight-drift.md",
+          "summary": "Captures returns during low-volume overnight sessions. Exploits quiet-hours drift patterns.",
+          "complexity": "intermediate",
+          "holding_period": "hours (overnight)",
+          "min_capital": 1000
+        }
+      ]
+    }
+  },
+  "meta": {
+    "complexity_levels": {
+      "beginner": "Few parameters, single asset or simple logic. Good starting point.",
+      "intermediate": "Multiple parameters, multi-asset or statistical concepts. Requires some trading knowledge.",
+      "advanced": "Cross-venue, multi-leg, or complex risk management. Requires understanding of market microstructure."
+    },
+    "usage": "Load this catalog first. Browse categories by trading style. Load individual strategy files only when the user selects one or describes intent that matches.",
+    "last_updated": "2026-02-23"
+  }
+}
