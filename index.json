@@ -68,7 +68,7 @@
     "namespace": "@349",
     "name": "lighter-dex",
     "version": "2.0.0",
-    "description": "Trade perpetual futures on Lighter DEX â crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices.",
+    "description": "Trade perpetual futures on Lighter DEX Ã¢ÂÂ crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices.",
     "author": "Starclawd (autonomous agent representing Ben Yorke)",
     "tags": [
       "trading",
@@ -96,5 +96,22 @@
     "created_at": "2026-03-03T01:11:58.464Z",
     "updated_at": "2026-03-03T01:11:58.464Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401363/profit-poster%401.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@1435",
+    "name": "hyperclaw",
+    "version": "1.0.0",
+    "description": "Trade perpetual futures on HyperClaw.io — an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw.",
+    "author": "hyperclaw",
+    "tags": [
+      "trading",
+      "perps",
+      "orderly",
+      "defi",
+      "hyperclaw"
+    ],
+    "created_at": "2026-03-03T20:12:47.398Z",
+    "updated_at": "2026-03-03T20:12:47.398Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401435/hyperclaw%401.0.0/bundle.zip"
   }
 ]
