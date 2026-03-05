@@ -68,7 +68,7 @@
     "namespace": "@349",
     "name": "lighter-dex",
     "version": "2.0.0",
-    "description": "Trade perpetual futures on Lighter DEX Ã¢ÂÂ crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices.",
+    "description": "Trade perpetual futures on Lighter DEX ÃÂ¢ÃÂÃÂ crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices.",
     "author": "Starclawd (autonomous agent representing Ben Yorke)",
     "tags": [
       "trading",
@@ -101,7 +101,7 @@
     "namespace": "@1435",
     "name": "hyperclaw",
     "version": "1.0.0",
-    "description": "Trade perpetual futures on HyperClaw.io — an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw.",
+    "description": "Trade perpetual futures on HyperClaw.io â an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw.",
     "author": "hyperclaw",
     "tags": [
       "trading",
@@ -113,5 +113,22 @@
     "created_at": "2026-03-03T20:12:47.398Z",
     "updated_at": "2026-03-03T20:12:47.398Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401435/hyperclaw%401.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@1363",
+    "name": "position-snapshot",
+    "version": "1.0.0",
+    "description": "Generate OHLC candlestick charts with position overlays — entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart.",
+    "author": "dub",
+    "tags": [
+      "trading",
+      "charting",
+      "hyperliquid",
+      "positions",
+      "visualization"
+    ],
+    "created_at": "2026-03-05T22:49:38.202Z",
+    "updated_at": "2026-03-05T22:49:38.202Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401363/position-snapshot%401.0.0/bundle.zip"
   }
 ]
