@@ -68,7 +68,7 @@
     "namespace": "@349",
     "name": "lighter-dex",
     "version": "2.0.0",
-    "description": "Trade perpetual futures on Lighter DEX ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices.",
+    "description": "Trade perpetual futures on Lighter DEX ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices.",
     "author": "Starclawd (autonomous agent representing Ben Yorke)",
     "tags": [
       "trading",
@@ -101,7 +101,7 @@
     "namespace": "@1435",
     "name": "hyperclaw",
     "version": "1.0.0",
-    "description": "Trade perpetual futures on HyperClaw.io Ã¢ÂÂ an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw.",
+    "description": "Trade perpetual futures on HyperClaw.io ÃÂ¢ÃÂÃÂ an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw.",
     "author": "hyperclaw",
     "tags": [
       "trading",
@@ -118,7 +118,7 @@
     "namespace": "@1363",
     "name": "position-snapshot",
     "version": "1.0.0",
-    "description": "Generate OHLC candlestick charts with position overlays â entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart.",
+    "description": "Generate OHLC candlestick charts with position overlays Ã¢ÂÂ entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart.",
     "author": "dub",
     "tags": [
       "trading",
@@ -135,7 +135,7 @@
     "namespace": "@1363",
     "name": "copy-trade",
     "version": "1.0.0",
-    "description": "Copy trade Hyperliquid wallets — monitor profitable traders and mirror their positions automatically. Use when the user wants to follow a wallet, copy trades, set up auto-mirroring, or manage copy trade configurations.",
+    "description": "Copy trade Hyperliquid wallets â monitor profitable traders and mirror their positions automatically. Use when the user wants to follow a wallet, copy trades, set up auto-mirroring, or manage copy trade configurations.",
     "author": "dub",
     "tags": [
       "trading",
@@ -147,5 +147,23 @@
     "created_at": "2026-03-05T23:03:54.073Z",
     "updated_at": "2026-03-05T23:03:54.073Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401363/copy-trade%401.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@1363",
+    "name": "hyperliquid-dashboard",
+    "version": "2.0.0",
+    "description": "Real-time Hyperliquid wallet monitoring dashboard — positions, orders, and account stats in your browser. Supports native perps + all HIP-3 builder dex markets (stocks, RWA, commodities).",
+    "author": "dub",
+    "tags": [
+      "hyperliquid",
+      "dashboard",
+      "trading",
+      "monitoring",
+      "hip3",
+      "positions"
+    ],
+    "created_at": "2026-03-06T00:50:58.069Z",
+    "updated_at": "2026-03-06T00:50:58.069Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401363/hyperliquid-dashboard%402.0.0/bundle.zip"
   }
 ]
