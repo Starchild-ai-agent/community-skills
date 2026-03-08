@@ -68,7 +68,7 @@
     "namespace": "@349",
     "name": "lighter-dex",
     "version": "2.0.0",
-    "description": "Trade perpetual futures on Lighter DEX ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices.",
+    "description": "Trade perpetual futures on Lighter DEX ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices.",
     "author": "Starclawd (autonomous agent representing Ben Yorke)",
     "tags": [
       "trading",
@@ -101,7 +101,7 @@
     "namespace": "@1435",
     "name": "hyperclaw",
     "version": "1.0.0",
-    "description": "Trade perpetual futures on HyperClaw.io ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw.",
+    "description": "Trade perpetual futures on HyperClaw.io ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw.",
     "author": "hyperclaw",
     "tags": [
       "trading",
@@ -118,7 +118,7 @@
     "namespace": "@1363",
     "name": "position-snapshot",
     "version": "1.0.0",
-    "description": "Generate OHLC candlestick charts with position overlays ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart.",
+    "description": "Generate OHLC candlestick charts with position overlays ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart.",
     "author": "dub",
     "tags": [
       "trading",
@@ -135,7 +135,7 @@
     "namespace": "@1363",
     "name": "copy-trade",
     "version": "1.0.0",
-    "description": "Copy trade Hyperliquid wallets ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ monitor profitable traders and mirror their positions automatically. Use when the user wants to follow a wallet, copy trades, set up auto-mirroring, or manage copy trade configurations.",
+    "description": "Copy trade Hyperliquid wallets ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ monitor profitable traders and mirror their positions automatically. Use when the user wants to follow a wallet, copy trades, set up auto-mirroring, or manage copy trade configurations.",
     "author": "dub",
     "tags": [
       "trading",
@@ -152,7 +152,7 @@
     "namespace": "@1363",
     "name": "hyperliquid-dashboard",
     "version": "2.0.0",
-    "description": "Real-time Hyperliquid wallet monitoring dashboard ÃÂ¢ÃÂÃÂ positions, orders, and account stats in your browser. Supports native perps + all HIP-3 builder dex markets (stocks, RWA, commodities).",
+    "description": "Real-time Hyperliquid wallet monitoring dashboard ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ positions, orders, and account stats in your browser. Supports native perps + all HIP-3 builder dex markets (stocks, RWA, commodities).",
     "author": "dub",
     "tags": [
       "hyperliquid",
@@ -170,7 +170,7 @@
     "namespace": "@1363",
     "name": "dub-trading-skill",
     "version": "1.1.0",
-    "description": "Dub's personal trading methodology Ã¢ÂÂ range trading with scaled entries/exits, stochastic + RSI signals, hard stops, and geopolitical risk awareness. Use when recommending trades or analyzing setups for this user.",
+    "description": "Dub's personal trading methodology ÃÂ¢ÃÂÃÂ range trading with scaled entries/exits, stochastic + RSI signals, hard stops, and geopolitical risk awareness. Use when recommending trades or analyzing setups for this user.",
     "author": "dub",
     "tags": [
       "trading",
@@ -217,5 +217,22 @@
     "created_at": "2026-03-07T04:16:40.750Z",
     "updated_at": "2026-03-07T04:16:40.750Z",
     "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401247/across-bridge%401.0.0/bundle.zip"
+  },
+  {
+    "namespace": "@554",
+    "name": "youtube-summary",
+    "version": "1.0.0",
+    "description": "Summarize YouTube videos by fetching their transcript and generating a structured summary. Use when the user shares a YouTube link and wants a summary, key points, or content overview of the video.",
+    "author": "starchild",
+    "tags": [
+      "youtube",
+      "summary",
+      "transcript",
+      "video",
+      "content"
+    ],
+    "created_at": "2026-03-08T16:08:50.151Z",
+    "updated_at": "2026-03-08T16:08:50.151Z",
+    "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/youtube-summary%401.0.0/bundle.zip"
   }
 ]
