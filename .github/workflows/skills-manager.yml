@@ -1,0 +1,186 @@
+name: Skills Manager
+
+on:
+  pull_request:
+    paths:
+      - '**/SKILL.md'
+      - 'skills.json'
+  push:
+    branches: [main]
+    paths:
+      - '**/SKILL.md'
+
+jobs:
+  # ─── PR Validation ─────────────────────────────────────────────────
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate SKILL.md files
+        run: |
+          set -e
+          ERRORS=0
+
+          # Find all changed SKILL.md files
+          CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} -- '**/SKILL.md' || true)
+
+          if [ -z "$CHANGED" ]; then
+            echo "No SKILL.md files changed."
+            exit 0
+          fi
+
+          for file in $CHANGED; do
+            echo "::group::Checking $file"
+
+            # 1. Verify file exists
+            if [ ! -f "$file" ]; then
+              echo "::warning::File $file was deleted, skipping."
+              echo "::endgroup::"
+              continue
+            fi
+
+            # 2. Extract directory namespace and slug
+            DIR_NAMESPACE=$(echo "$file" | cut -d'/' -f1)
+            DIR_SLUG=$(echo "$file" | cut -d'/' -f2)
+
+            # 3. Verify directory structure: namespace/skill-slug/SKILL.md
+            DEPTH=$(echo "$file" | tr '/' '\n' | wc -l)
+            if [ "$DEPTH" -ne 3 ]; then
+              echo "::error file=$file::Invalid path depth. Expected: namespace/skill-slug/SKILL.md"
+              ERRORS=$((ERRORS + 1))
+              echo "::endgroup::"
+              continue
+            fi
+
+            # 4. Check YAML frontmatter exists
+            if ! head -1 "$file" | grep -q '^---'; then
+              echo "::error file=$file::Missing YAML frontmatter (must start with ---)"
+              ERRORS=$((ERRORS + 1))
+              echo "::endgroup::"
+              continue
+            fi
+
+            # 5. Extract name from frontmatter
+            FM_NAME=$(sed -n '/^---$/,/^---$/p' "$file" | grep '^name:' | head -1 | sed 's/name:\s*//;s/^["'"'"']//;s/["'"'"']$//')
+
+            if [ -z "$FM_NAME" ]; then
+              echo "::error file=$file::Missing 'name' in frontmatter"
+              ERRORS=$((ERRORS + 1))
+              echo "::endgroup::"
+              continue
+            fi
+
+            # 6. Verify name matches @namespace/slug format
+            EXPECTED_NAME="@${DIR_NAMESPACE}/${DIR_SLUG}"
+            if [ "$FM_NAME" != "$EXPECTED_NAME" ]; then
+              echo "::error file=$file::Name mismatch: frontmatter has '$FM_NAME', expected '$EXPECTED_NAME'"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # 7. Check version exists
+            FM_VERSION=$(sed -n '/^---$/,/^---$/p' "$file" | grep '^version:' | head -1 | sed 's/version:\s*//;s/^["'"'"']//;s/["'"'"']$//')
+            if [ -z "$FM_VERSION" ]; then
+              echo "::error file=$file::Missing 'version' in frontmatter"
+              ERRORS=$((ERRORS + 1))
+            elif ! echo "$FM_VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+'; then
+              echo "::error file=$file::Invalid version '$FM_VERSION' (must be semver: x.y.z)"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # 8. Check description exists
+            FM_DESC=$(sed -n '/^---$/,/^---$/p' "$file" | grep '^description:' | head -1)
+            if [ -z "$FM_DESC" ]; then
+              echo "::error file=$file::Missing 'description' in frontmatter"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            echo "✅ $file validated"
+            echo "::endgroup::"
+          done
+
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::$ERRORS validation error(s) found"
+            exit 1
+          fi
+
+          echo "All SKILL.md files passed validation ✅"
+
+  # ─── Post-Merge: Update skills.json index ──────────────────────────
+  update-index:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild skills.json
+        run: |
+          python3 << 'EOF'
+          import os, json, re
+
+          skills = []
+
+          for ns_dir in sorted(os.listdir('.')):
+              if ns_dir.startswith('.') or not os.path.isdir(ns_dir):
+                  continue
+              if ns_dir in ('node_modules', '.github'):
+                  continue
+
+              for skill_dir in sorted(os.listdir(ns_dir)):
+                  skill_path = os.path.join(ns_dir, skill_dir)
+                  if not os.path.isdir(skill_path):
+                      continue
+                  skill_md = os.path.join(skill_path, 'SKILL.md')
+                  if not os.path.exists(skill_md):
+                      continue
+
+                  with open(skill_md, 'r') as f:
+                      content = f.read()
+
+                  fm_match = re.match(r'^---\s*\n([\s\S]*?)\n---', content)
+                  version = '1.0.0'
+                  description = ''
+                  name = f'@{ns_dir}/{skill_dir}'
+
+                  if fm_match:
+                      fm = fm_match.group(1)
+                      v = re.search(r'^version:\s*["\']?([^\s"\']+)', fm, re.M)
+                      if v: version = v.group(1)
+                      d = re.search(r'^description:\s*["\']?(.*?)["\']*$', fm, re.M)
+                      if d:
+                          desc = d.group(1).strip('"').strip("'")
+                          if desc: description = desc
+                      n = re.search(r'^name:\s*["\']?(@?\S+)', fm, re.M)
+                      if n: name = n.group(1).strip('"').strip("'")
+
+                  skills.append({
+                      "name": name,
+                      "path": f"{ns_dir}/{skill_dir}/SKILL.md",
+                      "version": version,
+                      "description": description,
+                  })
+
+          index = {"registry": "starchild-community", "skills": skills}
+
+          with open('skills.json', 'w') as f:
+              json.dump(index, f, indent=2)
+
+          print(f"Updated skills.json: {len(skills)} skills")
+          EOF
+
+      - name: Commit updated skills.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add skills.json
+          if git diff --cached --quiet; then
+            echo "No changes to skills.json"
+          else
+            git commit -m "chore: update skills.json index [skip ci]"
+            git push
+          fi

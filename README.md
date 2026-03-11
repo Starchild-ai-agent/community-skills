@@ -1,119 +1,101 @@
 # Starchild Community Skills
 
-Community-contributed skills for [Starchild](https://starchild.ai) AI agents. Skills are reusable capability modules — each one teaches an agent how to use a specific tool, protocol, or workflow.
+Community-contributed skills for [Starchild](https://iamstarchild.com) AI agents. Each skill teaches an agent a new capability — DeFi bridging, trading strategies, content writing, dashboards, and more.
 
-## What's in here
-
-Every skill lives under `namespaces/@{author_id}/{skill_name}/` and contains at least a `SKILL.md` file — the instruction set your agent reads. Some skills also include helper scripts and templates.
+## Repository Structure
 
 ```
-namespaces/
-├── @349/
-│   ├── starchild-strategies/    # Algorithmic trading strategies for perps
-│   ├── lighter-dex/             # Trade on Lighter DEX
-│   └── starchild-design-pack/   # UI/UX design system
-├── @554/
-│   ├── skill-installer/         # Search & install skills from the marketplace
-│   └── better-skill-creator/    # Create high-quality skills
-├── @1247/
-│   └── across-bridge/           # Cross-chain bridging via Across Protocol
-├── @1363/
-│   ├── profit-poster/           # TradingView-style trade summary cards
-│   ├── position-snapshot/       # OHLC charts with position overlays
-│   ├── copy-trade/              # Copy trade Hyperliquid wallets
-│   ├── hyperliquid-dashboard/   # Real-time HL wallet monitoring
-│   └── dub-trading-skill/       # Range trading methodology
-├── @1365/
-│   └── across-bridge/           # Cross-chain bridging via Across Protocol
-└── @1435/
-    └── hyperclaw/               # Trade perps on HyperClaw (Orderly Network)
+/
+├── skills.json                  # Global skill index
+├── .github/workflows/           # CI/CD automation
+└── [namespace]/                 # User namespace (numeric ID)
+    └── [skill-slug]/            # Skill directory
+        ├── SKILL.md             # Core skill file (required)
+        ├── scripts/             # Helper scripts (optional)
+        └── README.md            # Extended docs (optional)
 ```
 
-## Search and install skills
+## Browse Skills
 
-The easiest way to find and install skills is through your Starchild agent:
+Every skill is listed in [`skills.json`](./skills.json) at the repository root. You can also browse by namespace directory.
 
-```
-You:   search for cross-chain bridge skills
-Agent: (searches the marketplace, shows results, installs for you)
-```
+| Skill | Author | Description |
+|-------|--------|-------------|
+| [@1247/across-bridge](./1247/across-bridge/) | 1247 | Bridge tokens between EVM chains via Across Protocol |
+| [@1363/copy-trade](./1363/copy-trade/) | 1363 | Copy trade Hyperliquid wallets automatically |
+| [@1363/dub-trading-skill](./1363/dub-trading-skill/) | 1363 | Range trading with scaled entries/exits |
+| [@1363/hyperliquid-dashboard](./1363/hyperliquid-dashboard/) | 1363 | Real-time Hyperliquid position monitoring |
+| [@1363/position-snapshot](./1363/position-snapshot/) | 1363 | OHLC charts with position overlays |
+| [@1363/profit-poster](./1363/profit-poster/) | 1363 | TradingView-style trade summary cards |
+| [@1365/across-bridge](./1365/across-bridge/) | 1365 | Fast cross-chain bridging via Across |
+| [@1435/hyperclaw](./1435/hyperclaw/) | 1435 | Trade perps on HyperClaw.io (Orderly Network) |
+| [@1892/content-writing](./1892/content-writing/) | 1892 | Blog posts, articles, and tweet threads |
+| [@1892/crypto-content](./1892/crypto-content/) | 1892 | Crypto-focused content writing |
+| [@349/lighter-dex](./349/lighter-dex/) | 349 | Trade perps on Lighter DEX |
+| [@349/starchild-design-pack](./349/starchild-design-pack/) | 349 | UI/UX design system for vibe coders |
+| [@349/starchild-strategies](./349/starchild-strategies/) | 349 | Algorithmic trading strategy library |
+| [@554/better-skill-creator](./554/better-skill-creator/) | 554 | High-quality skill creation framework |
+| [@554/news-aggregator-skill](./554/news-aggregator-skill/) | 554 | Multi-source news aggregation (28 sources) |
+| [@554/skill-installer](./554/skill-installer/) | 554 | Search and install skills from marketplace |
+| [@554/youtube-summary](./554/youtube-summary/) | 554 | YouTube video transcript summarizer |
 
-Your agent has a built-in **skill-installer** that searches this repo and two additional curated registries (6,000+ skills total). Just describe what you need in plain language.
+## Install a Skill
 
-### Manual browsing
-
-You can also browse skills directly on GitHub:
-
-1. Navigate to the [`namespaces/`](./namespaces) directory
-2. Open any skill's `SKILL.md` to read what it does
-3. Download the files and place them in your agent's `skills/` directory
-
-### Direct download via API
-
-Each published skill has a downloadable bundle attached as a GitHub Release:
-
-```
-https://github.com/Starchild-ai-agent/community-skills/releases/download/@{author}/{skill}@{version}/bundle.zip
-```
-
-For example:
-```
-https://github.com/Starchild-ai-agent/community-skills/releases/download/@1365/across-bridge@1.0.0/bundle.zip
-```
-
-## Publishing your own skills
-
-Skills are published **through your Starchild agent** — not via pull request.
+The easiest way is through your Starchild agent:
 
 ```
-You:   publish my across-bridge skill
-Agent: (packages your skill, uploads to the marketplace)
+"Install the across-bridge skill"
+"Find skills for trading on Hyperliquid"
 ```
 
-Your agent handles versioning, bundling, and index updates automatically. You write the skill, your agent publishes it.
+To install manually, copy the skill directory into your agent's `skills/` folder:
 
-### Skill structure
-
-A minimal skill needs one file:
-
-```
-skills/my-skill/
-└── SKILL.md          # Required — the instruction set
+```bash
+# Clone and copy
+git clone https://github.com/Starchild-ai-agent/community-skills.git
+cp -r community-skills/1365/across-bridge ./skills/across-bridge
 ```
 
-A more complete skill might include:
+Or download a specific skill's release bundle from [Releases](https://github.com/Starchild-ai-agent/community-skills/releases).
+
+## Publish a Skill
+
+Skills are published through your Starchild agent — not via pull requests.
 
 ```
-skills/my-skill/
-├── SKILL.md          # Instructions and workflow
-└── scripts/
-    ├── helper.py     # Helper scripts
-    └── config.json   # Configuration templates
+"Publish my across-bridge skill to the marketplace"
 ```
 
-### Writing a good SKILL.md
+The agent handles validation, versioning, and index updates automatically.
 
-Your `SKILL.md` should include:
+## SKILL.md Format
 
-- **Description** — what the skill does (used for search matching)
-- **Prerequisites** — what tools, API keys, or setup is needed
-- **Workflow** — step-by-step instructions the agent follows
-- **Examples** — concrete usage patterns
+Every skill requires a `SKILL.md` with YAML frontmatter:
 
-See any skill in this repo for reference, or ask your agent to use the `better-skill-creator` skill to scaffold one for you.
+```yaml
+---
+name: "@namespace/skill-slug"
+version: "1.0.0"
+description: "What this skill does — keep it concise and keyword-rich."
+author: "your-name"
+tags: [defi, bridge, cross-chain]
+---
 
-## Versioning
+# Skill Title
 
-Each skill is versioned independently using Git tags:
-
+Your skill instructions here...
 ```
-@{author_id}/{skill_name}@{version}
-```
 
-For example: `@1365/across-bridge@1.0.0`
+**Required fields:**
+- `name` — Must match `@namespace/skill-slug` format
+- `version` — Semver (e.g. `1.0.0`)
+- `description` — Used for search matching
 
-When you publish an update through your agent, the version bumps automatically and a new release bundle is created.
+## CI/CD
+
+- **Pull requests** — Validates SKILL.md frontmatter, path consistency, and format
+- **Post-merge** — Automatically rebuilds `skills.json` index
 
 ## License
 
-Individual skills may have their own licenses specified in their SKILL.md or accompanying files. Please check each skill's documentation for specific terms.
+Individual skills may have their own licenses. Check each skill's directory for details.

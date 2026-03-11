@@ -1,0 +1,107 @@
+{
+  "registry": "starchild-community",
+  "skills": [
+    {
+      "name": "@1247/across-bridge",
+      "path": "1247/across-bridge/SKILL.md",
+      "version": "1.0.0",
+      "description": "Bridge ETH and ERC-20 tokens between EVM chains using Across Protocol v3. Supports Ethereum, Arbitrum, Optimism, Base, Polygon, BSC, Linea, and zkSync Era."
+    },
+    {
+      "name": "@1363/copy-trade",
+      "path": "1363/copy-trade/SKILL.md",
+      "version": "1.0.0",
+      "description": "Copy trade Hyperliquid wallets \u2014 monitor profitable traders and mirror their positions automatically. Use when the user wants to follow a wallet, copy trades, set up auto-mirroring, or manage copy trade configurations."
+    },
+    {
+      "name": "@1363/dub-trading-skill",
+      "path": "1363/dub-trading-skill/SKILL.md",
+      "version": "1.1.0",
+      "description": "Dub's personal trading methodology \u2014 range trading with scaled entries/exits, stochastic + RSI signals, hard stops, and geopolitical risk awareness. Use when recommending trades or analyzing setups for this user."
+    },
+    {
+      "name": "@1363/hyperliquid-dashboard",
+      "path": "1363/hyperliquid-dashboard/SKILL.md",
+      "version": "2.0.0",
+      "description": "Real-time Hyperliquid wallet monitoring dashboard \u2014 positions, orders, and account stats in your browser. Supports native perps + all HIP-3 builder dex markets (stocks, RWA, commodities)."
+    },
+    {
+      "name": "@1363/position-snapshot",
+      "path": "1363/position-snapshot/SKILL.md",
+      "version": "1.0.0",
+      "description": "Generate OHLC candlestick charts with position overlays \u2014 entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart."
+    },
+    {
+      "name": "@1363/profit-poster",
+      "path": "1363/profit-poster/SKILL.md",
+      "version": "1.0.0",
+      "description": "Generate TradingView-style trade summary cards (PNG). Use when user wants a visual trade recap, profit poster, or shareable trade image."
+    },
+    {
+      "name": "@1365/across-bridge",
+      "path": "1365/across-bridge/SKILL.md",
+      "version": "1.0.0",
+      "description": "Fast cross-chain bridging via Across protocol. Use when user wants to bridge tokens between chains (ETH, USDC, USDT, WETH, etc.) with fast settlement times and low fees."
+    },
+    {
+      "name": "@1435/hyperclaw",
+      "path": "1435/hyperclaw/SKILL.md",
+      "version": "1.0.0",
+      "description": "Trade perpetual futures on HyperClaw.io \u2014 an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw."
+    },
+    {
+      "name": "@1892/content-writing",
+      "path": "1892/content-writing/SKILL.md",
+      "version": "1.0.0",
+      "description": "Write blog posts, articles, and tweet threads. Human-sounding, no hype. Covers announcements, partnerships, product launches, and educational content for any brand or project."
+    },
+    {
+      "name": "@1892/crypto-content",
+      "path": "1892/crypto-content/SKILL.md",
+      "version": "1.0.0",
+      "description": "Write blog posts, articles, and tweet threads for crypto projects. Human-sounding, technically precise, no hype. Covers announcements, partnerships, product launches, and educational content."
+    },
+    {
+      "name": "@349/lighter-dex",
+      "path": "349/lighter-dex/SKILL.md",
+      "version": "2.0.0",
+      "description": "Trade perpetual futures on Lighter DEX \u2014 crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices."
+    },
+    {
+      "name": "@349/starchild-design-pack",
+      "path": "349/starchild-design-pack/SKILL.md",
+      "version": "1.0.0",
+      "description": "Complete UI/UX design + implementation skillset for vibe coders. Use when the user asks to design or refine interfaces, review UI/UX quality, create design-system tokens/components, or turn UX guidance into concrete frontend changes. Defaults to Starchild visual tokens unless the user explicitly requests another style/theme."
+    },
+    {
+      "name": "@349/starchild-strategies",
+      "path": "349/starchild-strategies/SKILL.md",
+      "version": "2.0.0",
+      "description": "Library of algorithmic trading strategies for perpetual futures. Organized into three families - mean reversion, momentum & trend, and market neutral. Use when a user wants to run a trading strategy, asks what strategies are available, or describes a trading idea that matches one of these patterns."
+    },
+    {
+      "name": "@554/better-skill-creator",
+      "path": "554/better-skill-creator/SKILL.md",
+      "version": "1.0.0",
+      "description": "Create high-quality skills that reliably trigger, complete workflows cleanly, and work well with other skills. Use when the user asks to build a new capability, integrate a new API, or extend the system with a repeatable workflow. Improvement on the default skill-creator with use-case design, behavioral testing, and success criteria."
+    },
+    {
+      "name": "@554/news-aggregator-skill",
+      "path": "554/news-aggregator-skill/SKILL.md",
+      "version": "1.0.0",
+      "description": "Comprehensive news aggregator that fetches, filters, and deeply analyzes real-time content from 28 sources including Hacker News, GitHub, Hugging Face Papers, AI Newsletters, WallStreetCN, Weibo, and Podcasts. Use when user requests 'daily scans', 'tech news', 'finance updates', 'AI briefings', 'deep analysis', or says '\u5982\u610f\u5982\u610f' to open the interactive menu."
+    },
+    {
+      "name": "@554/skill-installer",
+      "path": "554/skill-installer/SKILL.md",
+      "version": "2.1.0",
+      "description": "Search, install, and publish skills from the Starchild Community Marketplace and SkillsMP. Use when the user wants to find, discover, install, or share skills."
+    },
+    {
+      "name": "@554/youtube-summary",
+      "path": "554/youtube-summary/SKILL.md",
+      "version": "1.0.0",
+      "description": "Summarize YouTube videos by fetching their transcript and generating a structured summary. Use when the user shares a YouTube link and wants a summary, key points, or content overview of the video."
+    }
+  ]
+}
