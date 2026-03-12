@@ -184,3 +184,33 @@ jobs:
             git commit -m "chore: update skills.json index [skip ci]"
             git push
           fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Trigger skills.sh indexing
+        run: |
+          # Get changed SKILL.md files in this push
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- '**/SKILL.md' 2>/dev/null || true)
+
+          if [ -z "$CHANGED" ]; then
+            echo "No SKILL.md changes, skipping indexing trigger."
+            exit 0
+          fi
+
+          echo "Triggering skills.sh indexing for changed skills..."
+
+          for file in $CHANGED; do
+            NAMESPACE=$(echo "$file" | cut -d'/' -f1)
+            SLUG=$(echo "$file" | cut -d'/' -f2)
+            echo "→ Indexing @${NAMESPACE}/${SLUG}..."
+
+            # npx skills add triggers telemetry to skills.sh
+            # --yes to skip prompts, install to temp dir then clean up
+            npx -y skills add Starchild-ai-agent/community-skills/${NAMESPACE}/${SLUG} --yes 2>/dev/null || true
+
+            echo "  ✅ Telemetry sent for @${NAMESPACE}/${SLUG}"
+          done
+
+          echo "All indexing triggers complete."
