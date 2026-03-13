@@ -1,7 +1,7 @@
 ---
 name: "@349/binance"
 description: "Trade spot and futures on Binance — market/limit/stop/trailing/OCO orders, account balances, order history, and market data. Supports both Binance Spot and Binance Futures (USDM). Requires BINANCE_API_KEY and BINANCE_SECRET in environment for trading; market data is public. Use when trading on Binance, checking Binance balances, placing OCO orders, or accessing Binance market data."
-version: 1.0.0
+version: 1.0.1
 author: starchild
 tags: [cex, binance, trading, spot, futures]
 ---
@@ -36,6 +36,13 @@ BINANCE_SECRET=your_secret_here
 
 ```bash
 pip install --break-system-packages ccxt
+```
+
+### 4. Optional but recommended (persist across restarts)
+
+```bash
+grep -q "pip install --break-system-packages ccxt" workspace/setup.sh || \
+  echo "pip install --break-system-packages ccxt" >> workspace/setup.sh
 ```
 
 ---
@@ -170,10 +177,28 @@ And modify the exchange config in `skills/binance/scripts/ccex_core.py` to add `
 
 ---
 
+## First-Run Sanity Check
+
+Run this after setup to verify everything before placing trades:
+
+```bash
+python3 skills/binance/scripts/ccex_core.py ticker --exchange binance --symbol BTC/USDT
+```
+
+If credentials are configured, also test private access:
+
+```bash
+python3 skills/binance/scripts/ccex_core.py balance --exchange binance
+```
+
+---
+
 ## Error Handling
 
 | Error | Likely Cause | Fix |
 |-------|-------------|-----|
+| `Missing dependency: ccxt` | ccxt not installed | `pip install --break-system-packages ccxt` |
+| `Missing API credentials for binance` | BINANCE_API_KEY/BINANCE_SECRET not set | Add to `workspace/.env` |
 | `Invalid API Key` | Wrong key in .env | Re-check BINANCE_API_KEY |
 | `Timestamp for this request` | Clock skew | Sync system clock |
 | `MIN_NOTIONAL` | Order too small | Increase amount (min ~$10 USDT) |

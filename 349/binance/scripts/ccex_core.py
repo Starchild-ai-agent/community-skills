@@ -25,7 +25,39 @@ import os
 import sys
 import json
 import argparse
-import ccxt
+
+try:
+    import ccxt
+except ImportError:
+    print(json.dumps({
+        "error": "Missing dependency: ccxt",
+        "fix": "Run: pip install --break-system-packages ccxt",
+        "persist_fix": "Append the same install command to workspace/setup.sh so it survives restarts"
+    }, indent=2), file=sys.stderr)
+    sys.exit(1)
+
+PRIVATE_ACTIONS = {"balance", "order", "cancel", "orders", "history", "position", "oco"}
+
+
+def _required_env_keys(exchange_id: str):
+    return EXCHANGE_ENV_KEYS.get(exchange_id.lower(), ())
+
+
+def _missing_env_keys(exchange_id: str):
+    keys = _required_env_keys(exchange_id)
+    if len(keys) < 2:
+        return []
+    return [k for k in keys[:2] if not os.environ.get(k)]
+
+
+def _check_auth_required(exchange_id: str, action: str):
+    if action in PRIVATE_ACTIONS:
+        missing = _missing_env_keys(exchange_id)
+        if missing:
+            raise ValueError(
+                f"Missing API credentials for {exchange_id}: {', '.join(missing)}. "
+                f"Set them in workspace/.env and retry."
+            )
 
 # ──────────────────────────────────────────────
 # Exchange factory
@@ -304,11 +336,16 @@ def main():
     args = parser.parse_args()
 
     try:
+        _check_auth_required(args.exchange, args.action)
         exchange = get_exchange(args.exchange, futures=args.futures)
         result = ACTION_MAP[args.action](exchange, args)
         print(json.dumps(result, indent=2, default=str))
     except Exception as e:
-        print(json.dumps({"error": str(e)}, indent=2), file=sys.stderr)
+        print(json.dumps({
+            "error": str(e),
+            "exchange": args.exchange,
+            "action": args.action
+        }, indent=2), file=sys.stderr)
         sys.exit(1)
 
 
