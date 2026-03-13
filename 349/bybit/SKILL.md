@@ -1,7 +1,7 @@
 ---
 name: "@349/bybit"
 description: "Trade spot and perpetual futures on Bybit — market/limit/stop/trailing/TP+SL combo orders, account balances, positions, and market data. Supports Bybit Spot and Linear Perpetuals (USDT). Requires BYBIT_API_KEY and BYBIT_SECRET in environment for trading. Use when trading on Bybit, checking Bybit balances or positions, placing TP+SL combo orders, or accessing Bybit market data."
-version: 1.0.0
+version: 1.0.1
 author: starchild
 tags: [cex, bybit, trading, spot, futures, perpetuals]
 ---
@@ -36,6 +36,13 @@ BYBIT_SECRET=your_secret_here
 
 ```bash
 pip install --break-system-packages ccxt
+```
+
+### 4. Optional but recommended (persist across restarts)
+
+```bash
+grep -q "pip install --break-system-packages ccxt" workspace/setup.sh || \
+  echo "pip install --break-system-packages ccxt" >> workspace/setup.sh
 ```
 
 ---
@@ -172,10 +179,28 @@ Bybit allows 10 requests/second (order endpoints). CCXT handles this automatical
 
 ---
 
+## First-Run Sanity Check
+
+Run this after setup to verify everything before placing trades:
+
+```bash
+python3 skills/bybit/scripts/ccex_core.py ticker --exchange bybit --symbol ETH/USDT
+```
+
+If credentials are configured, also test private access:
+
+```bash
+python3 skills/bybit/scripts/ccex_core.py balance --exchange bybit
+```
+
+---
+
 ## Error Handling
 
 | Error | Likely Cause | Fix |
 |-------|-------------|-----|
+| `Missing dependency: ccxt` | ccxt not installed | `pip install --break-system-packages ccxt` |
+| `Missing API credentials for bybit` | BYBIT_API_KEY/BYBIT_SECRET not set | Add to `workspace/.env` |
 | `10003 Invalid API key` | Wrong key in .env | Re-check BYBIT_API_KEY |
 | `10006 Too many visits` | Rate limit hit | CCXT handles; reduce call frequency |
 | `Insufficient balance` | Not enough funds | Check balance first |
