@@ -1,0 +1,62 @@
+{
+  "aave_v3_pools": {
+    "Base": {
+      "chainId": 8453,
+      "pool": "0xA238Dd80C259a72e81d7e4664a9801593F98d1c5",
+      "usdc": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "aUSDC": "0x4e65fE4DbA92790696d040ac24Aa414708F5c0AB",
+      "rpc": "https://mainnet.base.org",
+      "explorer": "https://basescan.org"
+    },
+    "Ethereum": {
+      "chainId": 1,
+      "pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+      "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "aUSDC": "0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c",
+      "rpc": "https://eth.llamarpc.com",
+      "explorer": "https://etherscan.io"
+    },
+    "Arbitrum": {
+      "chainId": 42161,
+      "pool": "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
+      "usdc": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      "aUSDC": "0x724dc807b04555b71ed48a6896b6F41593b8C637",
+      "rpc": "https://arb1.arbitrum.io/rpc",
+      "explorer": "https://arbiscan.io"
+    },
+    "Optimism": {
+      "chainId": 10,
+      "pool": "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
+      "usdc": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "aUSDC": "0x38d693cE1dF5AaDF7bC62CAe1A8ADba061f1B5A0",
+      "rpc": "https://mainnet.optimism.io",
+      "explorer": "https://optimistic.etherscan.io"
+    },
+    "Polygon": {
+      "chainId": 137,
+      "pool": "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
+      "usdc": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "aUSDC": "0xA4D94019934D8333Ef880ABFFbF2FDd611C0b978",
+      "rpc": "https://polygon-rpc.com",
+      "explorer": "https://polygonscan.com"
+    },
+    "Avalanche": {
+      "chainId": 43114,
+      "pool": "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
+      "usdc": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+      "aUSDC": "0x625E7708f30cA75bfd92586e17077590C60eb4cD",
+      "rpc": "https://api.avax.network/ext/bc/C/rpc",
+      "explorer": "https://snowtrace.io"
+    }
+  },
+  "erc20_abi": [
+    "function approve(address spender, uint256 amount) returns (bool)",
+    "function allowance(address owner, address spender) view returns (uint256)",
+    "function balanceOf(address account) view returns (uint256)",
+    "function decimals() view returns (uint8)"
+  ],
+  "aave_pool_abi": [
+    "function supply(address asset, uint256 amount, address onBehalfOf, uint16 referralCode)",
+    "function withdraw(address asset, uint256 amount, address to) returns (uint256)"
+  ]
+}
