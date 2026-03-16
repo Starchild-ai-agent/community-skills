@@ -130,7 +130,7 @@ jobs:
                   if not os.path.exists(skill_md):
                       continue
 
-                  with open(skill_md, "r") as f:
+                  with open(skill_md, "r", encoding="utf-8") as f:
                       content = f.read()
 
                   fm_match = re.match(r"^---\s*\n([\s\S]*?)\n---", content)
@@ -158,8 +158,8 @@ jobs:
 
           index = {"registry": "starchild-community", "skills": skills}
 
-          with open("skills.json", "w") as f:
-              json.dump(index, f, indent=2)
+          with open("skills.json", "w", encoding="utf-8") as f:
+              json.dump(index, f, indent=2, ensure_ascii=False)
 
           print(f"Updated skills.json: {len(skills)} skills")
           EOF
