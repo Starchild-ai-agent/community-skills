@@ -1,6 +1,6 @@
 ---
 name: "@1363/dub-trading-skill"
-version: 1.1.0
+version: 1.2.0
 description: "Dub's personal trading methodology — range trading with scaled entries/exits, stochastic + RSI signals, hard stops, and geopolitical risk awareness. Use when recommending trades or analyzing setups for this user."
 author: dub
 tags: [trading, hyperliquid, btc, range-trading, risk-management]
@@ -21,11 +21,11 @@ user-invocable: true
 
 This skill encapsulates Dub's trading methodology — a disciplined, risk-first approach to crypto range trading. Activate this skill when analyzing markets, recommending trades, or managing positions for this user.
 
-**Account:** ~$215 USDC on Hyperliquid  
+**Account:** ~$276 USDC on Hyperliquid  
 **Typical leverage:** 5-10x  
 **Markets:** BTC and ETH  
-**Last updated:** 2026-03-05  
-**Status:** Active learning — evolves after every significant trade
+**Last updated:** 2026-03-06  
+**Status:** Active learning — rigorous training toward autonomous trading in Dub's style
 
 ---
 
@@ -46,7 +46,7 @@ This skill encapsulates Dub's trading methodology — a disciplined, risk-first 
 **Technical + Fundamental**
 - Stochastic crosses for timing (primary)
 - RSI confirmation (oversold <35, overbought >65)
-- Geopolitical events override technical signals
+- Geopolitical events are heavily weighted — not a hard override, but a strong factor in all decisions
 
 ---
 
@@ -104,7 +104,8 @@ This skill encapsulates Dub's trading methodology — a disciplined, risk-first 
 
 **Hard stops mandatory:**
 - Place below/above range extremes with buffer
-- Typical risk: 15-20% of account
+- Typical risk: 5-10% of account — always as minimal as possible
+- Move stops in front of entry after the first decent price move in the intended direction — position becomes risk-free ASAP
 - Early exit OK — If thesis breaks (e.g., war news), close before stop
 
 ---
@@ -113,7 +114,7 @@ This skill encapsulates Dub's trading methodology — a disciplined, risk-first 
 
 1. **Defined risk before entry** — Know max loss
 2. **Stops always** — No "hope and monitor"
-3. **Geopolitical = risk-off** — News events override technicals
+3. **Geopolitical awareness** — Major news events heavily weighted in all decisions
 4. **Weekend caution** — Avoid new positions
 5. **No revenge trading** — After loss, wait for A+ setup
 6. **Preservation first** — "Live to trade another day"
@@ -291,27 +292,52 @@ When scaling into a zone:
 
 This gives dollar-cost-averaged entry through the zone — if price extends further, avg entry improves. If it rolls early, you're still positioned.
 
+### Weekend Trading Behaviour
+- Weekend = thin liquidity, gap risk elevated → **no new positions, manage existing only**
+- After a major move (liq grab + reversal), expect a **Sunday bounce** back toward the previous value area high
+- Sunday bounce = opportunity to watch for rejection at VAH (~$69,400) before trend resumes
+- If Sunday bounce fails to break back above VAH → trend continuation to VAL confirmed
+- MoVAH is a separate, higher level — only relevant if price reclaims VAH first
+
 ### Agent Monitoring Rule
 - When user flags a time-sensitive setup (CME open, specific catalyst), agent must **actively monitor** into that window and alert — not wait for user to check in.
 
 ---
 
-## Current Market Views (as of 2026-03-06 21:33 UTC)
+## Current Market Views (as of 2026-03-06 23:02 UTC)
 
-- **BTC:** External range liquidity grab thesis fully played out. Short from $72,837 closed 60% at $67,994 (+66.5% ROE). Runner still alive.
-- **Bias:** Bear market, HTF short thesis confirmed. Managing runner with risk-free SL.
-- **Active position:** 0.00514 BTC short, entry $72,837, SL at $72,000 (risk-free)
-- **Stance:** 60% profits banked, letting 40% runner work toward HTF range lows (~$65-66k).
+### BTC 4H Market Profile Context
+| Level | Price | Notes |
+|-------|-------|-------|
+| 2024 VAH | $79,314 | Major HTF resistance |
+| MoVAH | $72,673 | Monthly VAH — short entry zone |
+| VAH | ~$69,400 | Current value area high — bounce target |
+| MoVWAP | $68,717 | Monthly VWAP — current area |
+| **POC** | **$67,882** | **High volume node — price sitting here now** |
+| VAL | ~$65,500 | Current value area low — runner target |
+| MoVAL / 2024 VWAP | $65,028 | Major HTF support — ultimate target |
+
+### Current Read (2026-03-06 23:02 UTC)
+- **What happened:** Textbook external range liquidity grab. Price swept above range highs → longs piled in → fakeout. Entered short at MoVAH rejection ($72,837). Price accepted back inside value area → melted straight to POC. 
+- **Now on weekend trading hours** — thin liquidity, gap risk elevated
+- **Bias:** Short thesis confirmed and intact. Sitting at POC, runner risk-free.
+- **Active position:** 0.00514 BTC short, entry $72,837, SL $72,000, target VAL $65k
+
+### Weekend Roadmap
+1. **Sunday** — Watch for bounce back toward VAH (~$69,400)
+2. **Reject VAH** → short trend continues to VAL $65,028 ✅ (runner target)
+3. **Break + accept above VAH** → watch MoVAH next; break above MoVAH → reassess short thesis entirely
 
 ### Active Watchlist
-
 | Setup | Asset | Level | Direction | Confluence | Status |
 |-------|-------|-------|-----------|------------|--------|
-| HTF range lows | BTC | ~$65-66k | TP target | VAL + MoVAL + 2024 VWAP | **Active target** |
+| Runner target | BTC | $65,028 | TP | VAL + MoVAL + 2024 VWAP | **Active** |
+| Sunday bounce resistance | BTC | $69,400 | Watch | VAH | Watching |
+| Reassess level | BTC | $72,673 | SL zone | MoVAH break = thesis broken | Watching |
 | Runner SL | BTC | $72,000 | Stop (risk-free) | Below entry | Active |
 | VAH fade | ETH | TBD | Short | Range high rotation | Watching |
 
-- **Next:** Ride runner to HTF range lows. Risk-free — worst case breakeven.
+- **Next:** Patient through weekend. Watch Sunday bounce — expect rejection at VAH ~$69,400. Target VAL $65k if rejected. MoVAH only relevant if VAH is reclaimed.
 
 ---
 
@@ -341,20 +367,36 @@ This gives dollar-cost-averaged entry through the zone — if price extends furt
 
 ## For The Agent
 
+**Primary Goal:** Learn Dub's trading style rigorously through every trade and TA session. The end goal is autonomous, profitable trading that mirrors his methodology exactly.
+
 **Activate this skill when:**
 - Dub asks "thoughts about long/short"
 - Analyzing a potential entry or exit
 - Reporting on open positions
 - Setting up orders
+- Receiving any TA or trade-related information
 
 **Always reference:**
 - The 5-level scaled entry/exit pattern
 - "Not chasing" rule
-- Hard stop requirement
-- Geopolitical risk override
+- Hard stop requirement (5-10% max risk, move to breakeven ASAP)
+- Geopolitical risk awareness
 
 **Default to:**
 - Patience over FOMO
 - Scaled entries over single entries
 - Risk-off when uncertain
-- Flat when war/news breaks
+- Cautious and reduced size when geopolitical risk is elevated
+
+**After EVERY trade or TA update:**
+- Update this SKILL.md immediately — no exceptions
+- Log the trade in the Completed Trades section
+- Extract any new lessons into the Core Philosophy
+- Update current market view and active positions
+- Do NOT publish to marketplace until Dub explicitly says so
+
+**Terminology learned:**
+- "In front of entry" on a short = SL placed *below* entry (no possible loss)
+- "Secure profits" = close a % of the position at market
+- "Runner" = remaining position after partial close, riding risk-free
+- "Sweep the highs" = price moves up to grab liquidity at recent highs before reversing
