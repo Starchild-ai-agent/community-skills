@@ -17,6 +17,25 @@
         "StarchildContest"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401826/woofi-swap-optimizer%401.1.0/bundle.zip"
+    },
+    {
+      "name": "@1826/nigeria-p2p-arb",
+      "path": "1826/nigeria-p2p-arb/SKILL.md",
+      "version": "1.0.0",
+      "description": "Real-time Binance P2P Naira rates vs USDT/USDC spot scanner + instant arbitrage alerts, plus live CBN/SEC/NIN policy & local crypto news watch. Built specifically for Nigerian traders on WOOFi/Starchild.",
+      "tags": [
+        "ngn",
+        "p2p",
+        "arbitrage",
+        "binance",
+        "cbn",
+        "nigeria",
+        "local",
+        "fiat",
+        "naira",
+        "StarchildContest"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401826/nigeria-p2p-arb%401.0.0/bundle.zip"
     }
   ]
 }
