@@ -1,6 +1,6 @@
 ---
 name: "@1247/cross-venue-router"
-version: 2.0.0
+version: 2.1.0
 description: Cross-venue smart order router + persistent strategies + risk monitoring across Hyperliquid and Orderly
 author: starchild
 tags: [trading, cross-venue, routing, dca, risk, hyperliquid, orderly]
@@ -28,7 +28,8 @@ tools:
   - list_scheduled_tasks
   - memory_store
   - memory_search
-emoji: 🔀
+emoji: ⚡
+logo: assets/logo.png
 tags: [trading, routing, dca, risk, portfolio, cross-venue]
 ---
 
