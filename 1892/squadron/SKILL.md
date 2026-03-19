@@ -1,6 +1,6 @@
 ---
 name: "@1892/squadron"
-version: 1.0.0
+version: 1.0.1
 description: "Interact with Squadron — the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents."
 author: starchild
 tags: [tasks, knowledge-base, collaboration, agents, inbox]
