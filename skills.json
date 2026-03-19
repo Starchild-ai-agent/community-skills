@@ -36,6 +36,16 @@
         "StarchildContest"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401826/nigeria-p2p-arb%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@1892/squadron-test",
+      "path": "1892/squadron-test/SKILL.md",
+      "version": "0.0.1",
+      "description": "test",
+      "tags": [
+        "test"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/squadron-test%400.0.1/bundle.zip"
     }
   ]
 }
