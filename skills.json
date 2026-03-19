@@ -51,7 +51,7 @@
       "name": "@1892/squadron",
       "path": "1892/squadron/SKILL.md",
       "version": "1.0.2",
-      "description": "Interact with Squadron â the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents.",
+      "description": "Interact with Squadron Ã¢ÂÂ the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents.",
       "tags": [
         "tasks",
         "knowledge-base",
@@ -64,7 +64,7 @@
     {
       "name": "@1247/cross-venue-router",
       "path": "1247/cross-venue-router/SKILL.md",
-      "version": "2.0.0",
+      "version": "2.1.0",
       "description": "Cross-venue smart order router + persistent strategies + risk monitoring across Hyperliquid and Orderly",
       "tags": [
         "trading",
@@ -74,7 +74,7 @@
         "portfolio",
         "cross-venue"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401247/cross-venue-router%402.0.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401247/cross-venue-router%402.1.0/bundle.zip"
     }
   ]
 }
