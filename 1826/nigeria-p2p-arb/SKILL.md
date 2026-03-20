@@ -1,119 +1,113 @@
 ---
 name: "@1826/nigeria-p2p-arb"
-version: 1.3.0
-description: Real-time Binance P2P Naira rates vs USDT/USDC spot scanner + instant arbitrage alerts, plus live CBN/SEC/NIN policy & local crypto news watch. MUST output in the exact same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1). Now includes explicit spot comparison and 9.7% premium highlighting.
+version: 1.4.0
+description: Real-time Binance P2P Naira rates vs USDT/USDC spot scanner + instant arbitrage alerts, plus live CBN/SEC/NIN policy & local crypto news watch. MUST output in the exact same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1). Uses consistent live spot rate from premium APIs for accurate spreads.
 category: Trading
 tags: [ngn, p2p, arbitrage, binance, cbn, nigeria, local, fiat, naira, contest, StarchildContest]
 author: "@1826"
 requires: web search, wallet, premium data
 ---
 
-# 🇳🇬 Nigeria P2P Arbitrage + Local Reg Watcher
-
-**Version:** 1.3.0 | **Author:** @1826 | **Category:** Trading
-
----
-
 ## How to use this skill
 
-When user says "check ngn p2p" or calls this skill, follow these steps exactly and output ONLY the full beautiful report — no extra text, no model names, no token counts, no "Key upgrade" notes, no signatures:
+When user says "check ngn p2p" or calls this skill, follow these steps exactly and output ONLY the full beautiful report — no extra text, no model names, no signatures:
 
-1. Pull live rates via p2p.army tracker (or Binance if available) for USDT/USDC/NGN.
-2. Compare directly against current WOOFi/DEX spot price.
-3. Calculate spreads, min amounts, and ₦500K profit examples.
-4. Scan latest CBN/SEC/NIN news (last 48h).
-5. Generate report with EXACT same structure as WOOFi skill:
-   - Big header box with flag and date
-   - BOTTOM LINE box
-   - Full comparison table (add Spot Price & Spread vs Spot column)
-   - RISK FLAGS section with bullets
-   - LOCAL NEWS & REGULATORY WATCH section with bullets
-   - ACT NOW? section
-   - Powered by footer (no model credit)
+### Step 1 — Fetch Live P2P Rates
+- Primary: fetch `https://p2p.army/en/p2p/prices/binance?fiatUnit=NGN` for USDT/USDC buy/sell rates
+- Secondary: fetch Quidax live USDT/NGN rate via web search
+- Tertiary: Binance P2P API direct (geo-blocked for NG users, try anyway)
 
-Use the exact same ━━━━━━━━━, ╔════════════════╗ boxes, tables, emojis, bold green/red spreads as the WOOFi v1.1 report.
+### Step 2 — Fetch Consistent Live Spot Rate
+- Call `coin_price(coin_ids="tether")` to get USDT USD price
+- Fetch current USD/NGN via CBN official rate or web search
+- Calculate: `spot_ngn = usdt_usd_price × usd_ngn_rate`
+- Use this ONE consistent spot rate for ALL spread calculations
+- NEVER use ₦1,000 parity — always use current live spot
 
----
+### Step 3 — Calculate Spreads
+- `spread_pct = ((p2p_rate - spot_ngn) / spot_ngn) × 100`
+- Apply to USDT BUY, USDT SELL, USDC BUY, USDC SELL
+- Profit example: `profit = (p2p_sell_rate - spot_ngn) × (500000 / spot_ngn)`
 
-## Output Format (STRICT — copy this exactly)
+### Step 4 — Regulatory Scan
+- web_search: "CBN SEC Nigeria crypto regulation news [today's date]"
+- web_search: "Nigeria P2P crypto crackdown NIN BVN [today's date]"
+- Extract 3–4 fresh bullets (last 48h only)
+
+### Step 5 — Generate Report (EXACT FORMAT BELOW)
 
 ```
 ╔══════════════════════════════════════════════════════╗
-║     🇳🇬 NGN P2P ARBITRAGE REPORT  v1.3              ║
-║     📅 {Day DD Mon YYYY · HH:MM WAT}                 ║
+║     🇳🇬 NGN P2P ARBITRAGE REPORT  v1.4              ║
+║     📅 [Day DD Mon YYYY · HH:MM WAT]                 ║
 ╚══════════════════════════════════════════════════════╝
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  💡 BOTTOM LINE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{one-line summary: status + reference rate + premium over spot}
+ [USDT status line — blocked/live]
+ ✅  Best rate: ₦[X]/USDT (Quidax/p2p.army)
+ 🟢  P2P premium over live spot: +[X]%
+     (₦[p2p] vs ₦[spot] live spot)
+ 📌  [One-line action summary]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 📊 LIVE RATES TABLE  (NGN · {Date})
+ 📊 LIVE RATES TABLE  (NGN · [Date])
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
- Asset │ Side │ P2P Rate  │ Spot Rate │ Spread       │ ₦500K Profit
- ──────┼──────┼───────────┼───────────┼──────────────┼─────────────
- USDT  │ BUY  │ ₦{rate}   │ ₦{spot}   │🔴 +{x.xx}%   │  —
- USDT  │ SELL │ ₦{rate}   │ ₦{spot}   │🟢 +{x.xx}%   │ ~₦{profit} 💰
- USDC  │ BUY  │ ₦{rate}   │ ₦{spot}   │🔴 +{x.xx}%   │  —
- USDC  │ SELL │ ₦{rate}   │ ₦{spot}   │🟢 +{x.xx}%   │ ~₦{profit} 💰
+ Asset │ Side │ P2P Rate  │ Spot Rate │ Spread    │ ₦500K Profit
+ ──────┼──────┼───────────┼───────────┼───────────┼─────────────
+ USDT  │ BUY  │ ₦[X]      │ ₦[spot]   │ 🔴 +[X]%  │     —
+ USDT  │ SELL │ ₦[X]      │ ₦[spot]   │ 🟢 +[X]%  │ ~₦[X] 💰
+ USDC  │ BUY  │ ₦[X]      │ ₦[spot]   │ 🔴 +[X]%  │     —
+ USDC  │ SELL │ ₦[X]      │ ₦[spot]   │ 🟢 +[X]%  │ ~₦[X] 💰
 
- Spread = P2P rate vs CBN/DEX official spot rate
- Profit example = ₦500K sold via P2P vs DEX spot
+ Spot source: CoinGecko USDT $[X] × CBN ₦[X]/USD = ₦[spot]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  ⚠️  RISK FLAGS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- {bullet list of active risks — suspension, KYC, chargeback, liquidity}
+ [4–5 risk bullets with 🔴/⚠️ emojis]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 📰 LOCAL NEWS & REGULATORY WATCH  (CBN / SEC / NIN · Last 48h)
+ 📰 REG WATCH  (CBN / SEC / NIN · Last 48h)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- {3–4 fresh regulatory/news bullets}
+ [3–4 fresh regulatory bullets with 🏦📋💸🔐 emojis]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  💼 WALLET SUGGESTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- {recommended route: DEX → token → platform → NGN, with net spread}
+ Optimal path: DEX/WOOFi → USDT → [Exchange] → NGN
+ Best rate:    ₦[X]/USDT
+ Gross spread: +[X]%
+ Est. net after fees: ~[X]% [✅/⚠️]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  🎯 ACT NOW?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- {✅ GO or ⏳ WAIT with bullet reasons and best window}
+ [✅ GO / ⏳ WAIT / ❌ NO] — [One line reason]
+  ✅/❌ [Spread assessment]
+  ✅/❌ [Platform status]
+  ✅/❌ [Timing/liquidity]
+
+ 🕘 [Specific action recommendation with time window]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- ⚡ Powered by Starchild · Data: P2P Tracker (live)
+ ⚡ Powered by Starchild · @1826/nigeria-p2p-arb
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
----
-
-## Data Sources (in priority order)
-
-1. **p2p.army** — `https://p2p.army/en/p2p/prices/binance?fiatUnit=NGN` (primary tracker)
-2. **Binance P2P API** — `https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search` (if accessible)
-3. **Web search** — "USDT NGN P2P rate today" as final fallback
-4. **Spot rate** — CoinGecko USDT price × current CBN USD/NGN official rate
-
----
-
 ## Safety & Rules
-
-- NEVER output any model name, token counts, footers like ↑↓ · $ · Claude, or extra commentary after the report.
-- NEVER suggest illegal activity or VPN workarounds.
-- Always note P2P counterparty & scam risks.
-- Warn about current Nigerian KYC/AML/NIN requirements.
+- NEVER output any model name, token counts, or extra commentary after the report.
+- NEVER use ₦1,000 as spot parity — always fetch and use current live spot rate.
+- Always use ONE consistent spot rate for all spread calculations in the same report.
+- Always note P2P counterparty, scam, and KYC risks.
 - Use only fresh data (nothing older than 5 minutes).
 - Log every scan.
 
----
-
 ## Changelog
-
-| Version | Changes |
-|---------|---------|
-| 1.0.0 | Initial release — basic P2P rate fetch + reg watch |
-| 1.1.0 | WOOFi-style boxed format, risk flags, ACT NOW CTA |
-| 1.2.0 | Spot price column, visual spread indicators 🟢🔴, wallet suggestion |
-| 1.3.0 | Strict output-only mode (no post-report commentary), p2p.army as primary source, 9.7% premium highlighting, full format template embedded |
+- v1.4.0: Fixed spot rate consistency (live API only, no parity). Embedded full report template. Strict no-commentary output mode.
+- v1.3.0: Strict output-only mode. Full format template added.
+- v1.2.0: Added spot comparison column and visual spread indicators.
+- v1.1.0: WOOFi-style boxed report format, risk flags, reg watch.
+- v1.0.0: Initial release.
