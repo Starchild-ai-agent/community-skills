@@ -1,7 +1,7 @@
 ---
 name: "@432/meta-dex-aggregator"
 description: "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, and outlier quote rejection. Use when the user wants to swap tokens, compare DEX prices, or find the best swap route across multiple aggregators."
-version: 2.0.0
+version: 2.1.0
 tools:
   - bash
   - oneinch_quote
@@ -41,17 +41,28 @@ gas-adjusted net output, and runs safety checks before execution.
 
 ## Workflow: Quote with Safety Check
 
+**Step 1 & 2 run in PARALLEL (no dependency between them):**
+
 ```bash
-# 1. Get quotes (includes safety analysis automatically)
+# 1. Get 4 aggregator quotes (ParaSwap, Odos, KyberSwap, Matcha/0x + safety)
 cd skills/meta-dex-aggregator/scripts && \
   python3 meta_dex.py quote --chain base --from ETH --to USDC --amount 0.5 --slippage 0.5
-
-# 2. Also get 1inch quote via native tool
-oneinch_quote(chain="base", src="0xEeee...EEeE", dst="<USDC_addr>", amount="<wei>")
-
-# 3. Present ranked results with safety.recommendation to user
-# 4. If safety.priceImpact.severity is "high"/"critical" — WARN before proceeding
 ```
+
+```
+# 2. Get 1inch quote via native tool (proxied, no API key needed)
+oneinch_quote(chain="base", src="<from_addr>", dst="<to_addr>", amount="<amount_in_wei>")
+# Returns: { "dstAmount": "<raw_amount>" }
+# Convert: dstAmount / 10^decimals = human amount
+```
+
+**Step 3 — Merge & present:**
+- Script returns quotes with: `aggregator`, `amountOutHuman`, `amountUsd`, `gasUsd`, `netOut`, `vsbestPct`
+- 1inch native tool returns `dstAmount` (raw wei) — convert to human amount using token decimals
+- Insert 1inch into the ranked table, recalculate `vsbestPct` if 1inch is the new winner
+- The script's `safety` block (priceImpact, slippageWarnings, recommendation) applies to all quotes
+- If `priceImpact.severity` is "high"/"critical" — WARN and **block the swap**
+- Execute via `oneinch_swap` if 1inch wins, or `wallet_transfer` with tx data for others
 
 ## Workflow: Execute Swap
 

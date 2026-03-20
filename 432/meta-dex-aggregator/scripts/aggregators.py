@@ -259,10 +259,18 @@ def zerox_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage)
         return None
 
 
+# ── 1inch ─────────────────────────────────────────────────────────────────────
+# 1inch is NOT called from this script. It uses the platform's native
+# oneinch_quote / oneinch_swap tools (proxied, no user API key needed).
+# The agent merges the 1inch result into the comparison table.
+# See SKILL.md for the workflow.
+
+
 # ── Dispatch ──────────────────────────────────────────────────────────────────
 AGGREGATORS = {
     "paraswap": paraswap_quote,
     "odos": odos_quote,
     "kyberswap": kyberswap_quote,
     "matcha/0x": zerox_quote,
+    # "1inch" — handled via native oneinch_quote tool, not in this script
 }
