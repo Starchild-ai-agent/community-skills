@@ -21,8 +21,8 @@
     {
       "name": "@1826/nigeria-p2p-arb",
       "path": "1826/nigeria-p2p-arb/SKILL.md",
-      "version": "1.3.0",
-      "description": "Real-time Binance P2P Naira rates vs USDT/USDC spot scanner + instant arbitrage alerts, plus live CBN/SEC/NIN policy & local crypto news watch. MUST output in the exact same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1). Now includes explicit spot comparison and 9.7% premium highlighting.",
+      "version": "1.4.0",
+      "description": "Real-time Binance P2P Naira rates vs USDT/USDC spot scanner + instant arbitrage alerts, plus live CBN/SEC/NIN policy & local crypto news watch. MUST output in the exact same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1). Uses consistent live spot rate from premium APIs for accurate spreads.",
       "tags": [
         "ngn",
         "p2p",
@@ -36,7 +36,7 @@
         "contest",
         "StarchildContest"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401826/nigeria-p2p-arb%401.3.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401826/nigeria-p2p-arb%401.4.0/bundle.zip"
     },
     {
       "name": "@1892/squadron-test",
@@ -52,7 +52,7 @@
       "name": "@1892/squadron",
       "path": "1892/squadron/SKILL.md",
       "version": "1.0.2",
-      "description": "Interact with Squadron ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents.",
+      "description": "Interact with Squadron ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents.",
       "tags": [
         "tasks",
         "knowledge-base",
