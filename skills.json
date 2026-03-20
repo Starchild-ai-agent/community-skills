@@ -5,9 +5,23 @@
       "name": "@432/meta-dex-aggregator",
       "path": "432/meta-dex-aggregator/SKILL.md",
       "version": "2.1.1",
-      "description": "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, and outlier quote rejection. Use when the user wants to swap tokens, compare DEX prices, or find the best swap route across multiple aggregators.",
+      "description": "Meta DEX Aggregator â aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, and outlier quote rejection. Use when the user wants to swap tokens, compare DEX prices, or find the best swap route across multiple aggregators.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40432/meta-dex-aggregator%402.1.1/bundle.zip"
+    },
+    {
+      "name": "@1892/squadron",
+      "path": "1892/squadron/SKILL.md",
+      "version": "1.1.0",
+      "description": "Interact with Squadron — the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents.",
+      "tags": [
+        "tasks",
+        "knowledge-base",
+        "collaboration",
+        "agents",
+        "inbox"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/squadron%401.1.0/bundle.zip"
     }
   ]
 }
