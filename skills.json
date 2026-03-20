@@ -52,7 +52,7 @@
       "name": "@1892/squadron",
       "path": "1892/squadron/SKILL.md",
       "version": "1.0.2",
-      "description": "Interact with Squadron ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents.",
+      "description": "Interact with Squadron ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents.",
       "tags": [
         "tasks",
         "knowledge-base",
@@ -84,6 +84,21 @@
       "description": "Headless browser for web crawling, UX audits, screenshots, and interaction testing. Use when the user wants to audit a website, take screenshots, click buttons, test UX flows, extract content from SPAs, or crawl pages that require JavaScript rendering.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401247/web-crawler%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@1247/orderly-data",
+      "path": "1247/orderly-data/SKILL.md",
+      "version": "1.0.0",
+      "description": "Fetch Orderly Network metrics for content creation, reporting, and analysis.",
+      "tags": [
+        "orderly",
+        "data",
+        "metrics",
+        "analytics",
+        "defi",
+        "perps"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401247/orderly-data%401.0.0/bundle.zip"
     }
   ]
 }
