@@ -1,172 +1,152 @@
 ---
 name: "@1826/funding-rate-arb"
-version: 1.2.0
-description: Real-time funding rate scanner across Hyperliquid, Binance Futures, Bybit, OKX and more. Highlights biggest long/short arb gaps and gives wallet-sized entry/exit suggestions. MUST output in the EXACT same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1) and Nigeria P2P skill.
+version: 1.3.0
+description: Real-time funding rate scanner across Hyperliquid, Binance Futures, Bybit, OKX and more. Highlights biggest long/short arb gaps and gives wallet-sized entry/exit suggestions. MUST output in the EXACT same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1) and Nigeria P2P skill, with every section.
 category: Trading
 tags: [funding rate, arbitrage, hyperliquid, binance, bybit, okx, perp, contest, StarchildContest]
 author: "@1826"
 requires: premium data apis, wallet
 ---
 
-# Cross-Exchange Funding Rate Arbitrage Scanner v1.1
-
-## Overview
-
-Scans live 8h/1h perpetual funding rates across Hyperliquid, Binance Futures, Bybit, OKX, HTX, KuCoin, Gate, BingX, MEXC, Bitget, WhiteBIT, and more. Identifies top delta-neutral arb opportunities, annualizes gaps, and outputs a full boxed report with wallet-sized trade suggestions and ACT NOW? CTA — identically styled to the WOOFi v1.1 and Nigeria P2P skills.
-
----
-
 ## How to use this skill
 
-When user says **"scan funding rates"** or calls this skill, follow these steps exactly and output **ONLY** the full beautiful report — no extra text, no model names, no signatures, no commentary:
+When user says "scan funding rates" or calls this skill, follow these steps exactly and output ONLY the full beautiful report — no extra text, no model names, no signatures, no explanations:
 
 ### Step 1 — Pull Live Funding Rates
-Use `funding_rate(symbol=X)` for each coin:
-```
-funding_rate(symbol="BTC")
-funding_rate(symbol="ETH")
-funding_rate(symbol="SOL")
-funding_rate(symbol="DOGE")
-funding_rate(symbol="XRP")
-```
-Pull ALL exchanges from each response (`uMarginList` array). Note each exchange's rate, interval (8h or 1h), and normalize to 8h-equivalent.
+Fetch current 8h/1h funding rates for BTC, ETH, SOL, DOGE, XRP from:
+- Hyperliquid (1h intervals)
+- Binance Futures (8h)
+- Bybit (8h)
+- OKX (8h)
+- HTX, KuCoin, Gate, MEXC, BingX, Bitget, WhiteBIT, Bitunix, CoinEx, LBank, Aster, dYdX, Coinbase Intl, Lighter
 
-**Normalization:** If exchange uses 1h intervals → multiply by 8 to get 8h equivalent.
+Use `funding_rate(symbol=BTC)` etc. via Coinglass premium API.
 
-### Step 2 — Calculate Annualized Rates
-```
-Annualized % = (8h_rate × 3 × 365) × 100
-```
-Flag rates > +0.500%/8h as 🟢 HOT, rates < -0.500%/8h as 🔴 HIGH SHORT PRESSURE.
+### Step 2 — Annualize & Rank
+- 8h rate: `rate × 3 × 365` = annualized
+- 1h rate: `rate × 24 × 365` = annualized
+- Gap formula: `best_positive_rate − best_negative_rate` on the same coin
+- Rank top 3 gaps by size (biggest gap = best arb)
+- Flag any exchange at rate cap (usually ±1.000%)
 
-### Step 3 — Identify Top 3 Arb Gaps
-For each coin, rank the gap between:
-- The exchange with **lowest (most negative)** rate → LONG leg (LONG here, collect funding)
-- The exchange with **highest (most positive)** rate → SHORT leg (SHORT here, collect funding)
+### Step 3 — Size Recommendations
+- Default leg size: $500–$1,000 per leg unless wallet data available
+- Max leverage: 3x for majors (BTC/ETH), 2x for alts (DOGE/XRP/SOL)
+- Must be delta-neutral: equal notional on each leg
+- Daily profit estimate: `gap_per_8h × 3 × notional`
 
-Gap = |positive_rate| + |negative_rate|
+### Step 4 — Generate Report (EXACT STRUCTURE — NO DEVIATIONS)
 
-Sort all coin/pair combos by gap descending. Top 3 = your arb opportunities.
-
-### Step 4 — Pull Current Prices
-```
-coin_price(coin_ids="bitcoin,ethereum,solana,dogecoin,ripple")
-```
-
-### Step 5 — Generate Report
-
-Output ONLY this report structure, no text before or after:
+Output the following sections in this exact order using the exact same boxes, separators, and emojis as WOOFi v1.1 and Nigeria P2P skills:
 
 ```
 ╔══════════════════════════════════════════════════════════╗
-║  💸 FUNDING RATE ARB SCANNER  v1.1                      ║
-║  📅 {Day DD Mon YYYY · HH:MM WAT}  |  {N} Coins · CEXs  ║
+║  💸 CROSS-EXCHANGE FUNDING RATE ARB SCANNER  v1.3       ║
+║  📅 {Day Date} · {HH:MM WAT}  |  {N} Coins · {N} CEXs  ║
 ╚══════════════════════════════════════════════════════════╝
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  💡 BOTTOM LINE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 🏆 Top gap:   {COIN} — {ExchangeA} {rateA}% vs
-               {ExchangeB} {rateB}%  per 8h
-    Net gap:   +{gap}%/8h = {annualized}% annualized
- 🥈 Runner-up: {COIN2 summary}
- 🥉 Third:     {COIN3 summary}
- 📌 {1-line market sentiment note}
+ 🏆 Top gap:  {COIN}  {ExchA} {rateA}/8h ↔ {ExchB} {rateB}/8h
+              Gap: +{gap}%/8h = 🔥 +{annualized}% annualized
+ 🥈 Runner:   {COIN}  ...
+ 🥉 Third:    {COIN}  ...
+ ⚠️  {Key risk note about rate caps or market regime}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 📊 FULL RATES TABLE  (USDT-margined perps)
+ 📊 FULL RATES TABLE  (USDT-margined · live {HH:MM WAT})
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
- {COIN}  ${price}  ·  Next funding: ~{Xh}
- Exchange      │ 8h Rate   │ Annualized  │ Side
- ──────────────┼───────────┼─────────────┼──────
- {Exchange}    │ {rate}%   │ 🔴/🟢 {ann}%│ SHORT/LONG pays
+ {coin_emoji} {COIN}  ${price}  ·  Next funding: ~{Xh}
+ Exchange      │ 8h Rate    │ Annualized   │ Side
+ ──────────────┼────────────┼──────────────┼──────────────
+ {exchange}    │ {rate}%    │ 🔴/🟢 {ann}% │ SHORT/LONG pays
  ...
- Best gap: {ExA} ↔ {ExB} = +{gap}%/8h
+ Best gap: {ExchA}(long) ↔ {ExchB}(short) = +{gap}%/8h
 
- [repeat for each coin]
+[Repeat per coin — BTC, ETH, SOL, DOGE, XRP]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 🏆 TOP 3 ARB OPPORTUNITIES  (Delta-Neutral)
+ 🏆 TOP 3 ARB OPPORTUNITIES  (Delta-Neutral Pairs)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
  #1  🔥 {COIN}  |  Gap: +{gap}%/8h  |  +{ann}% annualized
- ┌──────────────────────────────────────────────────────┐
- │ LEG A: LONG {COIN} on {ExchangeA}  ({rateA}%/8h)    │
- │ LEG B: SHORT {COIN} on {ExchangeB} ({rateB}%/8h)    │
- │ Net earn: +{gap}% per 8h                             │
- │ Suggested size: ${size} each leg · {x}x max leverage │
- │ Est. daily profit: ~${daily} (before fees)           │
- │ ⚠️  {key risk note}                                  │
- └──────────────────────────────────────────────────────┘
+ ┌────────────────────────────────────────────────────────┐
+ │ LEG A: LONG  {COIN} on {ExchA}  (earns +{rateA}%/8h)  │
+ │ LEG B: SHORT {COIN} on {ExchB}  (earns +{rateB}%/8h)  │
+ │ Net collect:  +{gap}% per 8h  (~+{daily}% per day)     │
+ │ Size: ${amount} each leg · {X}x leverage max           │
+ │ Entry: {COIN} ${price}                                  │
+ │ Est. daily: ~${profit} gross on ${notional} notional    │
+ │ ⚠️  {Risk note}                                        │
+ └────────────────────────────────────────────────────────┘
 
- [repeat for #2 and #3]
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- ⚠️  RISK FLAGS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- 🔴 [exchange-specific anomalies — 1% cap flags, etc.]
- 🔴 [market regime note — bearish/bullish sentiment]
- ⚠️  Delta-neutral only — DO NOT run directional legs
- ⚠️  Funding rates change every 8h (or 1h on HL/Coinbase)
- ⚠️  Always account for maker/taker fees (~0.02–0.05%)
- ⚠️  Liquidation risk even on "neutral" positions
- ⚠️  Transfer delays between exchanges = execution risk
+[Repeat for #2 and #3]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  💼 WALLET SUGGESTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- Best opportunity:    #{N} {COIN} — {ExA} ↔ {ExB}
- Suggested size:      ${size} each leg
- Gross yield/day:     ~{daily_pct}%
- Est. net (fees):     ~{net_pct}% ✅/{outcome}
+ Cleanest leg available right now:
+ → {COIN} delta-neutral: LONG {ExchA} + SHORT {ExchB}
+   Gross yield:  +{gap}%/8h
+   Est. net:     ~+{net}%/8h after fees (~+{monthly}% monthly)
+   Capital req:  ~${capital} total (${leg} each leg)
+   Max leverage: {X}x · use cross margin
+   Risk level:   ⚠️ {LOW/MEDIUM/HIGH} ({reason})
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ⚠️  RISK FLAGS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 🔴 {Exchange} rate at cap — likely to flip, verify live
+ 🔴 {Market condition — e.g. ETH bearish, crowded shorts}
+ ⚠️  Rates reset every 8h — gap can close before collect
+ ⚠️  Capital required on BOTH legs simultaneously
+ ⚠️  Maker/taker fees: ~0.02–0.05% per trade per leg
+ ⚠️  Delta-neutral positions still carry liquidation risk
+    if price swings >10% and margin isn't topped up
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  🎯 ACT NOW?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- [YES / WAIT / NO — clear single recommendation]
-  ✅ [confirmation point 1]
-  ✅ [confirmation point 2]
-  ✅ [confirmation point 3]
-  ❌ [risk/caveat 1]
-  ❌ [risk/caveat 2]
+ ⏳ REVIEW FIRST — then say YES to open:
+  ✅ {Top gap confirmed live with exchange names}
+  ✅ {Second gap confirmed — clean pair}
+  ✅ {Third gap — note on quality}
+  ❌ {Rate cap / flip risk — must verify live}
+  ❌ {Market timing note — e.g. enter after next reset}
+  ❌ {Capital placement note}
 
- 📌 Recommended trade: [COIN, legs, size, leverage]
- 👉 Reply YES to execute · NO to rescan later
+ 📌 Best first trade if YES:
+    {COIN}: LONG ${amount} {ExchA} + SHORT ${amount} {ExchB}
+    {X}x leverage · cross margin · verify {ExchB} rate live
+
+ 👉 Reply YES to open position · NO to rescan later
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  ⚡ Powered by Starchild · @1826/funding-rate-arb
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
----
-
 ## Safety & Rules
+- NEVER execute any trade without explicit "YES" from the user.
+- NEVER output any model name, token counts, or extra commentary.
+- Always warn on liquidation risk and funding flip potential.
+- Use only live data fetched in the current session (nothing older than 60s).
+- Report opens at the header box, closes at the `⚡ Powered by` line — nothing else.
+- Log every scan timestamp for trading journal reference.
 
-- **NEVER execute** any trade without explicit "YES" confirmation from the user.
-- **NEVER output** any model name, token counts, or extra commentary outside the report.
-- **Warn on** liquidation risk and funding flip potential in every scan.
-- **Use only live data** — nothing older than 60 seconds.
-- **Log every scan** for trading journal purposes.
-- **Delta-neutral only** — always open both legs simultaneously.
-- **Cap leverage** at 3x max unless user explicitly requests higher.
+## Example
 
----
-
-## Key Formulas
-
-```
-Annualized % = 8h_rate × 3 × 365 × 100
-Gap          = |rateA| + |rateB|  (when signs differ)
-Daily profit = notional × gap × 3  (3 × 8h periods/day)
-Est net      = daily_profit − (notional × 2 × avg_fee)
-```
+User input: `Scan funding rates now`
+Your output: [full formatted report in the exact structure above — all 6 sections in order, ACT NOW? box at the very end, ⚡ Powered by footer as the final line]
 
 ---
 
 ## Changelog
 
-| Version | Date       | Changes                                              |
-|---------|------------|------------------------------------------------------|
-| v1.2.0  | 2026-03-20 | Full ACT NOW? CTA parity with WOOFi v1.1 + Nigeria P2P; WALLET SUGGESTION section added; verbatim output template locked in; StarchildContest tag |
-| v1.0.0  | 2026-03-20 | Initial release — 5 coins, 12+ exchanges, top 3 arb, delta-neutral suggestions |
+| Version | Changes |
+|---------|---------|
+| 1.3.0 | Full section ordering locked: BOTTOM LINE → TABLE → TOP 3 → WALLET → RISK FLAGS → ACT NOW?. Verbatim template embedded. Complete WOOFi/Nigeria structural parity. |
+| 1.2.0 | Added WALLET SUGGESTION + ACT NOW? CTA. Full WOOFi/Nigeria style parity. StarchildContest tag. |
+| 1.0.0 | Initial release. Cross-exchange funding scanner. 5 coins, 9+ exchanges. |
