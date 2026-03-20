@@ -1,6 +1,6 @@
 ---
 name: "@1826/funding-rate-arb"
-version: 1.1.0
+version: 1.2.0
 description: Real-time funding rate scanner across Hyperliquid, Binance Futures, Bybit, OKX and more. Highlights biggest long/short arb gaps and gives wallet-sized entry/exit suggestions. MUST output in the EXACT same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1) and Nigeria P2P skill.
 category: Trading
 tags: [funding rate, arbitrage, hyperliquid, binance, bybit, okx, perp, contest, StarchildContest]
@@ -168,5 +168,5 @@ Est net      = daily_profit − (notional × 2 × avg_fee)
 
 | Version | Date       | Changes                                              |
 |---------|------------|------------------------------------------------------|
-| v1.1.0  | 2026-03-20 | Full ACT NOW? CTA parity with WOOFi v1.1 + Nigeria P2P; WALLET SUGGESTION section added; verbatim output template locked in; StarchildContest tag |
+| v1.2.0  | 2026-03-20 | Full ACT NOW? CTA parity with WOOFi v1.1 + Nigeria P2P; WALLET SUGGESTION section added; verbatim output template locked in; StarchildContest tag |
 | v1.0.0  | 2026-03-20 | Initial release — 5 coins, 12+ exchanges, top 3 arb, delta-neutral suggestions |
