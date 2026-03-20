@@ -1,7 +1,7 @@
 ---
 name: "@432/meta-dex-aggregator"
 description: "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, and outlier quote rejection. Use when the user wants to swap tokens, compare DEX prices, or find the best swap route across multiple aggregators."
-version: 2.1.0
+version: 2.1.1
 tools:
   - bash
   - oneinch_quote
