@@ -110,59 +110,10 @@ jobs:
           fetch-depth: 0
 
       - name: Rebuild skills.json
-        run: |
-          python3 << 'EOF'
-          import os, json, re
+        run: python3 scripts/build_skills_index.py
 
-          skills = []
-
-          for ns_dir in sorted(os.listdir(".")):
-              if ns_dir.startswith(".") or not os.path.isdir(ns_dir):
-                  continue
-              if ns_dir in ("node_modules", ".github"):
-                  continue
-
-              for skill_dir in sorted(os.listdir(ns_dir)):
-                  skill_path = os.path.join(ns_dir, skill_dir)
-                  if not os.path.isdir(skill_path):
-                      continue
-                  skill_md = os.path.join(skill_path, "SKILL.md")
-                  if not os.path.exists(skill_md):
-                      continue
-
-                  with open(skill_md, "r", encoding="utf-8") as f:
-                      content = f.read()
-
-                  fm_match = re.match(r"^---\s*\n([\s\S]*?)\n---", content)
-                  version = "1.0.0"
-                  description = ""
-                  name = f"@{ns_dir}/{skill_dir}"
-
-                  if fm_match:
-                      fm = fm_match.group(1)
-                      v = re.search(r'^version:\s*["\']?([^\s"\']+)', fm, re.M)
-                      if v: version = v.group(1)
-                      d = re.search(r'^description:\s*["\']?(.*?)["\']?$', fm, re.M)
-                      if d:
-                          desc = d.group(1).strip('"').strip("'")
-                          if desc: description = desc
-                      n = re.search(r'^name:\s*["\']?(@?\S+)', fm, re.M)
-                      if n: name = n.group(1).strip('"').strip("'")
-
-                  skills.append({
-                      "name": name,
-                      "path": f"{ns_dir}/{skill_dir}/SKILL.md",
-                      "version": version,
-                      "description": description,
-                  })
-
-          index = {"registry": "starchild-community", "skills": skills}
-
-          with open("skills.json", "w", encoding="utf-8") as f:
-              json.dump(index, f, indent=2, ensure_ascii=False)
-
-          print(f"Updated skills.json: {len(skills)} skills")
-          EOF
+      - name: Verify skills.json coverage
+        run: python3 scripts/verify_skills_index.py
 
       - name: Commit updated skills.json
         run: |
