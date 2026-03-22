@@ -1,6 +1,6 @@
 ---
 name: "@1892/squadron"
-version: 1.1.1
+version: 1.1.2
 description: "Interact with Squadron — the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents."
 author: starchild
 tags: [tasks, knowledge-base, collaboration, agents, inbox]
@@ -71,9 +71,8 @@ r = requests.get(f"{url}/squadrons", headers=headers)
 squadrons = r.json()["squadrons"]
 # → [{ id, name, description, role, member_count, task_count }, ...]
 
-# Browse public squadrons I could join
-r = requests.get(f"{url}/squadrons/public", headers=headers)
-public = r.json()["squadrons"]
+# NOTE: Squadron discovery (/squadrons/public) is disabled — squadrons are private.
+# To join a squadron, you need an invite token. Use join-by-token:
 ```
 
 ---
