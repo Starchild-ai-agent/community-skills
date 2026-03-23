@@ -1,7 +1,7 @@
 ---
 name: "@432/meta-dex-aggregator"
-description: "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, and outlier quote rejection. Use when the user wants to swap tokens, compare DEX prices, or find the best swap route across multiple aggregators."
-version: 2.1.1
+description: "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
+version: 3.1.1
 tools:
   - bash
   - oneinch_quote
@@ -9,14 +9,41 @@ tools:
   - oneinch_check_allowance
   - oneinch_approve
   - oneinch_swap
+  - oneinch_cross_chain_quote
+  - oneinch_cross_chain_swap
   - wallet_balance
   - wallet_transfer
 ---
 
 # Meta DEX Aggregator — Multi-Source Quote Comparison with Safety Layer
 
-Aggregator of aggregators. Queries 5 DEX aggregators in parallel, ranks by
+**v3.0.0** — Now with built-in execution, CowSwap polling, historical logging, and analytics.
+
+Aggregator of aggregators. Queries 6 DEX aggregators in parallel, ranks by
 gas-adjusted net output, and runs safety checks before execution.
+
+## New in v3.1.0
+
+| Feature | Description |
+|---------|-------------|
+| **Market orders** | `--market-order` uses 1inch for instant execution (no limit order failures) |
+| **Auto-verify** | `--auto-verify` fetches balances automatically via RPC |
+| **Retry logic** | Fallback to next best aggregator on failure |
+| **Better gas estimation** | Calibrated per aggregator (150k-300k vs flat 580k) |
+| **Price freshness check** | Warns if quote is >30s old before execution |
+
+## New in v3.0.0
+
+| Feature | Description |
+|---------|-------------|
+| **Built-in execution** | `execute` command handles swap + verification in one flow |
+| **CowSwap polling** | Auto-poll CowSwap orders until fulfilled (up to 2 min) |
+| **Historical logging** | Every quote logged to JSONL for trend analysis |
+| **Winner analytics** | `stats` command shows which aggregator wins most often |
+| **Price trends** | `trend` command shows net output over time |
+| **Slippage analysis** | `slippage` command analyzes competitive spreads |
+| **CSV export** | `export` command for external analysis |
+| **Quote monitoring** | `monitor` command alerts when target net output is reached |
 
 ## Safety Features
 
@@ -28,23 +55,30 @@ gas-adjusted net output, and runs safety checks before execution.
    Recommends MEV-safe route when within 0.5% of best price.
 4. **Slippage Warnings** — Sandwich risk >1%, stablecoin pairs >0.05%, too-low revert risk.
 5. **Outlier Detection** — Quotes >5% worse than best are flagged as outliers.
+6. **Post-Swap Verification** — Mandatory balance checks, flags >2% deviation.
 
 ## Aggregators
 
-| Adapter | API Key | Status |
-|---------|---------|--------|
-| ParaSwap | None needed | ✅ |
-| Odos | None needed | ✅ |
-| KyberSwap | None needed | ✅ |
-| 1inch | Native tool (platform-proxied) | ✅ |
-| Matcha/0x | `OX_API_KEY` in .env | ✅ |
+| Adapter | API Key | Status | MEV-Safe |
+|---------|---------|--------|----------|
+| ParaSwap | None needed | ✅ | ❌ |
+| Odos | None needed | ✅ | ❌ |
+| KyberSwap | None needed | ✅ | ❌ |
+| CowSwap | None needed | ✅ | ✅ |
+| 1inch | Native tool (platform-proxied) | ✅ | ❌ |
+| Matcha/0x | `OX_API_KEY` in .env | ✅ | ❌ |
+
+**CowSwap:** Batch auction protocol — solvers compete off-chain, user never exposed to MEV.
+Gasless for the user (solvers pay). Supported on Ethereum, Arbitrum, Gnosis, Base.
+Uses wrapped native tokens (WETH) internally — raw ETH is auto-converted.
+Execution is order-based (EIP-712 signed intent), not raw transaction.
 
 ## Workflow: Quote with Safety Check
 
 **Step 1 & 2 run in PARALLEL (no dependency between them):**
 
 ```bash
-# 1. Get 4 aggregator quotes (ParaSwap, Odos, KyberSwap, Matcha/0x + safety)
+# 1. Get 5 aggregator quotes (ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x + safety)
 cd skills/meta-dex-aggregator/scripts && \
   python3 meta_dex.py quote --chain base --from ETH --to USDC --amount 0.5 --slippage 0.5
 ```
@@ -64,23 +98,99 @@ oneinch_quote(chain="base", src="<from_addr>", dst="<to_addr>", amount="<amount_
 - If `priceImpact.severity` is "high"/"critical" — WARN and **block the swap**
 - Execute via `oneinch_swap` if 1inch wins, or `wallet_transfer` with tx data for others
 
-## Workflow: Execute Swap
+## Workflow: Execute Swap (v3.1.0 — Market Orders + Auto-Verify)
+
+**NEW in v3.1.0:**
+- `--market-order` flag for instant 1inch execution (no limit order failures)
+- `--auto-verify` flag for automatic balance fetching (no manual args)
+- Retry logic with fallback aggregators on failure
+
+### **Option A: Market Order (Recommended for < $100 swaps)**
 
 ```bash
-# 1. Get wallet address
-wallet_info()
-
-# 2. Get swap tx data
+# Instant execution via 1inch market order
 cd skills/meta-dex-aggregator/scripts && \
-  python3 meta_dex.py swap --chain base --from ETH --to USDC --amount 0.5 \
-    --aggregator odos --wallet 0x... --slippage 0.5
+  python3 meta_dex.py execute --chain arbitrum --from ETH --to USDC --amount 0.005 \
+    --market-order --wallet 0x... --slippage 2.0
 
-# 3. For ERC-20 tokens: check + set approval
-oneinch_check_allowance(chain, token) → oneinch_approve(chain, token) if needed
+# Response:
+# {
+#   "step": "market_order_ready",
+#   "mode": "market_order",
+#   "instruction": "Execute via oneinch_swap(chain='arbitrum', src='0x...', dst='0x...', amount='...', slippage=2.0)"
+# }
 
-# 4. Execute via wallet_transfer using the tx data from step 2
-wallet_transfer(to=tx.to, amount=tx.value, data=tx.data, chain_id=chainId)
+# Agent executes:
+oneinch_swap(chain="arbitrum", src="0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", dst="0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8", amount="5000000000000000", slippage=2.0)
+
+# Auto-verify after execution:
+python3 meta_dex.py execute --chain arbitrum --from ETH --to USDC --amount 0.005 \
+  --market-order --wallet 0x... --auto-verify --expected-out <actual_received_wei>
 ```
+
+### **Option B: Limit Order with Auto-Verification**
+
+```bash
+# Get quote and execute
+python3 meta_dex.py execute --chain arbitrum --from ETH --to USDC --amount 0.005 \
+  --aggregator kyberswap --wallet 0x... --slippage 1.0
+
+# Execute tx via wallet_transfer...
+
+# Auto-verify (no manual balance args needed):
+python3 meta_dex.py execute --chain arbitrum --from ETH --to USDC --amount 0.005 \
+  --aggregator kyberswap --wallet 0x... --verify --auto-verify --expected-out 10770000
+```
+
+**Option B: Manual swap (legacy)**
+
+```bash
+# Get swap tx data
+python3 meta_dex.py swap --chain base --from ETH --to USDC --amount 0.5 \
+  --aggregator odos --wallet 0x... --slippage 0.5
+
+# Execute and verify manually (see Post-Swap Verification section)
+```
+
+## Post-Swap Verification (MANDATORY)
+
+**v3.0.0: Use the `execute --verify` command for automatic verification.**
+
+Manual verification workflow (if not using execute command):
+
+```
+# 1. Record balances BEFORE the swap
+wallet_balance(chain="base", asset="eth")   → pre_from_balance
+wallet_balance(chain="base", asset="usdc")  → pre_to_balance
+
+# 2. Execute the swap (wallet_transfer or oneinch_swap)
+
+# 3. For CowSwap: poll until fulfilled
+# Use cowswap_poll_order(chain, order_uid) function
+# Poll every 5s for up to 180s
+
+# 4. Verify balances AFTER the swap
+wallet_balance(chain="base", asset="eth")   → post_from_balance
+wallet_balance(chain="base", asset="usdc")  → post_to_balance
+
+# 5. Verify with CLI
+python3 meta_dex.py execute --verify \
+  --chain base --from ETH --to USDC --amount 0.5 --aggregator kyberswap \
+  --wallet 0x... \
+  --pre-from-balance <pre_eth> --pre-to-balance <pre_usdc> \
+  --post-from-balance <post_eth> --post-to-balance <post_usdc> \
+  --expected-out <expected_out_wei>
+
+# Returns: {"verification": "PASSED"|"FAILED", "deviationPct": 0.5, ...}
+```
+
+**Rules:**
+- **Never report success without checking post-swap balances** — tx confirmed ≠ expected outcome
+- **Compare actual received vs quoted amount** — if deviation >2%, flag it to the user
+- **For CowSwap orders:** Orders are filled asynchronously by solvers (can take up to 2 minutes).
+  Use `cowswap_poll_order(chain, order_uid)` to poll until `status == "fulfilled"`.
+- **For 1inch via oneinch_swap:** The tool returns a tx hash. Wait for confirmation, then check balances.
+- **Include in confirmation:** tx hash, actual amounts spent/received, price achieved (received/spent)
 
 ## Cross-Chain Swaps
 
@@ -111,6 +221,62 @@ python3 skills/meta-dex-aggregator/scripts/meta_dex.py xquote \
 - Always show fee breakdown (gas + bridge fees + protocol fees)
 - After execution, track until funds arrive on destination chain
 - LI.FI `DONE/PARTIAL` means bridge delivered but not the final token — may need a manual swap
+
+## Historical Quote Logging (v3.0.0)
+
+Every quote is automatically logged to `skills/meta-dex-aggregator/logs/{chain}_{FROM}_{TO}.jsonl`.
+
+**What's logged:**
+- Timestamp, chain, tokens, amount
+- All aggregator quotes (amount, gas, netOut, vsBest)
+- Winner aggregator
+- Net output in USD
+
+**Log retention:** Unlimited (append-only JSONL). Manually prune old logs if needed.
+
+## Analytics Commands (v3.0.0)
+
+### Winner Statistics
+```bash
+python3 meta_dex.py stats --chain arbitrum --from ETH --to USDC --days 7
+```
+Shows which aggregator wins most often, win rates, and average net output per aggregator.
+
+### Price Trends
+```bash
+python3 meta_dex.py trend --chain arbitrum --from ETH --to USDC --days 7 --bucket-hours 4
+```
+Shows net output over time in 4-hour buckets (avg, min, max, count).
+
+### Slippage Analysis
+```bash
+python3 meta_dex.py slippage --chain arbitrum --from ETH --to USDC --days 7
+```
+Analyzes competitive spreads between top 2 aggregators. Low spread = highly competitive.
+
+### CSV Export
+```bash
+python3 meta_dex.py export --chain arbitrum --from ETH --to USDC --days 30 --output /tmp/quotes.csv
+```
+Exports all quotes to CSV for external analysis (Excel, Python, etc.).
+
+## Quote Monitoring (v3.0.0)
+
+Monitor for a target net output and alert when reached:
+
+```bash
+python3 meta_dex.py monitor --chain arbitrum --from ETH --to USDC --amount 1.0 \
+  --target-net-out 2050 --interval 60 --max-runs 10
+```
+
+- Polls every 60 seconds
+- Stops when net output ≥ $2050
+- Max 10 polls (omit for unlimited)
+- Returns immediately when target is met
+
+**Use case:** "Alert me when ETH→USDC on Arbitrum nets >$2050 after gas"
+
+Run this as a background task with `sessions_spawn` for non-blocking monitoring.
 
 ## Token Resolution — Smart Confirmation
 

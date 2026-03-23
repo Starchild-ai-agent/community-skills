@@ -7,6 +7,23 @@ Returns standardized results compatible with the same-chain pipeline.
 import os, json, requests
 from chains import CHAINS
 
+# ── Proxy Configuration ─────────────────────────────────────────────────────
+# Platform uses transparent proxy (sc-proxy) for billing on whitelisted APIs.
+# LI.FI is NOT whitelisted — use direct connection.
+# Configure proxies from environment if available (used for other APIs if needed).
+PROXIES = {}  # LI.FI uses direct connection (no proxy)
+_proxy_host = os.environ.get("PROXY_HOST", "")
+_proxy_port = os.environ.get("PROXY_PORT", "")
+if _proxy_host and _proxy_port:
+    # Handle IPv6 addresses by wrapping in brackets
+    if ":" in _proxy_host and not _proxy_host.startswith("["):
+        _proxy_host = f"[{_proxy_host}]"
+    PROXY_URL = f"http://{_proxy_host}:{_proxy_port}"
+    # Store for potential use by other APIs, but LI.FI calls use PROXIES = {}
+    _PLATFORM_PROXIES = {"http": PROXY_URL, "https": PROXY_URL}
+else:
+    _PLATFORM_PROXIES = {}
+
 # ── Chain ID mappings ────────────────────────────────────────────────────────
 
 LIFI_CHAIN_IDS = {
@@ -36,6 +53,7 @@ def lifi_resolve_token(chain_id, symbol_or_addr):
             f"https://li.quest/v1/token",
             params={"chain": chain_id, "token": symbol_or_addr},
             timeout=10,
+            proxies=PROXIES,
         )
         if r.status_code == 200:
             data = r.json()
@@ -78,11 +96,12 @@ def lifi_quote(src_chain, dst_chain, from_tok, to_tok, amount_wei, wallet, slipp
                 "options": {
                     "slippage": slip,
                     "order": "RECOMMENDED",
-                    "maxPriceImpact": 0.1,
+                    "maxPriceImpact": 0.5,  # 50% max — cross-chain routes can have higher impact
                 },
             },
             headers={"Content-Type": "application/json"},
             timeout=30,
+            proxies=PROXIES,
         )
         data = r.json()
     except Exception as e:

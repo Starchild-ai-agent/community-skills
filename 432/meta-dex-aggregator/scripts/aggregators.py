@@ -259,6 +259,110 @@ def zerox_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage)
         return None
 
 
+# ── CowSwap ───────────────────────────────────────────────────────────────────
+# CowSwap batch auction protocol — MEV-protected by design (solvers compete
+# off-chain, no front-running possible). Uses CoW Protocol API v1.
+COWSWAP_CHAINS = {"ethereum", "arbitrum", "gnosis", "base"}
+COWSWAP_CHAIN_PREFIX = {
+    "ethereum": "mainnet", "arbitrum": "arbitrum_one", "gnosis": "xdai", "base": "base",
+}
+COWSWAP_NATIVE_TOKEN = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+# CowSwap wrapped native addresses per chain (required — CowSwap can't quote raw native)
+COWSWAP_WRAPPED_NATIVE = {
+    "ethereum": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",  # WETH
+    "arbitrum": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",  # WETH
+    "gnosis":   "0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d",  # WXDAI
+    "base":     "0x4200000000000000000000000000000000000006",  # WETH
+}
+
+def cowswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage):
+    """Get a quote from CowSwap (CoW Protocol). MEV-protected batch auctions."""
+    if chain not in COWSWAP_CHAINS:
+        return None
+
+    prefix = COWSWAP_CHAIN_PREFIX[chain]
+    sell_token = from_tok["address"]
+    buy_token = to_tok["address"]
+
+    # CowSwap doesn't support native ETH directly — must use wrapped version
+    if sell_token == ZERO_ADDR or sell_token.lower() == COWSWAP_NATIVE_TOKEN.lower():
+        sell_token = COWSWAP_WRAPPED_NATIVE.get(chain)
+        if not sell_token:
+            return None
+    if buy_token == ZERO_ADDR or buy_token.lower() == COWSWAP_NATIVE_TOKEN.lower():
+        buy_token = COWSWAP_WRAPPED_NATIVE.get(chain)
+        if not buy_token:
+            return None
+
+    sender = wallet if wallet and wallet != ZERO_ADDR else "0x0000000000000000000000000000000000000001"
+
+    try:
+        resp = requests.post(
+            f"https://api.cow.fi/{prefix}/api/v1/quote",
+            json={
+                "sellToken": sell_token,
+                "buyToken": buy_token,
+                "sellAmountBeforeFee": str(amount_wei),
+                "from": sender,
+                "kind": "sell",
+                "receiver": sender,
+                "appData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "appDataHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "partiallyFillable": False,
+                "sellTokenBalance": "erc20",
+                "buyTokenBalance": "erc20",
+                "signingScheme": "eip712",
+            },
+            headers={"Content-Type": "application/json"},
+            timeout=15,
+        )
+        if resp.status_code != 200:
+            return None
+        data = resp.json()
+    except Exception:
+        return None
+
+    quote = data.get("quote", {})
+    buy_amount = quote.get("buyAmount", "0")
+    fee_amount = quote.get("feeAmount", "0")
+    sell_amount = quote.get("sellAmount", "0")
+
+    result = {
+        "aggregator": "CowSwap",
+        "amountOut": buy_amount,
+        "amountIn": sell_amount,
+        "gas": "0",  # CowSwap is gasless for the user (solvers pay gas)
+        "feeAmount": fee_amount,  # Protocol fee taken from sell token
+        "tokenApprovalAddress": quote.get("receiver", f"0x40A50cf069e992AA4536211B23F286eF88752187"),
+        "isMEVSafe": True,
+    }
+
+    # CowSwap execution is order-based (EIP-712 signed intent, not raw tx).
+    # For execution, agent posts a signed order to the CowSwap API.
+    # The "tx" here carries the order payload for signing.
+    if wallet and wallet != ZERO_ADDR:
+        result["tx"] = {
+            "to": f"https://api.cow.fi/{prefix}/api/v1/orders",
+            "method": "POST",
+            "type": "cowswap_order",
+            "order": {
+                "sellToken": sell_token,
+                "buyToken": buy_token,
+                "sellAmount": sell_amount,
+                "buyAmount": buy_amount,
+                "feeAmount": fee_amount,
+                "kind": "sell",
+                "receiver": wallet,
+                "validTo": data.get("quote", {}).get("validTo", 0),
+                "appData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "partiallyFillable": False,
+            },
+            "quoteId": data.get("id"),
+        }
+
+    return result
+
+
 # ── 1inch ─────────────────────────────────────────────────────────────────────
 # 1inch is NOT called from this script. It uses the platform's native
 # oneinch_quote / oneinch_swap tools (proxied, no user API key needed).
@@ -272,5 +376,6 @@ AGGREGATORS = {
     "odos": odos_quote,
     "kyberswap": kyberswap_quote,
     "matcha/0x": zerox_quote,
+    "cowswap": cowswap_quote,
     # "1inch" — handled via native oneinch_quote tool, not in this script
 }
