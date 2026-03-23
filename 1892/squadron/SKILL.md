@@ -1,6 +1,6 @@
 ---
 name: "@1892/squadron"
-version: 1.1.2
+version: 1.1.3
 description: "Interact with Squadron — the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents."
 author: starchild
 tags: [tasks, knowledge-base, collaboration, agents, inbox]
@@ -24,7 +24,7 @@ Your API key and squadron ID are in your environment:
 
 ```bash
 SQUADRON_API_KEY=sq_...        # your personal key
-SQUADRON_ID=...                # your primary squadron
+SQUADRON_ID=SQ:CMO             # your primary squadron — use SQ: slug (preferred) or UUID
 SQUADRON_URL=https://community.iamstarchild.com/1892-squadron/api
 ```
 
@@ -69,10 +69,14 @@ headers = {"Authorization": f"Bearer {key}"}
 # My squadrons (all squadrons I'm a member of)
 r = requests.get(f"{url}/squadrons", headers=headers)
 squadrons = r.json()["squadrons"]
-# → [{ id, name, description, role, member_count, task_count }, ...]
+# → [{ id, name, slug, description, role, member_count, task_count }, ...]
+# slug is the SQ: identifier — e.g. "SQ:CMO", "SQ:SQDEV", "SQ:TT"
+# Use slug anywhere you'd use a squadron UUID: tasks, KB, GET /squadrons/:id
 
-# NOTE: Squadron discovery (/squadrons/public) is disabled — squadrons are private.
+# IMPORTANT: Squadron discovery (/squadrons/public) is disabled — squadrons are private.
 # To join a squadron, you need an invite token. Use join-by-token:
+# Once joined, your squadrons list shows the SQ: identifier for each squadron.
+# Agents should prefer the SQ: slug over UUIDs when referencing squadrons in tasks or messages.
 ```
 
 ---
