@@ -1,7 +1,7 @@
 ---
 name: "@432/meta-dex-aggregator"
-description: "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
-version: 4.0.2
+description: "Meta DEX Aggregator - aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
+version: 5.0.0
 tools:
   - bash
   - oneinch_quote
@@ -19,7 +19,7 @@ tools:
   - sessions_spawn
 ---
 
-# Meta DEX Aggregator — Multi-Source Quote Comparison with Safety Layer
+# Meta DEX Aggregator - Multi-Source Quote Comparison with Safety Layer
 
 Aggregator of aggregators. Queries 6 DEX aggregators in parallel, ranks by
 gas-adjusted net output, and runs safety checks before execution.
@@ -32,7 +32,7 @@ gas-adjusted net output, and runs safety checks before execution.
 ```
 wallet_info()
 # Returns: { wallet_address: "0x...", chain_type: "ethereum" }
-# Save this — you'll need it as --wallet parameter for all commands
+# Save this - you'll need it as --wallet parameter for all commands
 ```
 
 ### Step 2: Check your balance
@@ -54,7 +54,7 @@ wallet_propose_policy(
   ]
 )
 ```
-**⚠️ Do NOT use `"method": "eth_sendTransaction"` with empty conditions — Privy rejects this with a 400 error. Always use `"method": "*"` for broad access.**
+**⚠️ Do NOT use `"method": "eth_sendTransaction"` with empty conditions - Privy rejects this with a 400 error. Always use `"method": "*"` for broad access.**
 
 The user must approve this in the UI before any swaps will work.
 
@@ -70,20 +70,20 @@ Now follow the Quote → Approve → Execute → Verify workflow below.
 - **CowSwap polling** for MEV-protected batch auction orders
 - **Cross-chain swaps** via LI.FI and 1inch Fusion+
 - **Historical logging** to JSONL for trend analysis
-- **Analytics** — winner stats, price trends, slippage analysis, CSV export
+- **Analytics** - winner stats, price trends, slippage analysis, CSV export
 - **Quote monitoring** with alerts when target price is reached
 
 ## Safety Features
 
-1. **Price Impact** — Fetches fair market price from DefiLlama coins API
+1. **Price Impact** - Fetches fair market price from DefiLlama coins API
    (+ DexScreener fallback), compares vs quote output.
    Thresholds: 3% warning, 5% high, 10% critical (blocks swap).
-2. **Gas-Adjusted Ranking** — `netOut = amountUsd - gasUsd`. Best route ≠ most tokens.
-3. **MEV Protection Flags** — CowSwap and 0x Gasless are flagged `isMEVSafe`.
+2. **Gas-Adjusted Ranking** - `netOut = amountUsd - gasUsd`. Best route ≠ most tokens.
+3. **MEV Protection Flags** - CowSwap and 0x Gasless are flagged `isMEVSafe`.
    Recommends MEV-safe route when within 0.5% of best price.
-4. **Slippage Warnings** — Sandwich risk >1%, stablecoin pairs >0.05%, too-low revert risk.
-5. **Outlier Detection** — Quotes >5% worse than best are flagged as outliers.
-6. **Post-Swap Verification** — Mandatory balance checks, flags >2% deviation.
+4. **Slippage Warnings** - Sandwich risk >1%, stablecoin pairs >0.05%, too-low revert risk.
+5. **Outlier Detection** - Quotes >5% worse than best are flagged as outliers.
+6. **Post-Swap Verification** - Mandatory balance checks, flags >2% deviation.
 
 ## Aggregators
 
@@ -92,16 +92,16 @@ Now follow the Quote → Approve → Execute → Verify workflow below.
 | ParaSwap | None needed | ✅ | |
 | Odos | None needed | ✅ | |
 | KyberSwap | None needed | ✅ | |
-| CowSwap | None needed | ⚠️ Rate limited | Batch auction — MEV protected, may skip when rate limited |
+| CowSwap | None needed | ⚠️ Rate limited | Batch auction - MEV protected, may skip when rate limited |
 | 1inch | Native tool (platform-proxied) | ✅ | Call `oneinch_quote()` separately, merge manually |
 | Matcha/0x | `OX_API_KEY` in .env | ✅ | |
 
-**MEV Protection:** CowSwap uses off-chain batch auctions (solvers compete, no mempool exposure). The safety layer flags it when available. All aggregators are safe — CowSwap just has extra protection.
+**MEV Protection:** CowSwap uses off-chain batch auctions (solvers compete, no mempool exposure). The safety layer flags it when available. All aggregators are safe - CowSwap just has extra protection.
 
 **Note:** CowSwap's public API is rate limited. The script gracefully skips it when rate limited (429). 1inch requires an API key, so the agent calls the platform's `oneinch_quote` tool (proxied, no user key needed) and merges the result into the comparison table.
 
 **CowSwap specifics:** Gasless for the user (solvers pay gas). Supported on Ethereum, Arbitrum, Gnosis, Base.
-Uses wrapped native tokens (WETH) internally — raw ETH is auto-converted.
+Uses wrapped native tokens (WETH) internally - raw ETH is auto-converted.
 Execution is order-based (EIP-712 signed intent), not raw transaction.
 
 ## Wallet Policy
@@ -125,12 +125,12 @@ oneinch_quote(chain="base", src="<from_addr>", dst="<to_addr>", amount="<amount_
 # Convert: dstAmount / 10^decimals = human amount
 ```
 
-**Step 3 — Merge & present:**
+**Step 3 - Merge & present:**
 - Script returns quotes with: `aggregator`, `amountOutHuman`, `amountUsd`, `gasUsd`, `netOut`, `vsbestPct`
-- 1inch native tool returns `dstAmount` (raw wei) — convert to human amount using token decimals
+- 1inch native tool returns `dstAmount` (raw wei) - convert to human amount using token decimals
 - Insert 1inch into the ranked table, recalculate `vsbestPct` if 1inch is the new winner
 - The script's `safety` block (priceImpact, slippageWarnings, recommendation) applies to all quotes
-- If `priceImpact.severity` is "high"/"critical" — WARN and **block the swap**
+- If `priceImpact.severity` is "high"/"critical" - WARN and **block the swap**
 - Execute via `oneinch_swap` if 1inch wins, or `wallet_transfer` with tx data for others (see Execution section below for exact param mapping)
 
 ## Pre-Swap: Token Approval (REQUIRED for ERC-20 source tokens)
@@ -223,7 +223,7 @@ The `execute` command returns a `tx` object. Map it to `wallet_transfer` like th
 # Agent calls:
 wallet_transfer(
   to="0xRouterAddr",           # tx.to
-  amount="500000000000000",    # tx.value (in wei — "0" if selling ERC-20, not native)
+  amount="500000000000000",    # tx.value (in wei - "0" if selling ERC-20, not native)
   data="0xCalldata...",        # tx.data (the swap calldata)
   chain_id=42161,              # chainId from the result
   gas_limit="300000"           # tx.gas (optional but recommended)
@@ -242,7 +242,7 @@ CowSwap is order-based, not transaction-based. When the execute command returns 
 4. Poll with the built-in `cowswap_poll_order` function or check the `pollEndpoint` URL
 5. CowSwap orders are filled by solvers asynchronously (up to 2 minutes)
 
-**If CowSwap seems complex, prefer `--market-order` for simplicity — it uses 1inch and executes instantly.**
+**If CowSwap seems complex, prefer `--market-order` for simplicity - it uses 1inch and executes instantly.**
 
 ## Post-Swap Verification (MANDATORY)
 
@@ -277,8 +277,8 @@ python3 meta_dex.py execute --verify \
 ```
 
 **Rules:**
-- **Never report success without checking post-swap balances** — tx confirmed ≠ expected outcome
-- **Compare actual received vs quoted amount** — if deviation >2%, flag it to the user
+- **Never report success without checking post-swap balances** - tx confirmed ≠ expected outcome
+- **Compare actual received vs quoted amount** - if deviation >2%, flag it to the user
 - **For CowSwap orders:** Orders are filled asynchronously by solvers (can take up to 2 minutes).
   Use `cowswap_poll_order(chain, order_uid)` to poll until `status == "fulfilled"`.
 - **For 1inch via oneinch_swap:** The tool returns a tx hash. Wait for confirmation, then check balances.
@@ -296,8 +296,8 @@ python3 skills/meta-dex-aggregator/scripts/meta_dex.py xquote \
 ```
 
 **Cross-chain sources:**
-- **LI.FI** — aggregates 20+ bridges (Relay, Stargate, Across, Hop, etc.). Returns ready-to-sign tx data. Execute via `wallet_transfer(to, amount=value, data, chain_id, gas_limit)`. Track status with `curl -s "https://li.quest/v1/status?txHash={hash}&fromChain={src_id}&toChain={dst_id}"`.
-- **1inch Fusion+** — intent-based atomic swaps (gasless, resolver handles both chains). The script returns a `needsToolCall: true` marker. Complete with `oneinch_cross_chain_quote` tool for the quote, then `oneinch_cross_chain_swap` for execution.
+- **LI.FI** - aggregates 20+ bridges (Relay, Stargate, Across, Hop, etc.). Returns ready-to-sign tx data. Execute via `wallet_transfer(to, amount=value, data, chain_id, gas_limit)`. Track status with `curl -s "https://li.quest/v1/status?txHash={hash}&fromChain={src_id}&toChain={dst_id}"`.
+- **1inch Fusion+** - intent-based atomic swaps (gasless, resolver handles both chains). The script returns a `needsToolCall: true` marker. Complete with `oneinch_cross_chain_quote` tool for the quote, then `oneinch_cross_chain_swap` for execution.
 
 **Cross-chain workflow:**
 1. Run `xquote` → get LI.FI routes + 1inch Fusion+ marker
@@ -305,14 +305,14 @@ python3 skills/meta-dex-aggregator/scripts/meta_dex.py xquote \
 3. Compare all routes: output amount, total fees (gas + bridge + protocol), estimated time
 4. Present table to user with clear winner
 5. For execution: LI.FI routes → `wallet_transfer` with tx data; 1inch → `oneinch_cross_chain_swap`
-6. Cross-chain is non-atomic — track status and confirm delivery on destination chain
+6. Cross-chain is non-atomic - track status and confirm delivery on destination chain
 
 **Safety notes for cross-chain:**
 - Default slippage 3% (bridges need more than same-chain swaps)
 - Always show estimated delivery time (4s to 10min depending on bridge)
 - Always show fee breakdown (gas + bridge fees + protocol fees)
 - After execution, track until funds arrive on destination chain
-- LI.FI `DONE/PARTIAL` means bridge delivered but not the final token — may need a manual swap
+- LI.FI `DONE/PARTIAL` means bridge delivered but not the final token - may need a manual swap
 
 ## Historical Quote Logging
 
@@ -370,7 +370,7 @@ python3 meta_dex.py monitor --chain arbitrum --from ETH --to USDC --amount 1.0 \
 
 Run this as a background task with `sessions_spawn` for non-blocking monitoring.
 
-## Token Resolution — Smart Confirmation
+## Token Resolution - Smart Confirmation
 
 Token resolution is tiered to avoid bothering the user for obvious tokens
 while protecting against picking the wrong contract for ambiguous ones.
@@ -392,9 +392,9 @@ The result includes a `candidates` list. Present them to the user:
 ```
 I found multiple tokens matching "XYZ" on Arbitrum:
 
-1. XYZ (XYZ Protocol) — 0x1234...5678 — $2.3M 24h vol
-2. XYZ (XYZ Finance) — 0xabcd...ef01 — $180K 24h vol
-3. XYZ (Old XYZ) — 0x9876...5432 — $12K 24h vol
+1. XYZ (XYZ Protocol) - 0x1234...5678 - $2.3M 24h vol
+2. XYZ (XYZ Finance) - 0xabcd...ef01 - $180K 24h vol
+3. XYZ (Old XYZ) - 0x9876...5432 - $12K 24h vol
 
 Which one did you mean? (or paste the contract address directly)
 ```
@@ -403,7 +403,7 @@ Once the user picks, re-call with the address directly to bypass resolution.
 
 ### Trusted token coverage:
 
-Ethereum, Arbitrum, Base, Optimism, Polygon, BSC, Avalanche, Gnosis —
+Ethereum, Arbitrum, Base, Optimism, Polygon, BSC, Avalanche, Gnosis -
 all major tokens (WETH, USDC, USDT, DAI, WBTC, LINK, UNI, AAVE, stETH,
 plus chain-specific tokens like ARB, OP, AERO, GMX, etc.)
 

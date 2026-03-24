@@ -6,8 +6,10 @@ Three-tier resolution:
   3. Ambiguous — multiple matches, returns candidates for user confirmation
 """
 
-import requests
+import json, time
 from decimal import Decimal
+from pathlib import Path
+import http_client as http
 from chains import CHAINS, ZERO_ADDR, NATIVE_SYMBOLS
 
 # ── Tier 1: Trusted canonical addresses per chain ──────────────────────
@@ -128,17 +130,43 @@ TRUSTED_TOKENS = {
     },
 }
 
-# ── Token cache ────────────────────────────────────────────────────────
+# ── Token cache (memory + disk with 12h TTL) ─────────────────────────
 _token_cache = {}
+_CACHE_DIR = Path(__file__).parent.parent / ".cache" / "tokenlists"
+_CACHE_TTL = 43200  # 12 hours
+
+def _disk_cache_path(chain_id: int) -> Path:
+    return _CACHE_DIR / f"tokenlist-{chain_id}.json"
 
 def get_token_list(chain_id: int) -> dict:
+    # 1. Memory cache (instant)
     if chain_id in _token_cache:
         return _token_cache[chain_id]
+
+    # 2. Disk cache (avoids network on cold start)
+    _CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    disk_path = _disk_cache_path(chain_id)
+    if disk_path.exists():
+        try:
+            cached = json.loads(disk_path.read_text())
+            if time.time() - cached.get("fetched_at", 0) < _CACHE_TTL:
+                _token_cache[chain_id] = cached["data"]
+                return cached["data"]
+        except Exception:
+            pass
+
+    # 3. Network fetch
     url = f"https://d3g10bzo9rdluh.cloudfront.net/tokenlists-{chain_id}.json"
-    resp = requests.get(url, timeout=15)
+    resp = http.get(url, timeout=(3, 15))
     resp.raise_for_status()
     data = resp.json()
     _token_cache[chain_id] = data
+
+    # 4. Persist to disk
+    try:
+        disk_path.write_text(json.dumps({"fetched_at": time.time(), "data": data}))
+    except Exception:
+        pass
     return data
 
 def search_tokens(chain: str, query: str, limit: int = 20):

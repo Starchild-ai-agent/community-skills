@@ -4,7 +4,8 @@ Queries LI.FI (multi-bridge) and 1inch Fusion+ for cross-chain quotes.
 Returns standardized results compatible with the same-chain pipeline.
 """
 
-import os, json, requests
+import os, json
+import http_client as http
 from chains import CHAINS
 
 # ── Proxy Configuration ─────────────────────────────────────────────────────
@@ -49,11 +50,11 @@ def lifi_resolve_token(chain_id, symbol_or_addr):
     if symbol_or_addr.startswith("0x") and len(symbol_or_addr) == 42:
         return symbol_or_addr
     try:
-        r = requests.get(
+        r = http.get(
             f"https://li.quest/v1/token",
             params={"chain": chain_id, "token": symbol_or_addr},
             timeout=10,
-            proxies=PROXIES,
+
         )
         if r.status_code == 200:
             data = r.json()
@@ -84,7 +85,7 @@ def lifi_quote(src_chain, dst_chain, from_tok, to_tok, amount_wei, wallet, slipp
     slip = float(slippage) / 100 if float(slippage) > 1 else float(slippage)
 
     try:
-        r = requests.post(
+        r = http.post(
             "https://li.quest/v1/advanced/routes",
             json={
                 "fromChainId": src_chain_id,
@@ -101,7 +102,7 @@ def lifi_quote(src_chain, dst_chain, from_tok, to_tok, amount_wei, wallet, slipp
             },
             headers={"Content-Type": "application/json"},
             timeout=30,
-            proxies=PROXIES,
+
         )
         data = r.json()
     except Exception as e:

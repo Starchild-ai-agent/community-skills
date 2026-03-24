@@ -14,6 +14,7 @@ Usage:
 
 import argparse, json, sys, os, time, hashlib
 from datetime import datetime
+from time import monotonic
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from chains import CHAINS
 from tokens import search_tokens, resolve_token, to_wei, from_wei
@@ -22,23 +23,32 @@ from safety import full_safety_check
 from crosschain import get_crosschain_quotes, LIFI_CHAIN_IDS
 from quote_logger import log_quote
 
+# Quote deadline: stop waiting after this many seconds and return what we have.
+# Prevents one slow upstream from blocking the entire quote.
+QUOTE_DEADLINE_SECONDS = 6.0
 
-def get_all_quotes(chain, from_tok, to_tok, amount_wei, wallet=None, slippage=None):
+
+def get_all_quotes(chain, from_tok, to_tok, amount_wei, wallet=None, slippage=None, deadline=None):
     chain_id = CHAINS[chain]
+    budget = deadline or QUOTE_DEADLINE_SECONDS
     results = []
-    with ThreadPoolExecutor(max_workers=5) as pool:
+    start = monotonic()
+    with ThreadPoolExecutor(max_workers=len(AGGREGATORS)) as pool:
         futures = {
             pool.submit(func, chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage): name
             for name, func in AGGREGATORS.items()
         }
-        for f in as_completed(futures):
+        for f in as_completed(futures, timeout=budget):
+            remaining = budget - (monotonic() - start)
+            if remaining <= 0:
+                break
             try:
-                r = f.result()
+                r = f.result(timeout=max(remaining, 0.1))
                 if r:
                     results.append(r)
             except Exception:
                 pass
-    results.sort(key=lambda r: int(r.get("amountOut", "0")), reverse=True)
+    results.sort(key=lambda r: int(r.get("amount_out", "0")), reverse=True)
     return results
 
 
@@ -55,15 +65,17 @@ def cmd_quote(args):
     amount_wei = to_wei(args.amount, from_tok["decimals"])
     quotes = get_all_quotes(args.chain, from_tok, to_tok, amount_wei,
                             getattr(args, "wallet", None), getattr(args, "slippage", "1.0"))
-    # Build quote list for safety check
+    # Build quote list for safety check (normalized schema)
     quote_data = []
     for q in quotes:
-        human_out = from_wei(q["amountOut"], to_tok["decimals"])
+        human_out = from_wei(q["amount_out"], to_tok["decimals"])
         quote_data.append({
             "name": q["aggregator"], "outputAmount": float(human_out),
-            "estimatedGas": int(float(q.get("gas", "0") or 0)),
-            "amountOut": q["amountOut"],
-            "tokenApprovalAddress": q.get("tokenApprovalAddress"),
+            "gas_units": q.get("gas_units"),
+            "gas_usd": q.get("gas_usd"),
+            "is_mev_safe": q.get("is_mev_safe", False),
+            "amountOut": q["amount_out"],
+            "tokenApprovalAddress": q.get("token_approval_address"),
         })
 
     slippage = getattr(args, "slippage", "0.5")
@@ -142,9 +154,9 @@ def cmd_swap(args):
         "chain": args.chain, "chainId": chain_id, "aggregator": result["aggregator"],
         "fromToken": from_tok, "toToken": to_tok,
         "amountIn": args.amount, "amountInWei": amount_wei,
-        "amountOut": result["amountOut"],
-        "amountOutHuman": from_wei(result["amountOut"], to_tok["decimals"]),
-        "tokenApprovalAddress": result.get("tokenApprovalAddress"),
+        "amountOut": result["amount_out"],
+        "amountOutHuman": from_wei(result["amount_out"], to_tok["decimals"]),
+        "tokenApprovalAddress": result.get("token_approval_address"),
         "needsApproval": from_tok["address"] != ZERO_ADDR,
         "tx": result["tx"],
     }, indent=2))
@@ -187,8 +199,8 @@ def cmd_xquote(args):
                 "note": q.get("note"),
             })
         else:
-            human_out = from_wei(q.get("amountOut", "0"), to_tok["decimals"])
-            human_min = from_wei(q.get("amountOutMin", q.get("amountOut", "0")), to_tok["decimals"])
+            human_out = from_wei(q.get("amount_out", "0"), to_tok["decimals"])
+            human_min = from_wei(q.get("amountOutMin", q.get("amount_out", "0")), to_tok["decimals"])
             entry = {
                 "aggregator": q["aggregator"],
                 "amountOutHuman": human_out,
@@ -291,8 +303,8 @@ def cmd_execute(args):
         "toToken": to_tok,
         "amountIn": args.amount,
         "amountInWei": amount_wei,
-        "expectedOut": quote["amountOut"],
-        "expectedOutHuman": from_wei(quote["amountOut"], to_tok["decimals"]),
+        "expectedOut": quote["amount_out"],
+        "expectedOutHuman": from_wei(quote["amount_out"], to_tok["decimals"]),
         "slippage": args.slippage,
         "timestamp": datetime.utcnow().isoformat() + "Z",
     }
@@ -307,12 +319,12 @@ def cmd_execute(args):
     else:
         result["tx"] = quote["tx"]
         result["needsApproval"] = from_tok["address"] != ZERO_ADDR
-        result["tokenApprovalAddress"] = quote.get("tokenApprovalAddress")
+        result["tokenApprovalAddress"] = quote.get("token_approval_address")
     
     # Verification instructions
     result["verification"] = {
         "instruction": "After execution, call: python3 meta_dex.py execute --chain {chain} --from {from_tok} --to {to_tok} --amount {amount} --aggregator {agg} --wallet {wallet} --verify --expected-out {expected_out}",
-        "expectedOutWei": quote["amountOut"],
+        "expectedOutWei": quote["amount_out"],
         "maxDeviationPct": args.max_deviation if hasattr(args, "max_deviation") else 2.0,
     }
     

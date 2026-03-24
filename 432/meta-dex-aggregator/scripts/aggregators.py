@@ -1,9 +1,43 @@
-"""DEX aggregator adapters for Meta DEX Aggregator."""
+"""DEX aggregator adapters for Meta DEX Aggregator.
 
-import os, requests
+Every adapter returns a NORMALIZED schema:
+  aggregator: str           — display name
+  amount_out: str           — output amount in wei
+  amount_in: str            — input amount in wei
+  gas_units: int | None     — estimated gas consumption (units, NOT USD)
+  gas_usd: float | None     — gas cost in USD (if upstream provides it directly)
+  token_approval_address: str | None
+  is_mev_safe: bool
+  tx: dict | None           — transaction payload for execution
+  raw: dict                 — original upstream response for debugging
+
+The safety engine uses gas_usd if present, otherwise derives from gas_units.
+This prevents the KyberSwap bug where gasUsd was stuffed into the gas_units field.
+"""
+
+import os
+import http_client as http
 from chains import (CHAINS, ZERO_ADDR, NATIVE_PLACEHOLDER, DEFILLAMA_REFERRER,
                     COWSWAP_CHAINS, COWSWAP_CHAIN_PREFIX, COWSWAP_WRAPPED_NATIVE, COWSWAP_NATIVE_TOKEN)
-# INCH_API_BASE removed — 1inch requires API key, use oneinch_quote tool instead
+
+
+def _norm(aggregator, amount_out, amount_in="0", gas_units=None, gas_usd=None,
+          token_approval_address=None, is_mev_safe=False, tx=None, raw=None, **extra):
+    """Build a normalized quote dict. All adapters must go through this."""
+    r = {
+        "aggregator": aggregator,
+        "amount_out": str(amount_out),
+        "amount_in": str(amount_in),
+        "gas_units": int(gas_units) if gas_units else None,
+        "gas_usd": float(gas_usd) if gas_usd else None,
+        "token_approval_address": token_approval_address,
+        "is_mev_safe": is_mev_safe,
+        "tx": tx,
+        "raw": raw or {},
+    }
+    r.update(extra)
+    return r
+
 
 # ── ParaSwap ──────────────────────────────────────────────────────────────────
 PARASWAP_CHAINS = {"ethereum","bsc","polygon","avax","arbitrum","fantom","optimism","base","gnosis","sonic","unichain"}
@@ -20,48 +54,40 @@ def paraswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippa
         f"&partner=llamaswap&side=SELL&network={chain_id}"
         f"&excludeDEXS=ParaSwapPool,ParaSwapLimitOrders&version=6.2"
     )
-    data = requests.get(url, timeout=15).json()
+    data = http.get(url).json()
     if "error" in data:
         return None
 
-    result = {
-        "aggregator": "ParaSwap",
-        "amountOut": data["priceRoute"]["destAmount"],
-        "amountIn": data["priceRoute"]["srcAmount"],
-        "gas": data["priceRoute"].get("gasCost", "0"),
-        "tokenApprovalAddress": data["priceRoute"].get("tokenTransferProxy"),
-    }
-
+    pr = data["priceRoute"]
+    tx = None
     if wallet and wallet != ZERO_ADDR:
         slippage_bps = int(float(slippage) * 100) if slippage else 100
-        tx_resp = requests.post(
+        tx_resp = http.post(
             f"https://apiv5.paraswap.io/transactions/{chain_id}?ignoreChecks=true",
             json={
-                "srcToken": data["priceRoute"]["srcToken"],
-                "srcDecimals": data["priceRoute"]["srcDecimals"],
-                "destToken": data["priceRoute"]["destToken"],
-                "destDecimals": data["priceRoute"]["destDecimals"],
-                "slippage": slippage_bps,
-                "userAddress": wallet,
-                "partner": "llamaswap",
-                "partnerAddress": DEFILLAMA_REFERRER,
-                "takeSurplus": True,
-                "priceRoute": data["priceRoute"],
-                "isCapSurplus": True,
-                "srcAmount": data["priceRoute"]["srcAmount"],
+                "srcToken": pr["srcToken"], "srcDecimals": pr["srcDecimals"],
+                "destToken": pr["destToken"], "destDecimals": pr["destDecimals"],
+                "slippage": slippage_bps, "userAddress": wallet,
+                "partner": "llamaswap", "partnerAddress": DEFILLAMA_REFERRER,
+                "takeSurplus": True, "priceRoute": pr, "isCapSurplus": True,
+                "srcAmount": pr["srcAmount"],
             },
             headers={"Content-Type": "application/json"},
-            timeout=15,
         )
         tx_data = tx_resp.json()
         if "error" not in tx_data:
-            result["tx"] = {
+            tx = {
                 "to": tx_data["to"], "data": tx_data["data"],
                 "value": tx_data.get("value", "0"),
-                "gas": tx_data.get("gas", data["priceRoute"].get("gasCost", "0")),
+                "gas": tx_data.get("gas", pr.get("gasCost", "0")),
                 "from": tx_data["from"],
             }
-    return result
+
+    return _norm("ParaSwap",
+                 amount_out=pr["destAmount"], amount_in=pr["srcAmount"],
+                 gas_units=pr.get("gasCost", 0),
+                 token_approval_address=pr.get("tokenTransferProxy"),
+                 tx=tx, raw=pr)
 
 
 # ── Odos ──────────────────────────────────────────────────────────────────────
@@ -88,7 +114,7 @@ def odos_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage):
     from_addr = from_tok["address"]
     to_addr = to_tok["address"]
 
-    quote = requests.post(
+    quote = http.post(
         "https://api.odos.xyz/sor/quote/v2",
         json={
             "chainId": chain_id,
@@ -100,45 +126,46 @@ def odos_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage):
             "disableRFQs": True, "compact": True,
         },
         headers={"Content-Type": "application/json"},
-        timeout=15,
     ).json()
 
     if "pathId" not in quote:
         return None
 
-    result = {
-        "aggregator": "Odos",
-        "amountOut": str(quote.get("outAmounts", ["0"])[0]),
-        "amountIn": amount_wei,
-        "gas": str(quote.get("gasEstimate", 0)),
-        "tokenApprovalAddress": ODOS_ROUTERS.get(chain),
-    }
+    gas_est = quote.get("gasEstimate", 0)
+    amount_out = str(quote.get("outAmounts", ["0"])[0])
+    tx = None
 
     if wallet and wallet != ZERO_ADDR:
-        swap_data = requests.post(
+        swap_data = http.post(
             "https://api.odos.xyz/sor/assemble",
             json={"userAddr": wallet, "pathId": quote["pathId"]},
             headers={"Content-Type": "application/json"},
-            timeout=15,
         ).json()
 
         if "transaction" in swap_data:
-            tx = swap_data["transaction"]
-            if tx["to"].lower() == ODOS_ROUTERS.get(chain, "").lower():
-                result["tx"] = {
-                    "to": tx["to"], "data": tx["data"],
-                    "value": str(tx.get("value", "0")),
-                    "gas": str(tx.get("gas") or swap_data.get("gasEstimate", 0)),
-                    "from": tx["from"],
+            tx_raw = swap_data["transaction"]
+            if tx_raw["to"].lower() == ODOS_ROUTERS.get(chain, "").lower():
+                tx = {
+                    "to": tx_raw["to"], "data": tx_raw["data"],
+                    "value": str(tx_raw.get("value", "0")),
+                    "gas": str(tx_raw.get("gas") or gas_est),
+                    "from": tx_raw["from"],
                 }
                 if swap_data.get("outputTokens"):
-                    result["amountOut"] = str(swap_data["outputTokens"][0]["amount"])
-            else:
-                result["error"] = f"Router mismatch: {tx['to']} != {ODOS_ROUTERS.get(chain)}"
-    return result
+                    amount_out = str(swap_data["outputTokens"][0]["amount"])
+
+    return _norm("Odos",
+                 amount_out=amount_out, amount_in=amount_wei,
+                 gas_units=gas_est,
+                 token_approval_address=ODOS_ROUTERS.get(chain),
+                 tx=tx, raw=quote)
 
 
 # ── KyberSwap ─────────────────────────────────────────────────────────────────
+# KEY FIX: KyberSwap returns gasUsd (dollars), NOT gas units.
+# Previous code stored gasUsd into the generic "gas" field, which safety.py
+# treated as gas units and multiplied by gwei*tokenPrice — double-counting.
+# Now we correctly store it as gas_usd (dollars) and leave gas_units as None.
 KYBER_CHAIN_MAP = {
     "ethereum": "ethereum", "bsc": "bsc", "polygon": "polygon",
     "arbitrum": "arbitrum", "optimism": "optimism", "avax": "avalanche",
@@ -158,22 +185,26 @@ def kyberswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slipp
         f"tokenIn={from_addr}&tokenOut={to_addr}&amountIn={amount_wei}"
         f"&saveGas=false&gasInclude=true"
     )
-    data = requests.get(url, timeout=15).json()
+    data = http.get(url).json()
     if data.get("code") != 0 or not data.get("data", {}).get("routeSummary"):
         return None
 
     summary = data["data"]["routeSummary"]
-    result = {
-        "aggregator": "KyberSwap",
-        "amountOut": summary.get("amountOut", "0"),
-        "amountIn": summary.get("amountIn", amount_wei),
-        "gas": summary.get("gasUsd", "0"),
-        "tokenApprovalAddress": summary.get("routerAddress"),
-    }
 
+    # IMPORTANT: summary["gasUsd"] is already in USD (e.g. "0.45").
+    # Do NOT put this in gas_units — that would cause double-conversion.
+    kyber_gas_usd = None
+    try:
+        kyber_gas_usd = float(summary.get("gasUsd", "0"))
+        if kyber_gas_usd == 0:
+            kyber_gas_usd = None
+    except (ValueError, TypeError):
+        pass
+
+    tx = None
     if wallet and wallet != ZERO_ADDR:
         slippage_bps = int(float(slippage) * 100) if slippage else 100
-        build_data = requests.post(
+        build_data = http.post(
             f"https://aggregator-api.kyberswap.com/{kyber_chain}/api/v1/route/build",
             json={
                 "routeSummary": summary,
@@ -181,37 +212,39 @@ def kyberswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slipp
                 "slippageTolerance": slippage_bps,
             },
             headers={"Content-Type": "application/json"},
-            timeout=15,
         ).json()
 
         if build_data.get("code") == 0 and build_data.get("data"):
             tx_data = build_data["data"]
-            result["tx"] = {
+            tx = {
                 "to": tx_data["routerAddress"], "data": tx_data["data"],
                 "value": tx_data.get("value", "0"),
                 "gas": tx_data.get("gas", "0"),
                 "from": wallet,
             }
-    return result
+
+    return _norm("KyberSwap",
+                 amount_out=summary.get("amountOut", "0"),
+                 amount_in=summary.get("amountIn", amount_wei),
+                 gas_units=None,  # KyberSwap doesn't give gas units
+                 gas_usd=kyber_gas_usd,  # Already in USD — use directly
+                 token_approval_address=summary.get("routerAddress"),
+                 tx=tx, raw=summary)
 
 
-# ============================================================
-# 0x / Matcha (requires OX_API_KEY env var - free at 0x.org/pricing)
-# ============================================================
-
+# ── 0x / Matcha ───────────────────────────────────────────────────────────────
 ZEROX_CHAIN_IDS = {
     "ethereum": "1", "bsc": "56", "polygon": "137", "optimism": "10",
     "arbitrum": "42161", "avalanche": "43114", "base": "8453",
     "linea": "59144", "scroll": "534352", "unichain": "130"
 }
-
 ZEROX_PERMIT2_ADDRESS = "0x000000000022d473030f116ddee9f6b43ac78ba3"
 
 def zerox_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage):
     """Get quote from 0x/Matcha v2 (permit2) API."""
     api_key = os.environ.get("OX_API_KEY", "")
     if not api_key:
-        return None  # silently skip if no key configured
+        return None
 
     zx_chain_id = ZEROX_CHAIN_IDS.get(chain)
     if not zx_chain_id:
@@ -222,49 +255,37 @@ def zerox_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage)
     to_addr = to_tok["address"] if isinstance(to_tok, dict) else to_tok
     token_from = native if from_addr == ZERO_ADDR else from_addr
     token_to = native if to_addr == ZERO_ADDR else to_addr
-    # 0x requires taker > 0x...ffff; use a real address as fallback for quotes
     taker = wallet or "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-
     slippage_bps = int(float(slippage) * 100) if slippage else 100
 
     try:
-        r = requests.get(
+        r = http.get(
             "https://api.0x.org/swap/permit2/quote",
             params={
-                "chainId": zx_chain_id,
-                "buyToken": token_to,
-                "sellToken": token_from,
-                "sellAmount": amount_wei,
-                "slippageBps": str(slippage_bps),
-                "taker": taker,
+                "chainId": zx_chain_id, "buyToken": token_to, "sellToken": token_from,
+                "sellAmount": amount_wei, "slippageBps": str(slippage_bps), "taker": taker,
             },
-            headers={
-                "0x-api-key": api_key,
-                "0x-version": "v2"
-            },
-            timeout=15,
+            headers={"0x-api-key": api_key, "0x-version": "v2"},
         )
         if r.status_code != 200:
             return None
 
         data = r.json()
         buy_amount = data.get("buyAmount") or data.get("minBuyAmount", "0")
-        tx = data.get("transaction")
-        return {
-            "aggregator": "Matcha/0x",
-            "amountOut": buy_amount,
-            "gas": data.get("gas", tx.get("gas", "0") if tx else "0"),
-            "tx": tx,
-            "tokenApprovalAddress": ZEROX_PERMIT2_ADDRESS,
-        }
+        tx_data = data.get("transaction")
+        gas_est = data.get("gas") or (tx_data.get("gas", "0") if tx_data else "0")
+
+        return _norm("Matcha/0x",
+                     amount_out=buy_amount, amount_in=amount_wei,
+                     gas_units=gas_est,
+                     token_approval_address=ZEROX_PERMIT2_ADDRESS,
+                     tx=tx_data, raw=data)
     except Exception:
         return None
 
 
 # ── CowSwap ───────────────────────────────────────────────────────────────────
-# CowSwap batch auction protocol — MEV-protected by design (solvers compete
-# off-chain, no front-running possible). Uses CoW Protocol API v1.
-# Constants moved to chains.py for proper import
+# MEV-protected by design — solvers compete off-chain. Gasless for the user.
 
 def cowswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage):
     """Get a quote from CowSwap (CoW Protocol). MEV-protected batch auctions."""
@@ -275,7 +296,7 @@ def cowswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippag
     sell_token = from_tok["address"]
     buy_token = to_tok["address"]
 
-    # CowSwap doesn't support native ETH directly — must use wrapped version
+    # CowSwap doesn't support native ETH — must use wrapped version
     if sell_token == ZERO_ADDR or sell_token.lower() == COWSWAP_NATIVE_TOKEN.lower():
         sell_token = COWSWAP_WRAPPED_NATIVE.get(chain)
         if not sell_token:
@@ -288,24 +309,18 @@ def cowswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippag
     sender = wallet if wallet and wallet != ZERO_ADDR else "0x0000000000000000000000000000000000000001"
 
     try:
-        resp = requests.post(
+        resp = http.post(
             f"https://api.cow.fi/{prefix}/api/v1/quote",
             json={
-                "sellToken": sell_token,
-                "buyToken": buy_token,
+                "sellToken": sell_token, "buyToken": buy_token,
                 "sellAmountBeforeFee": str(amount_wei),
-                "from": sender,
-                "kind": "sell",
-                "receiver": sender,
-                "appData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                "appDataHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "from": sender, "kind": "sell", "receiver": sender,
+                "appData": "0x" + "0" * 64, "appDataHash": "0x" + "0" * 64,
                 "partiallyFillable": False,
-                "sellTokenBalance": "erc20",
-                "buyTokenBalance": "erc20",
+                "sellTokenBalance": "erc20", "buyTokenBalance": "erc20",
                 "signingScheme": "eip712",
             },
             headers={"Content-Type": "application/json"},
-            timeout=15,
         )
         if resp.status_code != 200:
             return None
@@ -318,50 +333,38 @@ def cowswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippag
     fee_amount = quote.get("feeAmount", "0")
     sell_amount = quote.get("sellAmount", "0")
 
-    result = {
-        "aggregator": "CowSwap",
-        "amountOut": buy_amount,
-        "amountIn": sell_amount,
-        "gas": "0",  # CowSwap is gasless for the user (solvers pay gas)
-        "feeAmount": fee_amount,  # Protocol fee taken from sell token
-        "tokenApprovalAddress": quote.get("receiver", f"0x40A50cf069e992AA4536211B23F286eF88752187"),
-        "isMEVSafe": True,
-    }
-
-    # CowSwap execution is order-based (EIP-712 signed intent, not raw tx).
-    # For execution, agent posts a signed order to the CowSwap API.
-    # The "tx" here carries the order payload for signing.
+    tx = None
     if wallet and wallet != ZERO_ADDR:
-        result["tx"] = {
+        tx = {
             "to": f"https://api.cow.fi/{prefix}/api/v1/orders",
-            "method": "POST",
-            "type": "cowswap_order",
+            "method": "POST", "type": "cowswap_order",
             "order": {
-                "sellToken": sell_token,
-                "buyToken": buy_token,
-                "sellAmount": sell_amount,
-                "buyAmount": buy_amount,
-                "feeAmount": fee_amount,
-                "kind": "sell",
+                "sellToken": sell_token, "buyToken": buy_token,
+                "sellAmount": sell_amount, "buyAmount": buy_amount,
+                "feeAmount": fee_amount, "kind": "sell",
                 "receiver": wallet,
-                "validTo": data.get("quote", {}).get("validTo", 0),
-                "appData": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "validTo": quote.get("validTo", 0),
+                "appData": "0x" + "0" * 64,
                 "partiallyFillable": False,
             },
             "quoteId": data.get("id"),
         }
 
-    return result
+    return _norm("CowSwap",
+                 amount_out=buy_amount, amount_in=sell_amount,
+                 gas_units=None,      # Gasless for the user
+                 gas_usd=0.0,         # Solvers pay gas, user pays protocol fee from sell token
+                 token_approval_address=quote.get("receiver", "0x40A50cf069e992AA4536211B23F286eF88752187"),
+                 is_mev_safe=True,
+                 tx=tx, raw=data,
+                 fee_amount=fee_amount)
 
 
-# ── 1inch ─────────────────────────────────────────────────────────────────────
-# 1inch requires an API key (401 on public endpoint as of 2026).
-# Use the platform's native oneinch_quote tool instead (proxied, no user key needed).
-# The agent should call oneinch_quote separately and merge into the comparison.
-# DO NOT call 1inch from this script.
+# ── 1inch (placeholder) ──────────────────────────────────────────────────────
+# 1inch requires API key. Agent calls oneinch_quote tool separately.
 def inch_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage):
-    """Placeholder — 1inch requires API key. Use oneinch_quote tool instead."""
-    return None  # Agent will call oneinch_quote tool separately
+    """Placeholder - 1inch requires API key. Use oneinch_quote tool instead."""
+    return None
 
 
 # ── Dispatch ──────────────────────────────────────────────────────────────────
@@ -371,5 +374,4 @@ AGGREGATORS = {
     "kyberswap": kyberswap_quote,
     "matcha/0x": zerox_quote,
     "cowswap": cowswap_quote,
-    # 1inch excluded — requires API key. Agent calls oneinch_quote tool separately.
 }
