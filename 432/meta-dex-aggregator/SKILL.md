@@ -1,7 +1,7 @@
 ---
 name: "@432/meta-dex-aggregator"
 description: "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
-version: 3.1.1
+version: 3.1.2
 tools:
   - bash
   - oneinch_quote
@@ -72,6 +72,36 @@ gas-adjusted net output, and runs safety checks before execution.
 Gasless for the user (solvers pay). Supported on Ethereum, Arbitrum, Gnosis, Base.
 Uses wrapped native tokens (WETH) internally — raw ETH is auto-converted.
 Execution is order-based (EIP-712 signed intent), not raw transaction.
+
+## Wallet Policy (REQUIRED before first swap)
+
+Before executing any swap via `wallet_transfer` or `oneinch_swap`, the agent's wallet needs a policy.
+**Use the standard wildcard policy** — do NOT create method-specific rules with empty conditions (Privy rejects them with 400).
+
+Load the `wallet-policy` skill and propose:
+```json
+{
+  "chain_type": "ethereum",
+  "title": "Allow DEX Swaps",
+  "description": "Allow the meta-dex-aggregator to execute swaps and token approvals on EVM chains.",
+  "rules": [
+    {
+      "name": "Deny key export",
+      "method": "exportPrivateKey",
+      "conditions": [],
+      "action": "DENY"
+    },
+    {
+      "name": "Allow all operations",
+      "method": "*",
+      "conditions": [],
+      "action": "ALLOW"
+    }
+  ]
+}
+```
+
+**⚠️ Common mistake:** Using `"method": "eth_sendTransaction"` with `"conditions": []` will fail with a 400 error. Privy requires at least one condition for specific methods. The wildcard `"method": "*"` is the correct pattern for broad access.
 
 ## Workflow: Quote with Safety Check
 
