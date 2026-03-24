@@ -1,7 +1,7 @@
 ---
 name: "@432/meta-dex-aggregator"
 description: "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
-version: 4.0.0
+version: 4.0.1
 tools:
   - bash
   - oneinch_quote
@@ -87,17 +87,18 @@ Now follow the Quote → Approve → Execute → Verify workflow below.
 
 ## Aggregators
 
-| Adapter | API Key | Status | MEV-Safe |
-|---------|---------|--------|----------|
-| ParaSwap | None needed | ✅ | ❌ |
-| Odos | None needed | ✅ | ❌ |
-| KyberSwap | None needed | ✅ | ❌ |
-| CowSwap | None needed | ✅ | ✅ |
-| 1inch | Native tool (platform-proxied) | ✅ | ❌ |
-| Matcha/0x | `OX_API_KEY` in .env | ✅ | ❌ |
+| Adapter | API Key | Status | Notes |
+|---------|---------|--------|-------|
+| ParaSwap | None needed | ✅ | |
+| Odos | None needed | ✅ | |
+| KyberSwap | None needed | ✅ | |
+| CowSwap | None needed | ✅ | Batch auction — gasless, native MEV protection |
+| 1inch | Native tool (platform-proxied) | ✅ | |
+| Matcha/0x | `OX_API_KEY` in .env | ✅ | |
 
-**CowSwap:** Batch auction protocol — solvers compete off-chain, user never exposed to MEV.
-Gasless for the user (solvers pay). Supported on Ethereum, Arbitrum, Gnosis, Base.
+**MEV Protection:** The safety layer automatically flags CowSwap as MEV-protected and recommends it when its price is within 0.5% of the best quote. All aggregators are safe to use — CowSwap simply has an additional architectural advantage (off-chain batch auctions where solvers compete, so your swap is never exposed to the public mempool).
+
+**CowSwap specifics:** Gasless for the user (solvers pay gas). Supported on Ethereum, Arbitrum, Gnosis, Base.
 Uses wrapped native tokens (WETH) internally — raw ETH is auto-converted.
 Execution is order-based (EIP-712 signed intent), not raw transaction.
 
