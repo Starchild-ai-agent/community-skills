@@ -2,12 +2,388 @@
   "registry": "starchild-community",
   "skills": [
     {
+      "name": "@1247/across-bridge",
+      "path": "1247/across-bridge/SKILL.md",
+      "version": "1.0.0",
+      "description": "Bridge ETH and ERC-20 tokens between EVM chains using Across Protocol v3. Supports Ethereum, Arbitrum, Optimism, Base, Polygon, BSC, Linea, and zkSync Era."
+    },
+    {
+      "name": "@1247/cross-venue-router",
+      "path": "1247/cross-venue-router/SKILL.md",
+      "version": "2.1.0",
+      "description": "Cross-venue smart order router + persistent strategies + risk monitoring across Hyperliquid and Orderly"
+    },
+    {
+      "name": "@1247/orderly-api-authentication",
+      "path": "1247/orderly-api-authentication/SKILL.md",
+      "version": "1.0.0",
+      "description": "Complete authentication guide for Orderly Network - EIP-712 wallet signatures for EVM accounts, Ed25519 message signing for Solana accounts, and Ed25519 signatures for API requests"
+    },
+    {
+      "name": "@1247/orderly-data",
+      "path": "1247/orderly-data/SKILL.md",
+      "version": "1.0.0",
+      "description": "Fetch Orderly Network metrics for content creation, reporting, and analysis."
+    },
+    {
+      "name": "@1247/orderly-deposit-withdraw",
+      "path": "1247/orderly-deposit-withdraw/SKILL.md",
+      "version": "1.0.0",
+      "description": "Handle token deposits and withdrawals across chains, including allowance approval, vault interactions, and cross-chain operations"
+    },
+    {
+      "name": "@1247/orderly-positions-tpsl",
+      "path": "1247/orderly-positions-tpsl/SKILL.md",
+      "version": "1.0.0",
+      "description": "Monitor positions in real-time, configure Take-Profit/Stop-Loss orders, and manage risk with leverage settings"
+    },
+    {
+      "name": "@1247/orderly-trading-orders",
+      "path": "1247/orderly-trading-orders/SKILL.md",
+      "version": "1.0.0",
+      "description": "Place, manage, and cancel orders using REST API or SDK hooks. Covers market, limit, IOC, FOK, POST_ONLY order types and batch operations"
+    },
+    {
+      "name": "@1247/squad-agent",
+      "path": "1247/squad-agent/SKILL.md",
+      "version": "1.0.0",
+      "description": "Join a Starchild Squad as a real agent member. Receive @mentions, respond with your tools, collaborate with humans and other agents in shared rooms. Use when onboarding to a squad, checking squad messages, or responding to team requests."
+    },
+    {
+      "name": "@1247/trade-simulator",
+      "path": "1247/trade-simulator/SKILL.md",
+      "version": "1.0.0",
+      "description": "Multi-agent scenario analysis for traders using MiroFish swarm intelligence architecture. LLM-powered market participant simulation with behavioral reasoning, cascade analysis, and post-sim interviews."
+    },
+    {
+      "name": "@1247/vampire-attack-hl",
+      "path": "1247/vampire-attack-hl/SKILL.md",
+      "version": "1.0.0",
+      "description": "Hyperliquid-only vampire attack analysis. Use when you need a personalized 30d cost-leakage report (fees + slippage) and an Orderly counterfactual savings pitch for a wallet."
+    },
+    {
+      "name": "@1247/web-crawler",
+      "path": "1247/web-crawler/SKILL.md",
+      "version": "1.0.0",
+      "description": "Headless browser for web crawling, UX audits, screenshots, and interaction testing. Use when the user wants to audit a website, take screenshots, click buttons, test UX flows, extract content from SPAs, or crawl pages that require JavaScript rendering."
+    },
+    {
+      "name": "@1247/woofi-data",
+      "path": "1247/woofi-data/SKILL.md",
+      "version": "1.0.0",
+      "description": "Fetch WOOFi DEX metrics — trading stats, volume by source, earn yields, WOO staking. Covers 13 chains. No auth required."
+    },
+    {
+      "name": "@1247/yield-optimizer",
+      "path": "1247/yield-optimizer/SKILL.md",
+      "version": "1.0.0",
+      "description": "Autonomous USDC yield optimization across DeFi protocols. Scans 60+ pools on 6 chains (Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche) across 8+ protocols (Aave V3, Compound V3, Morpho, Pendle, Spark, Fluid, Sky). Use when the user asks about yield farming, best stablecoin rates, DeFi yields, where to deposit USDC, or wants autonomous yield management."
+    },
+    {
+      "name": "@1363/copy-trade",
+      "path": "1363/copy-trade/SKILL.md",
+      "version": "1.0.0",
+      "description": "Copy trade Hyperliquid wallets — monitor profitable traders and mirror their positions automatically. Use when the user wants to follow a wallet, copy trades, set up auto-mirroring, or manage copy trade configurations."
+    },
+    {
+      "name": "@1363/dub-trading-skill",
+      "path": "1363/dub-trading-skill/SKILL.md",
+      "version": "1.2.0",
+      "description": "Dub's personal trading methodology — range trading with scaled entries/exits, stochastic + RSI signals, hard stops, and geopolitical risk awareness. Use when recommending trades or analyzing setups for this user."
+    },
+    {
+      "name": "@1363/hyperliquid-dashboard",
+      "path": "1363/hyperliquid-dashboard/SKILL.md",
+      "version": "2.0.0",
+      "description": "Real-time Hyperliquid wallet monitoring dashboard — positions, orders, and account stats in your browser. Supports native perps + all HIP-3 builder dex markets (stocks, RWA, commodities)."
+    },
+    {
+      "name": "@1363/position-snapshot",
+      "path": "1363/position-snapshot/SKILL.md",
+      "version": "1.0.0",
+      "description": "Generate OHLC candlestick charts with position overlays — entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart."
+    },
+    {
+      "name": "@1363/profit-poster",
+      "path": "1363/profit-poster/SKILL.md",
+      "version": "1.0.0",
+      "description": "Generate TradingView-style trade summary cards (PNG). Use when user wants a visual trade recap, profit poster, or shareable trade image."
+    },
+    {
+      "name": "@1365/across-bridge",
+      "path": "1365/across-bridge/SKILL.md",
+      "version": "1.0.0",
+      "description": "Fast cross-chain bridging via Across protocol. Use when user wants to bridge tokens between chains (ETH, USDC, USDT, WETH, etc.) with fast settlement times and low fees."
+    },
+    {
+      "name": "@1368/polymarket-trade",
+      "path": "1368/polymarket-trade/SKILL.md",
+      "version": "1.0.0",
+      "description": "Place real bets on Polymarket prediction markets using the agent wallet. Buy/sell outcome tokens, check balances, manage orders. Requires USDC on Polygon and wallet policy allowing EIP-712 signing."
+    },
+    {
+      "name": "@1382/test-skill",
+      "path": "1382/test-skill/SKILL.md",
+      "version": "1.0.0",
+      "description": "test-skill"
+    },
+    {
+      "name": "@1390/woofi-bot",
+      "path": "1390/woofi-bot/SKILL.md",
+      "version": "5.0.0",
+      "description": "Complete WOOFi bot — DEX analytics, swap quotes, swap execution — DEX analytics, swap quotes, swap execution with tx generation, pool states, protocol revenue across 16 chains. Updated from woonetwork/woofi-skills v1.1."
+    },
+    {
+      "name": "@1390/woofi-data",
+      "path": "1390/woofi-data/SKILL.md",
+      "version": "4.0.0",
+      "description": "Complete WOOFi integration — DEX analytics, swap quotes, swap execution with tx generation, pool states, protocol revenue across 16 chains. Updated from woonetwork/woofi-skills v1.1."
+    },
+    {
+      "name": "@1393/daily-news",
+      "path": "1393/daily-news/SKILL.md",
+      "version": "1.0.0",
+      "description": ""
+    },
+    {
+      "name": "@1435/hyperclaw",
+      "path": "1435/hyperclaw/SKILL.md",
+      "version": "1.0.0",
+      "description": "Trade perpetual futures on HyperClaw.io — an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw."
+    },
+    {
+      "name": "@1458/dust-sweeper",
+      "path": "1458/dust-sweeper/SKILL.md",
+      "version": "2.0.0",
+      "description": "Scan a wallet for small-balance ERC-20 or SPL tokens ('dust') and swap them to ETH/USDC/SOL via Odos (EVM) or Jupiter (Solana). Use when the user says 'sweep my dust', 'clean up my wallet', 'sell my small token balances', or asks what tiny holdings they have. Supports Ethereum, Base, Arbitrum, and Solana."
+    },
+    {
+      "name": "@1458/woofi",
+      "path": "1458/woofi/SKILL.md",
+      "version": "1.0.0",
+      "description": "Fetch WOOFi DEX data — swap volume, traders, staking, TVL across chains. Use when the user asks about WOOFi metrics, volume breakdown, chain performance, or WOO staking stats."
+    },
+    {
+      "name": "@1463/dashboard",
+      "path": "1463/dashboard/SKILL.md",
+      "version": "1.0.0",
+      "description": "Create HTML/CSS/JS dashboards with data visualization and real-time updates"
+    },
+    {
+      "name": "@1795/test-skill",
+      "path": "1795/test-skill/SKILL.md",
+      "version": "1.0.0",
+      "description": "test-skilltest-skill"
+    },
+    {
+      "name": "@1826/funding-rate-arb",
+      "path": "1826/funding-rate-arb/SKILL.md",
+      "version": "1.3.0",
+      "description": "Real-time funding rate scanner across Hyperliquid, Binance Futures, Bybit, OKX and more. Highlights biggest long/short arb gaps and gives wallet-sized entry/exit suggestions. MUST output in the EXACT same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1) and Nigeria P2P skill, with every section."
+    },
+    {
+      "name": "@1826/nigeria-p2p-arb",
+      "path": "1826/nigeria-p2p-arb/SKILL.md",
+      "version": "1.6.0",
+      "description": "Real-time Binance P2P Naira rates vs USDT/USDC spot scanner + instant arbitrage alerts, plus live CBN/SEC/NIN policy & local crypto news watch. MUST output in the EXACT same beautiful boxed style as the WOOFi Zero-Slippage Swap Optimizer skill (v1.1), including the final ACT NOW? CTA box."
+    },
+    {
+      "name": "@1826/woofi-swap-optimizer",
+      "path": "1826/woofi-swap-optimizer/SKILL.md",
+      "version": "1.1.0",
+      "description": "Real-time WOOFi sPMM quote scanner + multi-aggregator comparison that ALWAYS tries WOOFi first for ultra-low slippage. Returns clean recommendation + simulation. Powered by WOO ecosystem APIs."
+    },
+    {
+      "name": "@1826/woofi-zero-slippage",
+      "path": "1826/woofi-zero-slippage/SKILL.md",
+      "version": "1.0.0",
+      "description": "Optimize token swaps with zero/near-zero slippage using WOOFi's sPMM across 12+ chains. Query routes, calculate price impact, execute swaps with minimal slippage."
+    },
+    {
+      "name": "@1892/content-writing",
+      "path": "1892/content-writing/SKILL.md",
+      "version": "1.0.0",
+      "description": "Write blog posts, articles, and tweet threads. Human-sounding, no hype. Covers announcements, partnerships, product launches, and educational content for any brand or project."
+    },
+    {
+      "name": "@1892/crypto-content",
+      "path": "1892/crypto-content/SKILL.md",
+      "version": "1.0.0",
+      "description": "Write blog posts, articles, and tweet threads for crypto projects. Human-sounding, technically precise, no hype. Covers announcements, partnerships, product launches, and educational content."
+    },
+    {
+      "name": "@1892/fal-image",
+      "path": "1892/fal-image/SKILL.md",
+      "version": "1.1.0",
+      "description": "Generate images using Fal.ai (Flux Pro, Flux Ultra, and other models). Use when you need to create AI-generated images, artwork, visuals, or any image content. Supports Flux Pro 1.1 Ultra (best quality), Flux Pro 1.1, Flux Dev, and more."
+    },
+    {
+      "name": "@1892/squadron-test",
+      "path": "1892/squadron-test/SKILL.md",
+      "version": "0.0.1",
+      "description": "test"
+    },
+    {
+      "name": "@1892/squadron",
+      "path": "1892/squadron/SKILL.md",
+      "version": "1.1.3",
+      "description": "Interact with Squadron — the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents."
+    },
+    {
+      "name": "@2061/yield-optimizer",
+      "path": "2061/yield-optimizer/SKILL.md",
+      "version": "2.0.0",
+      "description": "Autonomous USDC yield optimization across DeFi protocols. Scans 60+ pools on 6 chains (Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche) across 8+ protocols (Aave V3, Morpho, Pendle, Compound V3, Spark, Fluid, Euler). Auto-routes deposits to the highest-yielding protocol per chain. Includes a full web UI with multi-protocol deposit/withdraw. Use when the user asks about yield farming, best stablecoin rates, DeFi yields, where to deposit USDC, or wants autonomous yield management."
+    },
+    {
+      "name": "@329/test-skill",
+      "path": "329/test-skill/SKILL.md",
+      "version": "1.0.2",
+      "description": "test-skill-test-skill-test-skill"
+    },
+    {
+      "name": "@332/test-skill",
+      "path": "332/test-skill/SKILL.md",
+      "version": "1.0.0",
+      "description": "test-skilltest-skilltest-skilltest-skill"
+    },
+    {
+      "name": "@349/binance",
+      "path": "349/binance/SKILL.md",
+      "version": "1.0.1",
+      "description": "Trade spot and futures on Binance — market/limit/stop/trailing/OCO orders, account balances, order history, and market data. Supports both Binance Spot and Binance Futures (USDM). Requires BINANCE_API_KEY and BINANCE_SECRET in environment for trading; market data is public. Use when trading on Binance, checking Binance balances, placing OCO orders, or accessing Binance market data."
+    },
+    {
+      "name": "@349/bybit",
+      "path": "349/bybit/SKILL.md",
+      "version": "1.0.1",
+      "description": "Trade spot and perpetual futures on Bybit — market/limit/stop/trailing/TP+SL combo orders, account balances, positions, and market data. Supports Bybit Spot and Linear Perpetuals (USDT). Requires BYBIT_API_KEY and BYBIT_SECRET in environment for trading. Use when trading on Bybit, checking Bybit balances or positions, placing TP+SL combo orders, or accessing Bybit market data."
+    },
+    {
+      "name": "@349/lighter-dex",
+      "path": "349/lighter-dex/SKILL.md",
+      "version": "2.0.0",
+      "description": "Trade perpetual futures on Lighter DEX — crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices."
+    },
+    {
+      "name": "@349/okx-onchainos-suite",
+      "path": "349/okx-onchainos-suite/SKILL.md",
+      "version": "1.0.0",
+      "description": "Unified wrapper for OKX OnchainOS capabilities (wallet, market, token, signal, trenches, swap, gateway, security, portfolio, audit log). Use when users want any OKX OnchainOS workflow without installing many separate skills."
+    },
+    {
+      "name": "okx-agentic-wallet",
+      "path": "349/okx-onchainos-suite/modules/okx-agentic-wallet/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill when the user mentions wallet login, sign in, verify OTP, add wallet, switch account, wallet status, logout, wallet balance, assets, holdings, send tokens, transfer ETH, transfer USDC, pay someone, send crypto, send ERC-20, send SPL, transaction history, recent transactions, tx status, tx detail, order list, call smart contract, interact with contract, execute contract function, send calldata, invoke smart contract, show my addresses, wallet addresses, deposit, receive, receive..."
+    },
+    {
+      "name": "okx-audit-log",
+      "path": "349/okx-onchainos-suite/modules/okx-audit-log/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill when the user asks to export audit logs, find audit log location, view command history, 导出日志, 查看日志, 日志路径, 操作记录, 调用记录, 命令历史. Do NOT use for wallet balance, token search, swap, or any other on-chain operation — use the corresponding skill instead."
+    },
+    {
+      "name": "okx-dex-market",
+      "path": "349/okx-onchainos-suite/modules/okx-dex-market/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill for on-chain market data: token prices/价格, K-line/OHLC charts, index prices, and wallet PnL/盈亏分析 (win rate, my DEX trade history, realized/unrealized PnL per token). Use when the user asks for 'token price', 'price chart', 'candlestick', 'K线', 'OHLC', 'how much is X worth', 'show my PnL', '胜率', '盈亏', 'my DEX history', 'realized profit', or 'unrealized profit'. Do NOT use for smart-money/whale/KOL signal tracking — use okx-dex-signal. Do NOT use for meme/pump.fun token scanning ..."
+    },
+    {
+      "name": "okx-dex-signal",
+      "path": "349/okx-onchainos-suite/modules/okx-dex-signal/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill for smart-money/whale/KOL/大户 signal/信号 tracking — monitoring what notable wallets are buying across the market. Covers: real-time buy signals from smart money, KOL/influencers, and whales; filtering by wallet type, trade size, market cap, liquidity; listing supported chains for signals. Use when the user asks 'what are smart money/whales/KOLs buying', '大户在买什么', 'show me whale signals', 'smart money alerts', or wants to follow notable wallet activity. Do NOT use for meme/pump.fu..."
+    },
+    {
+      "name": "okx-dex-swap",
+      "path": "349/okx-onchainos-suite/modules/okx-dex-swap/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill to 'swap tokens', 'trade OKB for USDC', 'buy tokens', 'sell tokens', 'exchange crypto', 'convert tokens', 'swap SOL for USDC', 'get a swap quote', 'execute a trade', 'find the best swap route', 'cheapest way to swap', 'optimal swap', 'compare swap rates', '换币', '买币', '卖币', '兑换', '交易', '代币兑换', '最优路径', '滑点', or mentions swapping, trading, buying, selling, or exchanging tokens on XLayer, Solana, Ethereum, Base, BSC, Arbitrum, Polygon, or any of 20+ supported chains. Aggregates liq..."
+    },
+    {
+      "name": "okx-dex-token",
+      "path": "349/okx-onchainos-suite/modules/okx-dex-token/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill for token-level data: search and discover tokens, browse trending/hot tokens (热门, 代币榜单, by trending score or Twitter/X mentions), get liquidity pool info, view holder distribution by tag (whale/巨鲸, smart money, KOL, sniper, sniper holding percentage, sniper percent, bundler percent), check token safety and honeypot risk (貔貅盘, 'is this token a honeypot', 'can I sell this', 'check token safety'), see who created a token and their history, view recent buy/sell trade activity for a..."
+    },
+    {
+      "name": "okx-dex-trenches",
+      "path": "349/okx-onchainos-suite/modules/okx-dex-trenches/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill for meme/打狗/alpha token research on pump.fun and similar launchpads: scanning new token launches, checking developer reputation/开发者信息 and past rug pull history, bundle/sniper detection/捆绑狙击, bonding curve status, finding similar tokens by the same dev, and wallets that co-invested (同车/aped) into a token. Use when the user asks about 'new meme coins', 'pump.fun launches', 'trenches', 'trench', 'scan trenches/扫链', 'check dev reputation', 'bundler analysis', 'who else bought this ..."
+    },
+    {
+      "name": "okx-onchain-gateway",
+      "path": "349/okx-onchainos-suite/modules/okx-onchain-gateway/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill to 'broadcast transaction', 'send tx', 'estimate gas', 'simulate transaction', 'check tx status', 'track my transaction', 'get gas price', 'gas limit', 'broadcast signed tx', 'transaction hash confirmed on-chain', '交易哈希是否上链', '是否确认', or mentions broadcasting transactions, sending transactions on-chain, gas estimation, transaction simulation, tracking broadcast orders, or checking transaction status. Covers gas price, gas limit estimation, transaction simulation, transaction bro..."
+    },
+    {
+      "name": "okx-security",
+      "path": "349/okx-onchainos-suite/modules/okx-security/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill for security scanning: check transaction safety, is this transaction safe, pre-execution check, security scan, token risk scanning, honeypot detection, DApp/URL phishing detection, message signature safety, malicious transaction detection, approval safety checks, token approval management. Triggers: 'is this token safe', 'check token security', 'honeypot check', 'scan this tx', 'scan this swap tx', 'tx risk check', 'is this URL a scam', 'check if this dapp is safe', 'phishing s..."
+    },
+    {
+      "name": "okx-wallet-portfolio",
+      "path": "349/okx-onchainos-suite/modules/okx-wallet-portfolio/SKILL.md",
+      "version": "1.0.0",
+      "description": "Use this skill when the user provides a specific wallet address and wants to check its balance, token holdings, portfolio value, or DeFi positions. Typical triggers: 'check balance of 0xAbc...', 'show tokens in this address', 'what tokens does 0xAbc hold', 'portfolio value of this address', address portfolio value, multi-chain balance lookup for a given address. Supports XLayer, Solana, Ethereum, Base, BSC, Arbitrum, Polygon, and 20+ other chains. Do NOT use when the user asks about their own..."
+    },
+    {
+      "name": "@349/starchild-design-pack",
+      "path": "349/starchild-design-pack/SKILL.md",
+      "version": "1.0.0",
+      "description": "Complete UI/UX design + implementation skillset for vibe coders. Use when the user asks to design or refine interfaces, review UI/UX quality, create design-system tokens/components, or turn UX guidance into concrete frontend changes. Defaults to Starchild visual tokens unless the user explicitly requests another style/theme."
+    },
+    {
+      "name": "@349/starchild-strategies",
+      "path": "349/starchild-strategies/SKILL.md",
+      "version": "2.0.0",
+      "description": "Library of algorithmic trading strategies for perpetual futures. Organized into three families - mean reversion, momentum & trend, and market neutral. Use when a user wants to run a trading strategy, asks what strategies are available, or describes a trading idea that matches one of these patterns."
+    },
+    {
       "name": "@432/meta-dex-aggregator",
       "path": "432/meta-dex-aggregator/SKILL.md",
       "version": "5.0.1",
-      "description": "Meta DEX Aggregator - aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic.",
-      "tags": [],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40432/meta-dex-aggregator%405.0.1/bundle.zip"
+      "description": "Meta DEX Aggregator - aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
+    },
+    {
+      "name": "@554/better-skill-creator",
+      "path": "554/better-skill-creator/SKILL.md",
+      "version": "1.0.0",
+      "description": "Create high-quality skills that reliably trigger, complete workflows cleanly, and work well with other skills. Use when the user asks to build a new capability, integrate a new API, or extend the system with a repeatable workflow. Improvement on the default skill-creator with use-case design, behavioral testing, and success criteria."
+    },
+    {
+      "name": "@554/news-aggregator-skill",
+      "path": "554/news-aggregator-skill/SKILL.md",
+      "version": "1.0.0",
+      "description": "Comprehensive news aggregator that fetches, filters, and deeply analyzes real-time content from 28 sources including Hacker News, GitHub, Hugging Face Papers, AI Newsletters, WallStreetCN, Weibo, and Podcasts. Use when user requests 'daily scans', 'tech news', 'finance updates', 'AI briefings', 'deep analysis', or says '如意如意' to open the interactive menu."
+    },
+    {
+      "name": "@554/publish-test",
+      "path": "554/publish-test/SKILL.md",
+      "version": "1.0.0",
+      "description": "A test skill to verify the publish pipeline works correctly."
+    },
+    {
+      "name": "@554/skill-installer",
+      "path": "554/skill-installer/SKILL.md",
+      "version": "2.1.0",
+      "description": "Search, install, and publish skills from the Starchild Community Marketplace and SkillsMP. Use when the user wants to find, discover, install, or share skills."
+    },
+    {
+      "name": "@554/work-migration",
+      "path": "554/work-migration/SKILL.md",
+      "version": "1.0.0",
+      "description": "Package current work for handoff to another agent. Use when the user asks to migrate, transfer, hand off, or export work to another agent or environment. Produces a self-contained .zip with all files, configs, memory, and a comprehensive readme so the receiving agent needs zero additional context."
+    },
+    {
+      "name": "@554/youtube-summary",
+      "path": "554/youtube-summary/SKILL.md",
+      "version": "1.0.0",
+      "description": "Summarize YouTube videos by fetching their transcript and generating a structured summary. Use when the user shares a YouTube link and wants a summary, key points, or content overview of the video."
     }
   ]
 }

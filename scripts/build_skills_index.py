@@ -52,11 +52,21 @@ def fallback_name(rel: Path) -> str:
     return f"@{namespace}/{slug}"
 
 
+MAX_DESCRIPTION = 500
+
+
+def truncate(text: str, limit: int = MAX_DESCRIPTION) -> str:
+    """Truncate to prevent skills.json bloat (was 1.67MB, caused GitHub API failures)."""
+    if not text or len(text) <= limit:
+        return text or ""
+    return text[:limit - 3] + "..."
+
+
 def build_index(root: Path) -> dict:
     skills = []
 
     for path, rel in iter_skill_files(root):
-        content = path.read_text(encoding="utf-8")
+        content = path.read_text(encoding="utf-8", errors="replace")
         fm = parse_frontmatter(content)
 
         skills.append(
@@ -64,7 +74,7 @@ def build_index(root: Path) -> dict:
                 "name": fm.get("name") or fallback_name(rel),
                 "path": rel.as_posix(),
                 "version": fm.get("version") or "1.0.0",
-                "description": fm.get("description") or "",
+                "description": truncate(fm.get("description") or ""),
             }
         )
 
