@@ -4,10 +4,10 @@
     {
       "name": "@432/meta-dex-aggregator",
       "path": "432/meta-dex-aggregator/SKILL.md",
-      "version": "4.0.2",
-      "description": "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic.",
+      "version": "5.0.0",
+      "description": "Meta DEX Aggregator - aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic.",
       "tags": [],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40432/meta-dex-aggregator%404.0.2/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40432/meta-dex-aggregator%405.0.0/bundle.zip"
     }
   ]
 }
