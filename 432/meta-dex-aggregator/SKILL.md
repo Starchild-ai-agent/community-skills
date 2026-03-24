@@ -1,7 +1,7 @@
 ---
 name: "@432/meta-dex-aggregator"
 description: "Meta DEX Aggregator — aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
-version: 4.0.1
+version: 4.0.2
 tools:
   - bash
   - oneinch_quote
@@ -92,11 +92,13 @@ Now follow the Quote → Approve → Execute → Verify workflow below.
 | ParaSwap | None needed | ✅ | |
 | Odos | None needed | ✅ | |
 | KyberSwap | None needed | ✅ | |
-| CowSwap | None needed | ✅ | Batch auction — gasless, native MEV protection |
-| 1inch | Native tool (platform-proxied) | ✅ | |
+| CowSwap | None needed | ⚠️ Rate limited | Batch auction — MEV protected, may skip when rate limited |
+| 1inch | Native tool (platform-proxied) | ✅ | Call `oneinch_quote()` separately, merge manually |
 | Matcha/0x | `OX_API_KEY` in .env | ✅ | |
 
-**MEV Protection:** The safety layer automatically flags CowSwap as MEV-protected and recommends it when its price is within 0.5% of the best quote. All aggregators are safe to use — CowSwap simply has an additional architectural advantage (off-chain batch auctions where solvers compete, so your swap is never exposed to the public mempool).
+**MEV Protection:** CowSwap uses off-chain batch auctions (solvers compete, no mempool exposure). The safety layer flags it when available. All aggregators are safe — CowSwap just has extra protection.
+
+**Note:** CowSwap's public API is rate limited. The script gracefully skips it when rate limited (429). 1inch requires an API key, so the agent calls the platform's `oneinch_quote` tool (proxied, no user key needed) and merges the result into the comparison table.
 
 **CowSwap specifics:** Gasless for the user (solvers pay gas). Supported on Ethereum, Arbitrum, Gnosis, Base.
 Uses wrapped native tokens (WETH) internally — raw ETH is auto-converted.
@@ -111,7 +113,7 @@ See **Getting Started → Step 3** above. Policy must be approved by the user be
 **Step 1 & 2 run in PARALLEL (no dependency between them):**
 
 ```bash
-# 1. Get 5 aggregator quotes (ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x + safety)
+# 1. Get 4 aggregator quotes (ParaSwap, Odos, KyberSwap, Matcha/0x + safety)
 cd skills/meta-dex-aggregator/scripts && \
   python3 meta_dex.py quote --chain base --from ETH --to USDC --amount 0.5 --slippage 0.5
 ```

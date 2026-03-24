@@ -1,7 +1,9 @@
 """DEX aggregator adapters for Meta DEX Aggregator."""
 
 import os, requests
-from chains import (CHAINS, ZERO_ADDR, NATIVE_PLACEHOLDER, DEFILLAMA_REFERRER)
+from chains import (CHAINS, ZERO_ADDR, NATIVE_PLACEHOLDER, DEFILLAMA_REFERRER,
+                    COWSWAP_CHAINS, COWSWAP_CHAIN_PREFIX, COWSWAP_WRAPPED_NATIVE, COWSWAP_NATIVE_TOKEN)
+# INCH_API_BASE removed — 1inch requires API key, use oneinch_quote tool instead
 
 # ── ParaSwap ──────────────────────────────────────────────────────────────────
 PARASWAP_CHAINS = {"ethereum","bsc","polygon","avax","arbitrum","fantom","optimism","base","gnosis","sonic","unichain"}
@@ -262,18 +264,7 @@ def zerox_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage)
 # ── CowSwap ───────────────────────────────────────────────────────────────────
 # CowSwap batch auction protocol — MEV-protected by design (solvers compete
 # off-chain, no front-running possible). Uses CoW Protocol API v1.
-COWSWAP_CHAINS = {"ethereum", "arbitrum", "gnosis", "base"}
-COWSWAP_CHAIN_PREFIX = {
-    "ethereum": "mainnet", "arbitrum": "arbitrum_one", "gnosis": "xdai", "base": "base",
-}
-COWSWAP_NATIVE_TOKEN = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-# CowSwap wrapped native addresses per chain (required — CowSwap can't quote raw native)
-COWSWAP_WRAPPED_NATIVE = {
-    "ethereum": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",  # WETH
-    "arbitrum": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",  # WETH
-    "gnosis":   "0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d",  # WXDAI
-    "base":     "0x4200000000000000000000000000000000000006",  # WETH
-}
+# Constants moved to chains.py for proper import
 
 def cowswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage):
     """Get a quote from CowSwap (CoW Protocol). MEV-protected batch auctions."""
@@ -364,10 +355,13 @@ def cowswap_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippag
 
 
 # ── 1inch ─────────────────────────────────────────────────────────────────────
-# 1inch is NOT called from this script. It uses the platform's native
-# oneinch_quote / oneinch_swap tools (proxied, no user API key needed).
-# The agent merges the 1inch result into the comparison table.
-# See SKILL.md for the workflow.
+# 1inch requires an API key (401 on public endpoint as of 2026).
+# Use the platform's native oneinch_quote tool instead (proxied, no user key needed).
+# The agent should call oneinch_quote separately and merge into the comparison.
+# DO NOT call 1inch from this script.
+def inch_quote(chain, chain_id, from_tok, to_tok, amount_wei, wallet, slippage):
+    """Placeholder — 1inch requires API key. Use oneinch_quote tool instead."""
+    return None  # Agent will call oneinch_quote tool separately
 
 
 # ── Dispatch ──────────────────────────────────────────────────────────────────
@@ -377,5 +371,5 @@ AGGREGATORS = {
     "kyberswap": kyberswap_quote,
     "matcha/0x": zerox_quote,
     "cowswap": cowswap_quote,
-    # "1inch" — handled via native oneinch_quote tool, not in this script
+    # 1inch excluded — requires API key. Agent calls oneinch_quote tool separately.
 }
