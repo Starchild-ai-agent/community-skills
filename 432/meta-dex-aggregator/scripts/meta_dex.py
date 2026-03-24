@@ -410,14 +410,14 @@ def cowswap_poll_order(chain, order_uid, timeout_sec=180, poll_interval=5):
     
     Returns: {"status": "fulfilled"|"expired"|"cancelled"|"timeout", "orderData": {...}}
     """
-    import requests
+    import http_client as http
     
     endpoint = f"https://api.cow.fi/{chain}/api/v1/orders/{order_uid}"
     start_time = time.time()
     
     while time.time() - start_time < timeout_sec:
         try:
-            r = requests.get(endpoint, timeout=10)
+            r = http.get(endpoint, timeout=(2, 10))
             if r.status_code == 200:
                 data = r.json()
                 status = data.get("status")
@@ -502,58 +502,27 @@ def verify_swap(args):
     
     # Auto-verify mode: fetch balances from wallet
     if getattr(args, "auto_verify", False):
-        import requests
+        import http_client as http
+        from gas_oracle import _RPC_ENDPOINTS
         wallet = args.wallet
         from aggregators import CHAINS
         chain_id = CHAINS[chain]
         
-        # Fetch current balances via RPC
+        # Fetch current balances via RPC (reuses gas_oracle's RPC map + http_client session)
         def get_token_balance(token_addr, decimals):
+            rpc = _RPC_ENDPOINTS.get(chain)
+            if not rpc:
+                print(json.dumps({"error": f"No RPC URL for chain {chain}"}))
+                sys.exit(1)
             if token_addr == "0x0000000000000000000000000000000000000000":
-                # Native token - use reliable public RPCs
-                rpc_urls = {
-                    1: "https://cloudflare-eth.com",
-                    42161: "https://rpc.ankr.com/arbitrum",
-                    8453: "https://rpc.ankr.com/base",
-                    10: "https://rpc.ankr.com/optimism",
-                    137: "https://rpc.ankr.com/polygon",
-                    56: "https://rpc.ankr.com/bsc",
-                    43114: "https://rpc.ankr.com/avalanche",
-                    250: "https://rpc.ankr.com/fantom",
-                }
-                rpc = rpc_urls.get(chain_id)
-                if not rpc:
-                    print(json.dumps({"error": f"No RPC URL for chain {chain}"}))
-                    sys.exit(1)
                 payload = {"jsonrpc": "2.0", "method": "eth_getBalance", "params": [wallet, "latest"], "id": 1}
-                r = requests.post(rpc, json=payload, timeout=10)
-                if r.status_code == 200:
-                    result = r.json()
-                    return int(result.get("result", "0x0"), 16)
-                return 0
             else:
-                # ERC20 - use reliable public RPCs
-                rpc_urls = {
-                    1: "https://cloudflare-eth.com",
-                    42161: "https://rpc.ankr.com/arbitrum",
-                    8453: "https://rpc.ankr.com/base",
-                    10: "https://rpc.ankr.com/optimism",
-                    137: "https://rpc.ankr.com/polygon",
-                    56: "https://rpc.ankr.com/bsc",
-                    43114: "https://rpc.ankr.com/avalanche",
-                    250: "https://rpc.ankr.com/fantom",
-                }
-                rpc = rpc_urls.get(chain_id)
-                if not rpc:
-                    return 0
-                # balanceOf method
                 data = f"0x70a08231000000000000000000000000{wallet[2:]}"
                 payload = {"jsonrpc": "2.0", "method": "eth_call", "params": [{"to": token_addr, "data": data}, "latest"], "id": 1}
-                r = requests.post(rpc, json=payload, timeout=10)
-                if r.status_code == 200:
-                    result = r.json()
-                    return int(result.get("result", "0x0"), 16)
-                return 0
+            r = http.post(rpc, json=payload, timeout=(2, 10))
+            if r.status_code == 200:
+                return int(r.json().get("result", "0x0"), 16)
+            return 0
         
         # Try to fetch balances with retry logic
         max_retries = 3

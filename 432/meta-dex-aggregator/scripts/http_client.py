@@ -28,7 +28,7 @@ def _get_session():
         adapter = HTTPAdapter(max_retries=retry, pool_connections=20, pool_maxsize=40)
         _session.mount("https://", adapter)
         _session.mount("http://", adapter)
-        _session.headers.update({"User-Agent": "meta-dex-aggregator/4.1"})
+        _session.headers.update({"User-Agent": "meta-dex-aggregator/5.0"})
     return _session
 
 
