@@ -7,6 +7,7 @@ v4.1 changes:
   - Uses shared HTTP client for connection pooling
 """
 
+import time
 import http_client as http
 import gas_oracle
 
@@ -31,6 +32,20 @@ DEFILLAMA_CHAIN_MAP = {
     "scroll": "scroll", "sonic": "sonic", "unichain": "unichain",
 }
 ZERO_ADDR = "0x0000000000000000000000000000000000000000"
+
+# ── Price cache (avoids repeated DefiLlama/DexScreener calls) ────────
+_price_cache = {}  # key: (chain, addr) -> {"price": float, "ts": float}
+_PRICE_CACHE_TTL = 15  # seconds — short enough to stay fresh, long enough to dedupe
+
+def _cached_price(chain, addr):
+    key = (chain, addr.lower())
+    entry = _price_cache.get(key)
+    if entry and time.time() - entry["ts"] < _PRICE_CACHE_TTL:
+        return entry["price"]
+    return None
+
+def _set_price_cache(chain, addr, price):
+    _price_cache[(chain, addr.lower())] = {"price": price, "ts": time.time()}
 
 
 def _dexscreener_price(chain, token_addr):
@@ -59,28 +74,47 @@ def _dexscreener_price(chain, token_addr):
 
 
 def get_fair_market_prices(chain, from_addr, to_addr):
-    """Fetch fair market prices from DefiLlama + DexScreener fallback."""
+    """Fetch fair market prices from cache → DefiLlama → DexScreener fallback."""
     llama_chain = DEFILLAMA_CHAIN_MAP.get(chain, chain)
-    coin_ids = [f"{llama_chain}:{ZERO_ADDR}"]
+
+    # Check cache first — avoids network calls on repeated quotes
+    all_addrs = [ZERO_ADDR]
     if from_addr != ZERO_ADDR:
-        coin_ids.append(f"{llama_chain}:{from_addr}")
+        all_addrs.append(from_addr)
     if to_addr != ZERO_ADDR:
-        coin_ids.append(f"{llama_chain}:{to_addr}")
+        all_addrs.append(to_addr)
 
     prices = {}
-    try:
-        resp = http.get(f"https://coins.llama.fi/prices/current/{','.join(coin_ids)}", timeout=(2, 5))
-        if resp.status_code == 200:
-            for cid, data in resp.json().get("coins", {}).items():
-                prices[cid.split(":")[-1].lower()] = data.get("price")
-    except Exception:
-        pass
+    uncached = []
+    for addr in all_addrs:
+        cp = _cached_price(chain, addr)
+        if cp is not None:
+            prices[addr.lower()] = cp
+        else:
+            uncached.append(addr)
 
+    # Fetch only uncached prices from DefiLlama
+    if uncached:
+        coin_ids = [f"{llama_chain}:{a}" for a in uncached]
+        try:
+            resp = http.get(f"https://coins.llama.fi/prices/current/{','.join(coin_ids)}", timeout=(2, 5))
+            if resp.status_code == 200:
+                for cid, data in resp.json().get("coins", {}).items():
+                    addr = cid.split(":")[-1].lower()
+                    p = data.get("price")
+                    if p is not None:
+                        prices[addr] = p
+                        _set_price_cache(chain, addr, p)
+        except Exception:
+            pass
+
+    # DexScreener fallback for still-missing tokens
     for addr in [from_addr, to_addr]:
         if addr != ZERO_ADDR and (addr.lower() not in prices or prices.get(addr.lower()) is None):
             p = _dexscreener_price(chain, addr)
             if p:
                 prices[addr.lower()] = p
+                _set_price_cache(chain, addr, p)
 
     return {
         "gas_token_price": prices.get(ZERO_ADDR),
@@ -124,23 +158,46 @@ def gas_adjusted_ranking(quotes, chain, gas_token_price, to_token_price):
     """Rank quotes by net output (amountUsd - gasUsd).
 
     Uses normalized schema:
-      - If quote has gas_usd (e.g. KyberSwap, CowSwap): use it directly
+      - If quote has gas_usd (e.g. KyberSwap): use it directly
       - If quote has gas_units: derive gas_usd via live gas oracle
-      - If neither: gas_usd = None, rank by raw output
+      - If neither: penalize with median gas from peers (never treat unknown as zero)
     """
     ranked = []
+
+    # Phase 1: resolve known gas costs across all quotes
+    known_gas = []
+    for q in quotes:
+        g = None
+        if q.get("gas_usd") is not None and q["gas_usd"] > 0:
+            g = q["gas_usd"]
+        elif q.get("gas_units") and gas_token_price:
+            g = gas_oracle.estimate_gas_usd(chain, q["gas_units"], gas_token_price)
+        if g and g > 0:
+            known_gas.append(g)
+
+    # Phase 2: fallback for unknown gas — use median of known peers
+    # Unknown gas should NEVER be treated as zero gas (biases ranking)
+    median_gas = None
+    if known_gas:
+        s = sorted(known_gas)
+        mid = len(s) // 2
+        median_gas = s[mid] if len(s) % 2 else (s[mid - 1] + s[mid]) / 2
+
     for q in quotes:
         out = float(q.get("outputAmount", 0))
         amt_usd = out * float(to_token_price) if to_token_price else None
 
-        # Resolve gas cost — prefer upstream gas_usd, else derive from gas_units
+        # Resolve gas cost — prefer upstream gas_usd, else derive, else median peer penalty
         final_gas_usd = None
+        gas_source = "known"
         if q.get("gas_usd") is not None and q["gas_usd"] > 0:
-            # Upstream gave us USD directly (KyberSwap, CowSwap)
             final_gas_usd = q["gas_usd"]
         elif q.get("gas_units") and gas_token_price:
-            # Derive from gas units + live chain gas price
             final_gas_usd = gas_oracle.estimate_gas_usd(chain, q["gas_units"], gas_token_price)
+        elif median_gas is not None:
+            # Penalize unknown gas with median from peers — fair, not free
+            final_gas_usd = median_gas
+            gas_source = "estimated"
 
         if amt_usd is not None and final_gas_usd is not None:
             net = amt_usd - final_gas_usd
@@ -153,6 +210,7 @@ def gas_adjusted_ranking(quotes, chain, gas_token_price, to_token_price):
             **q,
             "amountUsd": round(amt_usd, 2) if amt_usd else None,
             "gasUsd": round(final_gas_usd, 4) if final_gas_usd else None,
+            "gasSource": gas_source,
             "netOut": round(net, 4),
             "isMEVSafe": q.get("is_mev_safe", False) or q.get("name", "") in MEV_SAFE_AGGREGATORS,
         })

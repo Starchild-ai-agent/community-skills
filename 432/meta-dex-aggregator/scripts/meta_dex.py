@@ -101,6 +101,7 @@ def cmd_quote(args):
                  "amountOutHuman": r["outputAmount"],
                  "amountUsd": r.get("amountUsd"),
                  "gasUsd": r.get("gasUsd"),
+                 "gasSource": r.get("gasSource", "known"),
                  "netOut": r.get("netOut"),
                  "vsbestPct": r.get("vsbestPct"),
                  "isMEVSafe": r.get("isMEVSafe", False),

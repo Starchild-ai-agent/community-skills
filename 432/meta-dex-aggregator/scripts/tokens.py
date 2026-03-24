@@ -146,25 +146,48 @@ def get_token_list(chain_id: int) -> dict:
     # 2. Disk cache (avoids network on cold start)
     _CACHE_DIR.mkdir(parents=True, exist_ok=True)
     disk_path = _disk_cache_path(chain_id)
+    cached_etag = None
+    cached_data = None
     if disk_path.exists():
         try:
             cached = json.loads(disk_path.read_text())
+            cached_etag = cached.get("etag")
+            cached_data = cached.get("data")
             if time.time() - cached.get("fetched_at", 0) < _CACHE_TTL:
-                _token_cache[chain_id] = cached["data"]
-                return cached["data"]
+                _token_cache[chain_id] = cached_data
+                return cached_data
         except Exception:
             pass
 
-    # 3. Network fetch
+    # 3. Network fetch (with ETag conditional GET to save bandwidth)
     url = f"https://d3g10bzo9rdluh.cloudfront.net/tokenlists-{chain_id}.json"
-    resp = http.get(url, timeout=(3, 15))
+    headers = {}
+    if cached_etag:
+        headers["If-None-Match"] = cached_etag
+
+    resp = http.get(url, timeout=(3, 15), headers=headers)
+
+    if resp.status_code == 304 and cached_data:
+        # Not modified — refresh timestamp, keep cached data
+        _token_cache[chain_id] = cached_data
+        try:
+            disk_path.write_text(json.dumps({
+                "fetched_at": time.time(), "etag": cached_etag, "data": cached_data
+            }))
+        except Exception:
+            pass
+        return cached_data
+
     resp.raise_for_status()
     data = resp.json()
+    etag = resp.headers.get("ETag")
     _token_cache[chain_id] = data
 
-    # 4. Persist to disk
+    # 4. Persist to disk with ETag
     try:
-        disk_path.write_text(json.dumps({"fetched_at": time.time(), "data": data}))
+        disk_path.write_text(json.dumps({
+            "fetched_at": time.time(), "etag": etag, "data": data
+        }))
     except Exception:
         pass
     return data
