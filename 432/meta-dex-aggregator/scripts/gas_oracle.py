@@ -9,20 +9,21 @@ import time
 import http_client as http
 
 # Public RPCs per chain (free, no key needed) — multiple fallbacks for reliability
+# Multiple RPCs per chain for fallback reliability
 _RPC_ENDPOINTS = {
-    "ethereum": "https://eth.llamarpc.com",
-    "base": "https://mainnet.base.org",
-    "arbitrum": "https://arb1.arbitrum.io/rpc",
-    "optimism": "https://mainnet.optimism.io",
-    "polygon": "https://polygon-rpc.com",
-    "bsc": "https://bsc-dataseed.binance.org",
-    "avax": "https://api.avax.network/ext/bc/C/rpc",
-    "gnosis": "https://rpc.gnosischain.com",
-    "fantom": "https://rpc.ftm.tools",
-    "linea": "https://rpc.linea.build",
-    "scroll": "https://rpc.scroll.io",
-    "zksync": "https://mainnet.era.zksync.io",
-    "sonic": "https://rpc.soniclabs.com",
+    "ethereum": ["https://eth.llamarpc.com", "https://cloudflare-eth.com", "https://rpc.ankr.com/eth"],
+    "base": ["https://mainnet.base.org", "https://base.llamarpc.com", "https://rpc.ankr.com/base"],
+    "arbitrum": ["https://arb1.arbitrum.io/rpc", "https://arbitrum.llamarpc.com", "https://rpc.ankr.com/arbitrum"],
+    "optimism": ["https://mainnet.optimism.io", "https://optimism.llamarpc.com", "https://rpc.ankr.com/optimism"],
+    "polygon": ["https://polygon.drpc.org", "https://rpc.ankr.com/polygon", "https://polygon-bor-rpc.publicnode.com"],
+    "bsc": ["https://bsc-dataseed1.binance.org", "https://bsc.llamarpc.com", "https://rpc.ankr.com/bsc"],
+    "avax": ["https://api.avax.network/ext/bc/C/rpc", "https://rpc.ankr.com/avalanche"],
+    "gnosis": ["https://rpc.gnosischain.com", "https://rpc.ankr.com/gnosis"],
+    "fantom": ["https://rpc.ftm.tools", "https://rpc.ankr.com/fantom"],
+    "linea": ["https://rpc.linea.build", "https://linea.drpc.org"],
+    "scroll": ["https://rpc.scroll.io", "https://scroll.drpc.org"],
+    "zksync": ["https://mainnet.era.zksync.io", "https://zksync.drpc.org"],
+    "sonic": ["https://rpc.soniclabs.com"],
 }
 
 # Sane defaults in gwei if RPC fails
@@ -58,20 +59,21 @@ def get_gas_price_gwei(chain):
         if now - ts < _CACHE_TTL:
             return val
 
-    # Try live RPC
-    rpc_url = _RPC_ENDPOINTS.get(chain)
-    if rpc_url:
+    # Try live RPC (multiple fallbacks per chain)
+    rpc_urls = _RPC_ENDPOINTS.get(chain, [])
+    for rpc_url in rpc_urls:
         try:
             resp = http.post(rpc_url, json={
                 "jsonrpc": "2.0", "method": "eth_gasPrice", "params": [], "id": 1
             }, timeout=(2, 3))
             if resp.status_code == 200:
-                hex_val = resp.json().get("result", "0x0")
-                gwei = int(hex_val, 16) / 1e9
-                _cache[chain] = (now, gwei)
-                return gwei
+                result = resp.json().get("result")
+                if result:
+                    gwei = int(result, 16) / 1e9
+                    _cache[chain] = (now, gwei)
+                    return gwei
         except Exception:
-            pass
+            continue
 
     # Fallback to defaults
     default = _DEFAULT_GAS_GWEI.get(chain, 20.0)

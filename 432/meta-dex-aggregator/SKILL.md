@@ -1,7 +1,7 @@
 ---
 name: "@432/meta-dex-aggregator"
 description: "Meta DEX Aggregator - aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
-version: 5.1.0
+version: 5.1.1
 tools:
   - bash
   - oneinch_quote
@@ -65,7 +65,7 @@ Now follow the Quote → Approve → Execute → Verify workflow below.
 
 ## Features
 
-- **6 aggregators** compared in parallel (ParaSwap, Odos, KyberSwap, CowSwap, 1inch, Matcha/0x)
+- **5 aggregators** queried in parallel (ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x) + 1inch via agent tool
 - **Market orders** via 1inch for instant execution (`--market-order`)
 - **Auto-verify** post-swap balance checking (`--auto-verify`)
 - **Retry logic** with fallback to next best aggregator on failure
