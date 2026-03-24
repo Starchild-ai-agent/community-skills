@@ -71,7 +71,7 @@
       "name": "@1247/woofi-data",
       "path": "1247/woofi-data/SKILL.md",
       "version": "1.0.0",
-      "description": "Fetch WOOFi DEX metrics — trading stats, volume by source, earn yields, WOO staking. Covers 13 chains. No auth required."
+      "description": "Fetch WOOFi DEX metrics â trading stats, volume by source, earn yields, WOO staking. Covers 13 chains. No auth required."
     },
     {
       "name": "@1247/yield-optimizer",
@@ -83,25 +83,25 @@
       "name": "@1363/copy-trade",
       "path": "1363/copy-trade/SKILL.md",
       "version": "1.0.0",
-      "description": "Copy trade Hyperliquid wallets — monitor profitable traders and mirror their positions automatically. Use when the user wants to follow a wallet, copy trades, set up auto-mirroring, or manage copy trade configurations."
+      "description": "Copy trade Hyperliquid wallets â monitor profitable traders and mirror their positions automatically. Use when the user wants to follow a wallet, copy trades, set up auto-mirroring, or manage copy trade configurations."
     },
     {
       "name": "@1363/dub-trading-skill",
       "path": "1363/dub-trading-skill/SKILL.md",
       "version": "1.2.0",
-      "description": "Dub's personal trading methodology — range trading with scaled entries/exits, stochastic + RSI signals, hard stops, and geopolitical risk awareness. Use when recommending trades or analyzing setups for this user."
+      "description": "Dub's personal trading methodology â range trading with scaled entries/exits, stochastic + RSI signals, hard stops, and geopolitical risk awareness. Use when recommending trades or analyzing setups for this user."
     },
     {
       "name": "@1363/hyperliquid-dashboard",
       "path": "1363/hyperliquid-dashboard/SKILL.md",
       "version": "2.0.0",
-      "description": "Real-time Hyperliquid wallet monitoring dashboard — positions, orders, and account stats in your browser. Supports native perps + all HIP-3 builder dex markets (stocks, RWA, commodities)."
+      "description": "Real-time Hyperliquid wallet monitoring dashboard â positions, orders, and account stats in your browser. Supports native perps + all HIP-3 builder dex markets (stocks, RWA, commodities)."
     },
     {
       "name": "@1363/position-snapshot",
       "path": "1363/position-snapshot/SKILL.md",
       "version": "1.0.0",
-      "description": "Generate OHLC candlestick charts with position overlays — entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart."
+      "description": "Generate OHLC candlestick charts with position overlays â entry price, open limit orders, PnL, and liquidity zones. Use when the user wants a visual snapshot of their current trading position on a price chart."
     },
     {
       "name": "@1363/profit-poster",
@@ -131,13 +131,13 @@
       "name": "@1390/woofi-bot",
       "path": "1390/woofi-bot/SKILL.md",
       "version": "5.0.0",
-      "description": "Complete WOOFi bot — DEX analytics, swap quotes, swap execution — DEX analytics, swap quotes, swap execution with tx generation, pool states, protocol revenue across 16 chains. Updated from woonetwork/woofi-skills v1.1."
+      "description": "Complete WOOFi bot â DEX analytics, swap quotes, swap execution â DEX analytics, swap quotes, swap execution with tx generation, pool states, protocol revenue across 16 chains. Updated from woonetwork/woofi-skills v1.1."
     },
     {
       "name": "@1390/woofi-data",
       "path": "1390/woofi-data/SKILL.md",
       "version": "4.0.0",
-      "description": "Complete WOOFi integration — DEX analytics, swap quotes, swap execution with tx generation, pool states, protocol revenue across 16 chains. Updated from woonetwork/woofi-skills v1.1."
+      "description": "Complete WOOFi integration â DEX analytics, swap quotes, swap execution with tx generation, pool states, protocol revenue across 16 chains. Updated from woonetwork/woofi-skills v1.1."
     },
     {
       "name": "@1393/daily-news",
@@ -149,7 +149,7 @@
       "name": "@1435/hyperclaw",
       "path": "1435/hyperclaw/SKILL.md",
       "version": "1.0.0",
-      "description": "Trade perpetual futures on HyperClaw.io — an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw."
+      "description": "Trade perpetual futures on HyperClaw.io â an Orderly Network-powered DEX. Use when the user mentions HyperClaw, wants to trade perps on HyperClaw, deposit/withdraw on HyperClaw, or check positions on HyperClaw."
     },
     {
       "name": "@1458/dust-sweeper",
@@ -161,7 +161,7 @@
       "name": "@1458/woofi",
       "path": "1458/woofi/SKILL.md",
       "version": "1.0.0",
-      "description": "Fetch WOOFi DEX data — swap volume, traders, staking, TVL across chains. Use when the user asks about WOOFi metrics, volume breakdown, chain performance, or WOO staking stats."
+      "description": "Fetch WOOFi DEX data â swap volume, traders, staking, TVL across chains. Use when the user asks about WOOFi metrics, volume breakdown, chain performance, or WOO staking stats."
     },
     {
       "name": "@1463/dashboard",
@@ -227,7 +227,7 @@
       "name": "@1892/squadron",
       "path": "1892/squadron/SKILL.md",
       "version": "1.1.3",
-      "description": "Interact with Squadron — the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents."
+      "description": "Interact with Squadron â the shared task + knowledge base platform for the Starchild team. Use when you need to create or update tasks, check your inbox, read or write to the knowledge base, or collaborate with other agents."
     },
     {
       "name": "@2061/yield-optimizer",
@@ -251,19 +251,19 @@
       "name": "@349/binance",
       "path": "349/binance/SKILL.md",
       "version": "1.0.1",
-      "description": "Trade spot and futures on Binance — market/limit/stop/trailing/OCO orders, account balances, order history, and market data. Supports both Binance Spot and Binance Futures (USDM). Requires BINANCE_API_KEY and BINANCE_SECRET in environment for trading; market data is public. Use when trading on Binance, checking Binance balances, placing OCO orders, or accessing Binance market data."
+      "description": "Trade spot and futures on Binance â market/limit/stop/trailing/OCO orders, account balances, order history, and market data. Supports both Binance Spot and Binance Futures (USDM). Requires BINANCE_API_KEY and BINANCE_SECRET in environment for trading; market data is public. Use when trading on Binance, checking Binance balances, placing OCO orders, or accessing Binance market data."
     },
     {
       "name": "@349/bybit",
       "path": "349/bybit/SKILL.md",
       "version": "1.0.1",
-      "description": "Trade spot and perpetual futures on Bybit — market/limit/stop/trailing/TP+SL combo orders, account balances, positions, and market data. Supports Bybit Spot and Linear Perpetuals (USDT). Requires BYBIT_API_KEY and BYBIT_SECRET in environment for trading. Use when trading on Bybit, checking Bybit balances or positions, placing TP+SL combo orders, or accessing Bybit market data."
+      "description": "Trade spot and perpetual futures on Bybit â market/limit/stop/trailing/TP+SL combo orders, account balances, positions, and market data. Supports Bybit Spot and Linear Perpetuals (USDT). Requires BYBIT_API_KEY and BYBIT_SECRET in environment for trading. Use when trading on Bybit, checking Bybit balances or positions, placing TP+SL combo orders, or accessing Bybit market data."
     },
     {
       "name": "@349/lighter-dex",
       "path": "349/lighter-dex/SKILL.md",
       "version": "2.0.0",
-      "description": "Trade perpetual futures on Lighter DEX — crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices."
+      "description": "Trade perpetual futures on Lighter DEX â crypto, stocks, commodities, forex. Use when trading perps, managing risk, placing conditional orders (stop loss, take profit, TWAP), or monitoring liquidation prices."
     },
     {
       "name": "@349/okx-onchainos-suite",
@@ -281,43 +281,43 @@
       "name": "okx-audit-log",
       "path": "349/okx-onchainos-suite/modules/okx-audit-log/SKILL.md",
       "version": "1.0.0",
-      "description": "Use this skill when the user asks to export audit logs, find audit log location, view command history, 导出日志, 查看日志, 日志路径, 操作记录, 调用记录, 命令历史. Do NOT use for wallet balance, token search, swap, or any other on-chain operation — use the corresponding skill instead."
+      "description": "Use this skill when the user asks to export audit logs, find audit log location, view command history, å¯¼åºæ¥å¿, æ¥çæ¥å¿, æ¥å¿è·¯å¾, æä½è®°å½, è°ç¨è®°å½, å½ä»¤åå². Do NOT use for wallet balance, token search, swap, or any other on-chain operation â use the corresponding skill instead."
     },
     {
       "name": "okx-dex-market",
       "path": "349/okx-onchainos-suite/modules/okx-dex-market/SKILL.md",
       "version": "1.0.0",
-      "description": "Use this skill for on-chain market data: token prices/价格, K-line/OHLC charts, index prices, and wallet PnL/盈亏分析 (win rate, my DEX trade history, realized/unrealized PnL per token). Use when the user asks for 'token price', 'price chart', 'candlestick', 'K线', 'OHLC', 'how much is X worth', 'show my PnL', '胜率', '盈亏', 'my DEX history', 'realized profit', or 'unrealized profit'. Do NOT use for smart-money/whale/KOL signal tracking — use okx-dex-signal. Do NOT use for meme/pump.fun token scanning ..."
+      "description": "Use this skill for on-chain market data: token prices/ä»·æ ¼, K-line/OHLC charts, index prices, and wallet PnL/çäºåæ (win rate, my DEX trade history, realized/unrealized PnL per token). Use when the user asks for 'token price', 'price chart', 'candlestick', 'Kçº¿', 'OHLC', 'how much is X worth', 'show my PnL', 'èç', 'çäº', 'my DEX history', 'realized profit', or 'unrealized profit'. Do NOT use for smart-money/whale/KOL signal tracking â use okx-dex-signal. Do NOT use for meme/..."
     },
     {
       "name": "okx-dex-signal",
       "path": "349/okx-onchainos-suite/modules/okx-dex-signal/SKILL.md",
       "version": "1.0.0",
-      "description": "Use this skill for smart-money/whale/KOL/大户 signal/信号 tracking — monitoring what notable wallets are buying across the market. Covers: real-time buy signals from smart money, KOL/influencers, and whales; filtering by wallet type, trade size, market cap, liquidity; listing supported chains for signals. Use when the user asks 'what are smart money/whales/KOLs buying', '大户在买什么', 'show me whale signals', 'smart money alerts', or wants to follow notable wallet activity. Do NOT use for meme/pump.fu..."
+      "description": "Use this skill for smart-money/whale/KOL/å¤§æ· signal/ä¿¡å· tracking â monitoring what notable wallets are buying across the market. Covers: real-time buy signals from smart money, KOL/influencers, and whales; filtering by wallet type, trade size, market cap, liquidity; listing supported chains for signals. Use when the user asks 'what are smart money/whales/KOLs buying', 'å¤§æ·å¨ä¹°ä»ä¹', 'show me whale signals', 'smart money alerts', or wants to follow notable wallet activity. Do NO..."
     },
     {
       "name": "okx-dex-swap",
       "path": "349/okx-onchainos-suite/modules/okx-dex-swap/SKILL.md",
       "version": "1.0.0",
-      "description": "Use this skill to 'swap tokens', 'trade OKB for USDC', 'buy tokens', 'sell tokens', 'exchange crypto', 'convert tokens', 'swap SOL for USDC', 'get a swap quote', 'execute a trade', 'find the best swap route', 'cheapest way to swap', 'optimal swap', 'compare swap rates', '换币', '买币', '卖币', '兑换', '交易', '代币兑换', '最优路径', '滑点', or mentions swapping, trading, buying, selling, or exchanging tokens on XLayer, Solana, Ethereum, Base, BSC, Arbitrum, Polygon, or any of 20+ supported chains. Aggregates liq..."
+      "description": "Use this skill to 'swap tokens', 'trade OKB for USDC', 'buy tokens', 'sell tokens', 'exchange crypto', 'convert tokens', 'swap SOL for USDC', 'get a swap quote', 'execute a trade', 'find the best swap route', 'cheapest way to swap', 'optimal swap', 'compare swap rates', 'æ¢å¸', 'ä¹°å¸', 'åå¸', 'åæ¢', 'äº¤æ', 'ä»£å¸åæ¢', 'æä¼è·¯å¾', 'æ»ç¹', or mentions swapping, trading, buying, selling, or exchanging tokens on XLayer, Solana, Ethereum, Base, BSC, Arbitrum, Polygon, or any..."
     },
     {
       "name": "okx-dex-token",
       "path": "349/okx-onchainos-suite/modules/okx-dex-token/SKILL.md",
       "version": "1.0.0",
-      "description": "Use this skill for token-level data: search and discover tokens, browse trending/hot tokens (热门, 代币榜单, by trending score or Twitter/X mentions), get liquidity pool info, view holder distribution by tag (whale/巨鲸, smart money, KOL, sniper, sniper holding percentage, sniper percent, bundler percent), check token safety and honeypot risk (貔貅盘, 'is this token a honeypot', 'can I sell this', 'check token safety'), see who created a token and their history, view recent buy/sell trade activity for a..."
+      "description": "Use this skill for token-level data: search and discover tokens, browse trending/hot tokens (ç­é¨, ä»£å¸æ¦å, by trending score or Twitter/X mentions), get liquidity pool info, view holder distribution by tag (whale/å·¨é²¸, smart money, KOL, sniper, sniper holding percentage, sniper percent, bundler percent), check token safety and honeypot risk (è²è²ç, 'is this token a honeypot', 'can I sell this', 'check token safety'), see who created a token and their history, view recent buy/sel..."
     },
     {
       "name": "okx-dex-trenches",
       "path": "349/okx-onchainos-suite/modules/okx-dex-trenches/SKILL.md",
       "version": "1.0.0",
-      "description": "Use this skill for meme/打狗/alpha token research on pump.fun and similar launchpads: scanning new token launches, checking developer reputation/开发者信息 and past rug pull history, bundle/sniper detection/捆绑狙击, bonding curve status, finding similar tokens by the same dev, and wallets that co-invested (同车/aped) into a token. Use when the user asks about 'new meme coins', 'pump.fun launches', 'trenches', 'trench', 'scan trenches/扫链', 'check dev reputation', 'bundler analysis', 'who else bought this ..."
+      "description": "Use this skill for meme/æç/alpha token research on pump.fun and similar launchpads: scanning new token launches, checking developer reputation/å¼åèä¿¡æ¯ and past rug pull history, bundle/sniper detection/æç»çå», bonding curve status, finding similar tokens by the same dev, and wallets that co-invested (åè½¦/aped) into a token. Use when the user asks about 'new meme coins', 'pump.fun launches', 'trenches', 'trench', 'scan trenches/æ«é¾', 'check dev reputation', 'bundler ana..."
     },
     {
       "name": "okx-onchain-gateway",
       "path": "349/okx-onchainos-suite/modules/okx-onchain-gateway/SKILL.md",
       "version": "1.0.0",
-      "description": "Use this skill to 'broadcast transaction', 'send tx', 'estimate gas', 'simulate transaction', 'check tx status', 'track my transaction', 'get gas price', 'gas limit', 'broadcast signed tx', 'transaction hash confirmed on-chain', '交易哈希是否上链', '是否确认', or mentions broadcasting transactions, sending transactions on-chain, gas estimation, transaction simulation, tracking broadcast orders, or checking transaction status. Covers gas price, gas limit estimation, transaction simulation, transaction bro..."
+      "description": "Use this skill to 'broadcast transaction', 'send tx', 'estimate gas', 'simulate transaction', 'check tx status', 'track my transaction', 'get gas price', 'gas limit', 'broadcast signed tx', 'transaction hash confirmed on-chain', 'äº¤æåå¸æ¯å¦ä¸é¾', 'æ¯å¦ç¡®è®¤', or mentions broadcasting transactions, sending transactions on-chain, gas estimation, transaction simulation, tracking broadcast orders, or checking transaction status. Covers gas price, gas limit estimation, transaction sim..."
     },
     {
       "name": "okx-security",
@@ -346,8 +346,10 @@
     {
       "name": "@432/meta-dex-aggregator",
       "path": "432/meta-dex-aggregator/SKILL.md",
-      "version": "5.0.1",
-      "description": "Meta DEX Aggregator - aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic."
+      "version": "5.1.0",
+      "description": "Meta DEX Aggregator - aggregator of aggregators. Compares quotes across ParaSwap, Odos, KyberSwap, CowSwap, Matcha/0x, and 1inch to find the best swap price. Includes safety layer: price impact detection, gas-adjusted ranking, MEV protection flagging, slippage warnings, outlier quote rejection, built-in execution with verification, CowSwap order polling, historical quote logging, winner analytics, market orders, auto-verify, and retry logic.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40432/meta-dex-aggregator%405.1.0/bundle.zip"
     },
     {
       "name": "@554/better-skill-creator",
@@ -359,7 +361,7 @@
       "name": "@554/news-aggregator-skill",
       "path": "554/news-aggregator-skill/SKILL.md",
       "version": "1.0.0",
-      "description": "Comprehensive news aggregator that fetches, filters, and deeply analyzes real-time content from 28 sources including Hacker News, GitHub, Hugging Face Papers, AI Newsletters, WallStreetCN, Weibo, and Podcasts. Use when user requests 'daily scans', 'tech news', 'finance updates', 'AI briefings', 'deep analysis', or says '如意如意' to open the interactive menu."
+      "description": "Comprehensive news aggregator that fetches, filters, and deeply analyzes real-time content from 28 sources including Hacker News, GitHub, Hugging Face Papers, AI Newsletters, WallStreetCN, Weibo, and Podcasts. Use when user requests 'daily scans', 'tech news', 'finance updates', 'AI briefings', 'deep analysis', or says 'å¦æå¦æ' to open the interactive menu."
     },
     {
       "name": "@554/publish-test",
