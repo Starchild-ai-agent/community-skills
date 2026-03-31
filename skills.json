@@ -404,8 +404,8 @@
     {
       "name": "@1390/woofi-swap",
       "path": "1390/woofi-swap/SKILL.md",
-      "version": "6.0.0",
-      "description": "Swap any token at the best price. WOOFi is a meta-aggregator that queries WooPP, 1inch, and ODOS simultaneously — returning the globally optimal rate across all three sources. Supports all ERC-20 tokens and native gas tokens (ETH, BNB, AVAX, MATIC, etc.) on 14 EVM chains. Get quotes, build transactions, execute swaps.",
+      "version": "7.0.0",
+      "description": "Swap any token at the best price with a single API call. One POST to /v1/swap handles everything — best-price quote, approval check, and transaction building — no separate calls needed. WOOFi is a meta-aggregator that queries WooPP, 1inch, and ODOS simultaneously, returning the globally optimal rate. Supports all ERC-20 tokens and native gas tokens (ETH, BNB, AVAX, MATIC, etc.) on 14 EVM chains.",
       "tags": [
         "swap",
         "trade",
@@ -436,7 +436,7 @@
         "odos",
         "woofi"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401390/woofi-swap%406.0.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401390/woofi-swap%407.0.0/bundle.zip"
     }
   ]
 }
