@@ -1,6 +1,6 @@
 ---
 name: "@2405/sol-scalper"
-version: 1.0.0
+version: 1.1.0
 description: "SOL 15M scalping strategy for Hyperliquid. Includes 9/21 EMA crossover, 1H EMA + VWAP filters, order block detection, funding rate gate, 200 EMA regime filter, RSI smoothing, and 1% risk / 1-2x leverage position sizing. Deploys a live alert task that fires every 15 minutes. Use when the user wants to run or install the SOL scalping strategy."
 author: starchild
 tags: [trading, scalping, solana, hyperliquid, alerts, strategy]
