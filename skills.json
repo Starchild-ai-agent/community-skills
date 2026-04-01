@@ -454,6 +454,23 @@
         "domain"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401247/orderly-dex-creator%402.1.0/bundle.zip"
+    },
+    {
+      "name": "@2061/orderly-dex-creator",
+      "path": "2061/orderly-dex-creator/SKILL.md",
+      "version": "2.2.0",
+      "description": "End-to-end lifecycle playbook for launching and operating an Orderly perpetual futures DEX — launch, graduate, domain/DNS, growth automation, market making, vaults, and security hardening. Includes prerequisite matrices, risk boundaries, and rollback procedures.",
+      "tags": [
+        "orderly",
+        "dex",
+        "perp",
+        "growth",
+        "market-making",
+        "vaults",
+        "security",
+        "domain"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402061/orderly-dex-creator%402.2.0/bundle.zip"
     }
   ]
 }
