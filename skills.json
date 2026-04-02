@@ -490,7 +490,7 @@
     {
       "name": "@1892/dgclaw",
       "path": "1892/dgclaw/SKILL.md",
-      "version": "3.0.0",
+      "version": "3.1.0",
       "description": "|-",
       "tags": [
         "trading",
@@ -501,7 +501,7 @@
         "competition",
         "virtuals"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/dgclaw%403.0.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/dgclaw%403.1.0/bundle.zip"
     }
   ]
 }
