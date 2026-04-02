@@ -486,6 +486,22 @@
         "strategy"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402405/sol-scalper%401.1.0/bundle.zip"
+    },
+    {
+      "name": "@1892/dgclaw",
+      "path": "1892/dgclaw/SKILL.md",
+      "version": "3.0.0",
+      "description": "|-",
+      "tags": [
+        "trading",
+        "defi",
+        "acp",
+        "hyperliquid",
+        "perpetuals",
+        "competition",
+        "virtuals"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/dgclaw%403.0.0/bundle.zip"
     }
   ]
 }
