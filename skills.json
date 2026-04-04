@@ -502,6 +502,14 @@
         "virtuals"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/dgclaw%403.1.0/bundle.zip"
+    },
+    {
+      "name": "@1892/abstract",
+      "path": "1892/abstract/SKILL.md",
+      "version": "1.0.0",
+      "description": "Abstract L2 — Master skill hub for all Abstract blockchain capabilities. Provides a directory of 7 specialized skills for building on Abstract: connecting, deploying contracts, wallet integration, agent wallets, multisig, prediction markets, and onchain agent identity. Use when the user wants to build on Abstract, deploy contracts, set up wallets, create multisigs, integrate prediction markets, register agents onchain, or any Abstract L2 development task.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/abstract%401.0.0/bundle.zip"
     }
   ]
 }
