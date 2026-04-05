@@ -1,6 +1,6 @@
 ---
 name: "@1892/solana"
-version: 1.0.0
+version: 1.0.2
 description: "Solana — Master skill hub for all Solana blockchain capabilities. Provides a directory of 15+ specialized skills for DeFi trading, NFTs, development, infrastructure, and tooling on Solana. Use when the user wants to build on Solana, trade DeFi protocols, create NFTs, deploy programs, set up multisig wallets, bridge assets, or any Solana development or interaction task."
 metadata:
   starchild:
@@ -14,7 +14,7 @@ disable-model-invocation: false
 
 Solana is a high-performance blockchain optimized for speed and low transaction costs. This master skill provides a directory of all Solana-related capabilities and helps you pick the right one.
 
-![Solana](assets/logo.svg)
+![Solana](assets/logo.png)
 
 ---
 
