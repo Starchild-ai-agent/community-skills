@@ -1,6 +1,6 @@
 ---
 name: "@1892/abstract"
-version: 1.0.1
+version: 1.0.2
 description: "Abstract L2 — Master skill hub for all Abstract blockchain capabilities. Provides a directory of 7 specialized skills for building on Abstract: connecting, deploying contracts, wallet integration, agent wallets, multisig, prediction markets, and onchain agent identity. Use when the user wants to build on Abstract, deploy contracts, set up wallets, create multisigs, integrate prediction markets, register agents onchain, or any Abstract L2 development task."
 metadata:
   starchild:
