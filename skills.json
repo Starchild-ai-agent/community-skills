@@ -526,6 +526,14 @@
       "description": "DESIGN.md — Curated collection of design system markdown files from 50+ popular websites. Drop a DESIGN.md into your project and let AI coding agents build matching UI. Use when the user wants to apply a design system, needs a DESIGN.md file, wants to clone a site's look and feel, or asks about Google Stitch design systems, UI themes, or visual styling.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/design-md%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@1892/disk-manager",
+      "path": "1892/disk-manager/SKILL.md",
+      "version": "1.2.0",
+      "description": "Intelligent disk space management for workspace environments. Analyze storage by safety tier, run dry-run cleanup, remove safe cache artifacts, and archive old projects with dependency exclusion. Use when the user asks to free disk space, clean workspace clutter, or automate cleanup policies.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/disk-manager%401.2.0/bundle.zip"
     }
   ]
 }
