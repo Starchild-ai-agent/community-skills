@@ -534,6 +534,23 @@
       "description": "Intelligent disk space management for workspace environments. Analyze storage by safety tier, run dry-run cleanup, remove safe cache artifacts, and archive old projects with dependency exclusion. Use when the user asks to free disk space, clean workspace clutter, or automate cleanup policies.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/disk-manager%401.2.0/bundle.zip"
+    },
+    {
+      "name": "@2192/video-producer",
+      "path": "2192/video-producer/SKILL.md",
+      "version": "1.0.0",
+      "description": "完整视频制作流水线：idea → 剧本 → 分镜表 → AI Prompt全集。用户只需提供一个创意，自动生成可分发给执行团队的完整制作包。Use when the user provides a video idea or asks to produce a video script, shot breakdown, or AI prompts.",
+      "tags": [
+        "video",
+        "视频制作",
+        "剧本",
+        "分镜",
+        "AI Prompt",
+        "短剧",
+        "中文",
+        "创作"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402192/video-producer%401.0.0/bundle.zip"
     }
   ]
 }
