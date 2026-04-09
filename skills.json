@@ -551,6 +551,23 @@
         "创作"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402192/video-producer%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@554/wallet",
+      "path": "554/wallet/SKILL.md",
+      "version": "3.0.0",
+      "description": "Multi-chain wallet — balances, transfers, signing, policy (EVM + Solana)",
+      "tags": [
+        "wallet",
+        "evm",
+        "solana",
+        "transfer",
+        "sign",
+        "policy",
+        "debank",
+        "birdeye"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/wallet%403.0.0/bundle.zip"
     }
   ]
 }
