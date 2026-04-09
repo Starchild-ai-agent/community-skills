@@ -1,6 +1,6 @@
 ---
 name: "@554/wallet"
-version: 3.0.0
+version: 3.0.1
 description: "Multi-chain wallet — balances, transfers, signing, policy (EVM + Solana)"
 author: starchild
 tags: [wallet, evm, solana, transfer, sign, policy, debank, birdeye]
