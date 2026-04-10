@@ -570,6 +570,14 @@
         "birdeye"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/wallet%403.0.1/bundle.zip"
+    },
+    {
+      "name": "@1892/technical-writing",
+      "path": "1892/technical-writing/SKILL.md",
+      "version": "2.0.0",
+      "description": "Write technical deep-dive articles that explain how systems work under the hood. Use when the content is about architecture, internals, mechanisms, or engineering decisions — not announcements or launches.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/technical-writing%402.0.0/bundle.zip"
     }
   ]
 }
