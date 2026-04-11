@@ -1,6 +1,6 @@
 ---
 name: "@1892/technical-writing"
-version: 2.0.0
+version: 3.0.0
 description: "Write technical deep-dive articles that explain how systems work under the hood. Use when the content is about architecture, internals, mechanisms, or engineering decisions — not announcements or launches."
 
 metadata:
@@ -31,12 +31,13 @@ Not every technical article is an architecture post. Match the structure to the 
 Explains how a system is built and why decisions were made. Our default type.
 
 ```
-1. Problem we needed to solve
-2. Constraints and requirements
-3. Options considered
-4. Architecture chosen (with diagram)
-5. Trade-offs we accepted
-6. Results and lessons
+1. Problem (lead with it fast, first paragraph)
+2. Why naive approaches fail (show what breaks, not just what works)
+3. Proposed approach (our fix, with architecture diagram)
+4. Architecture/workflow (concrete: real commands, real file paths, real config)
+5. Failure modes and tradeoffs (honest about what doesn't work)
+6. Results or lessons (metrics if you have them, principles if you don't)
+7. Practical takeaways (not a generic summary — actionable items)
 ```
 
 ### 2. Deep Dive / Explainer
@@ -114,6 +115,23 @@ The v1 draft covered six features in one article. The v2 covered two. The v2 per
 
 **Rule of thumb:** 2-3 topics per article, each with enough detail that a reader could actually implement what you're describing. If you can't write 200+ words of substantive content about a feature, it doesn't belong in a technical article. Save it for a changelog or a feature list.
 
+## TL;DR
+
+Every article gets a 3-5 bullet TL;DR right after the audience level declaration. This is not optional. Busy developers skim first and decide whether to invest. The TL;DR should convey the core argument, not just list the topics covered.
+
+Bad TL;DR: "This article covers task scheduling, output contracts, and model reliability."
+Good TL;DR: "A prompt on a timer is not a task. Scripts are truth, metadata is labels. Silence from a monitoring task is correct behavior. Numbers come from code, narrative from the model."
+
+## Write for Two Audiences
+
+Skimmers and deep readers. Both need to get value from the same article.
+
+For skimmers: clear section headers that tell the story on their own, short paragraphs, occasional bullets, the TL;DR at top. Someone reading only the headers should understand the argument.
+
+For deep readers: code blocks, architecture details, exact failure modes, metrics, the reasoning behind decisions. The substance that makes the article worth bookmarking.
+
+If a section only serves one audience, it probably doesn't belong.
+
 ## Word Count by Type
 
 | Type | Word Count | Why |
@@ -141,6 +159,8 @@ State your assumed audience level explicitly at the start of the article:
 
 All rules from the content-writing skill apply, plus these additions specific to technical content:
 
+**Be concrete.** Real examples, exact failure modes, architecture details, actual prompts, real metrics where possible. "Response time: 2.3s → 180ms" beats "performance improved significantly." If you can't share the real number, share the order of magnitude. Vague claims are marketing; specific claims are engineering.
+
 **Be opinionated about defaults.** Technical articles exist because defaults are often wrong for power users. Say so directly. "That is waste" is better than "This may not be optimal."
 
 **Explain the why, not just the what.** Every feature description needs a reason it exists. Don't just say "Smart Routing routes messages to different models." Say why one model for everything is a problem worth solving.
@@ -148,6 +168,8 @@ All rules from the content-writing skill apply, plus these additions specific to
 **Use concrete before/after states.** Show the world as it is, then the world as it could be. "Every message hits the same model, whether you're asking what time it is or debugging a 300-line async crawler" is more compelling than "Smart Routing optimizes model selection."
 
 **No hedging.** Don't say "you might want to consider" or "it could be helpful to." Say "do this" or "this is worth setting up." Technical readers want conviction, not options.
+
+**Show tradeoffs and failure modes.** Strong technical writing earns trust by explaining what broke, what didn't work, and why. Every approach has downsides. Name them. An article that only shows success reads as marketing, not engineering. Include a dedicated tradeoffs section or weave failure modes into each section.
 
 **Write from experience.** Only write about what you've done in production. If exploring, say so. The sentence "We haven't tested this at scale yet, but here's our thinking" is better than pretending certainty you don't have.
 
@@ -258,6 +280,34 @@ delay = calculate_retry_delay(attempt=3)  # ~8.0-8.8 seconds
 
 One diagram is worth 500 words of description. If you're describing a system with more than three components, draw it instead of narrating it.
 
+**Graphics explain, they don't decorate.** Prefer architecture diagrams, flowcharts, tradeoff tables, annotated screenshots, and before/after examples. Avoid generic decorative AI art. Every visual must answer a question that text answers poorly. If removing the image doesn't reduce understanding, the image shouldn't be there.
+
+## Decision Tables
+
+Use tables whenever you're comparing approaches, architectures, or tradeoffs. Prose is for narrative. Tables are for decisions. Especially good for:
+
+| When to use a table | Example |
+|---------------------|---------|
+| Comparing approaches | Short-term vs long-term memory |
+| Tradeoff analysis | Retrieval vs summarization |
+| Architecture choices | Static prompt vs dynamic context |
+| Feature comparison | Tool A vs Tool B for task X |
+
+If you find yourself writing "on one hand X, on the other hand Y," stop and make a table instead.
+
+## Special Topic: Prompting, Memory, and Context Posts
+
+Articles about LLM prompting, memory systems, or context management need to answer these explicitly:
+
+- What goes into context (and what gets left out)
+- How memory is stored (format, location, retention)
+- How memory is retrieved (matching, ranking, recency)
+- How context is compressed or filtered (strategies, triggers)
+- What breaks at scale (token limits, latency, cost)
+- What heuristics worked in practice (not theory, not benchmarks — actual production experience)
+
+These topics are especially prone to vagueness because the systems are complex. Fight that with specificity. Show the actual prompt template. Show the memory format. Show the retrieval query.
+
 ## Common Mistakes
 
 | Mistake | Problem | Fix |
@@ -277,15 +327,19 @@ One diagram is worth 500 words of description. If you're describing a system wit
 ## Editing Checklist
 
 Before publishing:
-- [ ] Title promises something specific
-- [ ] Subtitle states the thesis, not the topic
-- [ ] Opening hooks in 30 seconds (the gap, the problem)
-- [ ] Audience level stated explicitly
-- [ ] Claims backed by examples, code, or numbers
+- [ ] Is the title specific? (Not "Thoughts on Memory" — "How We Manage Memory for Long-Running Agents")
+- [ ] Is the thesis obvious up front? (First paragraph, not buried in section 3)
+- [ ] TL;DR present with 3-5 bullets for skimmers?
+- [ ] Can someone skim the headings and get the story?
+- [ ] Are there concrete examples? (Real failure modes, real metrics, real commands)
+- [ ] Are failure modes and tradeoffs included?
+- [ ] Are visuals explanatory, not decorative?
+- [ ] Decision tables used where comparing approaches?
 - [ ] All unnecessary words cut (see Words to Cut)
 - [ ] Code examples tested and runnable
-- [ ] Trade-offs section present and honest
-- [ ] Takeaway crystal clear
+- [ ] Audience level stated explicitly
+- [ ] Ending leaves practical takeaways, not a generic summary
+- [ ] Can any paragraph be cut by 30%?
 - [ ] Would send to a respected colleague without embarrassment
 
 ## What to Ask For
