@@ -574,10 +574,10 @@
     {
       "name": "@1892/technical-writing",
       "path": "1892/technical-writing/SKILL.md",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "description": "Write technical deep-dive articles that explain how systems work under the hood. Use when the content is about architecture, internals, mechanisms, or engineering decisions — not announcements or launches.",
       "tags": [],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/technical-writing%402.0.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/technical-writing%403.0.0/bundle.zip"
     }
   ]
 }
