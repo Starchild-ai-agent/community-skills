@@ -578,6 +578,19 @@
       "description": "Write technical deep-dive articles that explain how systems work under the hood. Use when the content is about architecture, internals, mechanisms, or engineering decisions — not announcements or launches.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/technical-writing%403.0.0/bundle.zip"
+    },
+    {
+      "name": "@2004/skill-repo-publish",
+      "path": "2004/skill-repo-publish/SKILL.md",
+      "version": "1.0.0",
+      "description": "Update and publish skills to the official-skills GitHub repo. Use when the user wants to update a SKILL.md, bump version, and push to Starchild-ai-agent/official-skills.",
+      "tags": [
+        "github",
+        "skills",
+        "workflow",
+        "git"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/skill-repo-publish%401.0.0/bundle.zip"
     }
   ]
 }
