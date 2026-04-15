@@ -591,6 +591,14 @@
         "git"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/skill-repo-publish%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@554/chart",
+      "path": "554/chart/SKILL.md",
+      "version": "3.0.0",
+      "description": "Interactive web-based charts for data analysis and business intelligence. Project-based output in output/chart-html/<project>/ with HTML + script + data + screenshot.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/chart%403.0.0/bundle.zip"
     }
   ]
 }
