@@ -614,6 +614,21 @@
         "vibe-coding"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/starchild-design-pack%401.1.0/bundle.zip"
+    },
+    {
+      "name": "@554/lunarcrush",
+      "path": "554/lunarcrush/SKILL.md",
+      "version": "1.3.0",
+      "description": "Crypto non-structured data expert — social sentiment, news aggregation, content search, influencer tracking, and topic/category intelligence",
+      "tags": [
+        "crypto",
+        "sentiment",
+        "news",
+        "social",
+        "lunarcrush",
+        "analytics"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/lunarcrush%401.3.0/bundle.zip"
     }
   ]
 }
