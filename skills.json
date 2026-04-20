@@ -629,6 +629,14 @@
         "analytics"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/lunarcrush%401.3.0/bundle.zip"
+    },
+    {
+      "name": "@554/jupiter",
+      "path": "554/jupiter/SKILL.md",
+      "version": "1.2.0",
+      "description": "Jupiter DEX aggregator on Solana — token swaps, limit orders, DCA. Use when user mentions Jupiter, Solana swap, SOL/USDC swap, or Solana DEX aggregator.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/jupiter%401.2.0/bundle.zip"
     }
   ]
 }
