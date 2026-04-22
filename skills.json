@@ -637,6 +637,14 @@
       "description": "Jupiter DEX aggregator on Solana — token swaps, limit orders, DCA. Use when user mentions Jupiter, Solana swap, SOL/USDC swap, or Solana DEX aggregator.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/jupiter%401.2.0/bundle.zip"
+    },
+    {
+      "name": "@3073/virtual-trading",
+      "path": "3073/virtual-trading/SKILL.md",
+      "version": "1.0.0",
+      "description": "",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403073/virtual-trading%401.0.0/bundle.zip"
     }
   ]
 }
