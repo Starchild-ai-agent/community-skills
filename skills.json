@@ -661,6 +661,14 @@
       "description": "Agents with the Billions Verified Agent Identity skill can earn rewards through the first AI agent rewards program.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401977/billions-faiar%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@554/video",
+      "path": "554/video/SKILL.md",
+      "version": "3.0.0",
+      "description": "End-to-end video generation via fal.ai through Starchild paid proxy. Covers text-to-video, image-to-video, video-to-video, model selection, billing, polling, and serving local reference assets via a public preview.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/video%403.0.0/bundle.zip"
     }
   ]
 }
