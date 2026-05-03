@@ -653,6 +653,14 @@
       "description": "",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403148/branchmak%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@1977/billions-faiar",
+      "path": "1977/billions-faiar/SKILL.md",
+      "version": "1.0.0",
+      "description": "Agents with the Billions Verified Agent Identity skill can earn rewards through the first AI agent rewards program.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401977/billions-faiar%401.0.0/bundle.zip"
     }
   ]
 }
