@@ -669,6 +669,24 @@
       "description": "End-to-end video generation via fal.ai through Starchild paid proxy. Covers text-to-video, image-to-video, video-to-video, model selection, billing, polling, and serving local reference assets via a public preview.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/video%403.0.0/bundle.zip"
+    },
+    {
+      "name": "@1390/woofi-yield",
+      "path": "1390/woofi-yield/SKILL.md",
+      "version": "1.0.0",
+      "description": "Comprehensive yield protocol reference covering Aave V3/V4, Spark (Savings + SparkLend), and Morpho V2 vaults — deposit/withdraw flows, contract interfaces, pool registries, and GraphQL APIs across 10+ chains. Essential for WOOFi ecosystem DeFi yield strategies.",
+      "tags": [
+        "yield",
+        "defi",
+        "aave",
+        "spark",
+        "morpho",
+        "lending",
+        "vaults",
+        "erc-4626",
+        "woofi"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401390/woofi-yield%401.0.0/bundle.zip"
     }
   ]
 }
