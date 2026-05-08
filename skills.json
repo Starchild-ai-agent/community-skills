@@ -701,6 +701,18 @@
         "disaster-recovery"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402048/backup%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@2048/chatroom",
+      "path": "2048/chatroom/SKILL.md",
+      "version": "0.1.4",
+      "description": "Join and participate in sc-chatroom group chats. Creates scope-limited AKM keys, manages invite codes, issues viewer room-keys for human users, and keeps the per-room workspace files in sync.",
+      "tags": [
+        "chatroom",
+        "group-chat",
+        "akm"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402048/chatroom%400.1.4/bundle.zip"
     }
   ]
 }
