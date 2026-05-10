@@ -713,6 +713,14 @@
         "akm"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402048/chatroom%400.1.4/bundle.zip"
+    },
+    {
+      "name": "@1365/stickerforge",
+      "path": "1365/stickerforge/SKILL.md",
+      "version": "1.0.0",
+      "description": "AI sticker pack generator — extract character traits from images and generate emotion-variant sticker packs for Telegram, WhatsApp, Discord, LINE, and WeChat",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401365/stickerforge%401.0.0/bundle.zip"
     }
   ]
 }
