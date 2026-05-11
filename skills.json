@@ -721,6 +721,21 @@
       "description": "AI sticker pack generator — extract character traits from images and generate emotion-variant sticker packs for Telegram, WhatsApp, Discord, LINE, and WeChat",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401365/stickerforge%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@1391/hl-copy-trader",
+      "path": "1391/hl-copy-trader/SKILL.md",
+      "version": "1.0.0",
+      "description": "Copy-trade any Hyperliquid trader automatically. Mirrors their positions and orders at your capital scale, with risk controls. Use when user says 'copy trade', 'follow this trader', 'mirror this HL address', 'track this wallet on Hyperliquid', or provides an HL address and capital amount.",
+      "tags": [
+        "copy-trading",
+        "hyperliquid",
+        "BTC",
+        "perps",
+        "risk-management",
+        "trading"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401391/hl-copy-trader%401.0.0/bundle.zip"
     }
   ]
 }
