@@ -1,6 +1,6 @@
 ---
 name: "@1391/hl-copy-trader"
-version: 1.0.0
+version: 1.1.0
 description: "Copy-trade any Hyperliquid trader automatically. Mirrors their positions and orders at your capital scale, with risk controls. Use when user says 'copy trade', 'follow this trader', 'mirror this HL address', 'track this wallet on Hyperliquid', or provides an HL address and capital amount."
 author: TomTom
 tags: [copy-trading, hyperliquid, BTC, perps, risk-management, trading]
@@ -42,6 +42,7 @@ Before any trade, wallet policy must be active. Load the **wallet-policy** skill
 | `max_leverage` | number | 10 | Cap leverage if target uses more |
 | `copy_assets` | string | "all" | Coins to copy. "all" or comma-separated e.g. "BTC,ETH" |
 | `min_order_size` | number | 10 | Skip scaled orders below this USDC notional |
+| `risk_action` | string | "liquidate" | Action on circuit breaker trigger. `"liquidate"` = close all positions + stop (default). `"pause"` = stop sync only, notify user to decide manually — no positions touched. |
 
 ---
 
@@ -73,12 +74,18 @@ Confirm? (yes/no)
 
 Run `scripts/sync.py` on every scheduled trigger. Steps:
 
-1. **Risk check first** — if `account_value < stop_value`: close all positions, cancel all orders, pause task, notify user.
+1. **Risk check first** — if `account_value < stop_value`:
+   - If `risk_action == "liquidate"` (default): close all **skill-managed** positions, cancel all **skill-managed** orders, pause task, notify user.
+   - If `risk_action == "pause"`: pause task immediately without touching any positions. Notify user: `"⚠️ Stop-loss triggered. Sync paused. Your positions are untouched — please decide whether to close manually."`
 2. **Fetch target state** — positions + open orders via HL info API.
 3. **Fetch my state** — positions + open orders + account value.
-4. **Sync positions** — for each target position: scale size, cap leverage, open/adjust/close as needed. Close any position I hold that target no longer holds.
-5. **Sync orders** — cancel orders target no longer has (via saved paul_oid→my_oid mapping). Place orders target added. Skip if scaled notional < `min_order_size` or asset not in `copy_assets`.
-6. **Notify** — only if something changed. Silent on no-op runs.
+4. **Scale ratio drift check** — compare current target account value against `state.json:target_account_value_at_setup`. If drift > 20%:
+   - Pause sync immediately.
+   - Notify user: `"⚠️ Target account value changed from $X to $Y (>{20}%). Scale ratio would shift from 1:A to 1:B. Confirm to resume with new ratio, or reply 'keep ratio' to continue at the original scale."`
+   - Wait for user confirmation before updating `scale_ratio` in state and resuming.
+5. **Sync positions** — for each target position: scale size, cap leverage, open/adjust/close as needed. Only close positions that exist in `state.json:skill_positions` (skill-managed). Never touch positions not in that set.
+6. **Sync orders** — cancel only orders tracked in `state.json:paul_orders` (skill-managed). Place orders target added. Skip if scaled notional < `min_order_size` or asset not in `copy_assets`. Never cancel orders not in the mapping.
+7. **Notify** — only if something changed. Silent on no-op runs.
 
 State is stored in `tasks/{job_id}/state.json`:
 ```json
@@ -93,6 +100,9 @@ State is stored in `tasks/{job_id}/state.json`:
   "copy_assets": "all",
   "min_order_size": 10,
   "paul_orders": {"target_oid": "my_oid"},
+  "skill_positions": ["BTC"],
+  "target_account_value_at_setup": 102000,
+  "risk_action": "liquidate",
   "lang": "zh"
 }
 ```
@@ -135,10 +145,11 @@ State is stored in `tasks/{job_id}/state.json`:
 ## Key Implementation Notes
 
 - Use `HyperliquidClient` from `skills/hyperliquid/client.py` for all HL calls
-- BTC minimum order size on HL is **0.001 BTC** — always `max(scaled_size, 0.001)`
+- **Per-coin minimum order size**: before placing any order, fetch the coin's `szDecimals` from HL `meta` API (`POST /info` with `{"type":"meta"}`). Compute `min_size = 10 ** (-szDecimals)`. Always use `max(scaled_size, min_size)`. Do not hardcode per-coin values — the `meta` response is the source of truth.
 - After opening position, verify fill via `get_account_state` before confirming
 - Deduplication: run cleanup pass on my orders before first sync to avoid doubling
-- Scale ratio must be recomputed if target's account value changes significantly (>20%)
+- Scale ratio drift (>20%) always triggers a user confirmation pause — never silently update the ratio. Store `target_account_value_at_setup` in state at initialization.
+- User manual orders/positions (not in `skill_positions` / `paul_orders`) are never touched by the sync loop.
 - For the weekly report, compare realized PnL from fills, not mark-to-market
 
 ---
