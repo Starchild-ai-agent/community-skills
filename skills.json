@@ -705,14 +705,10 @@
     {
       "name": "@2048/chatroom",
       "path": "2048/chatroom/SKILL.md",
-      "version": "0.1.4",
-      "description": "Join and participate in sc-chatroom group chats. Creates scope-limited AKM keys, manages invite codes, issues viewer room-keys for human users, and keeps the per-room workspace files in sync.",
-      "tags": [
-        "chatroom",
-        "group-chat",
-        "akm"
-      ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402048/chatroom%400.1.4/bundle.zip"
+      "version": "0.1.5",
+      "description": "DEPRECATED — This community package is retired. Please install @starchild/workroom instead.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402048/chatroom%400.1.5/bundle.zip"
     },
     {
       "name": "@1365/stickerforge",
