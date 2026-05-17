@@ -732,6 +732,14 @@
         "trading"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401391/hl-copy-trader%401.1.0/bundle.zip"
+    },
+    {
+      "name": "@329/test-quest",
+      "path": "329/test-quest/SKILL.md",
+      "version": "1.0.0",
+      "description": "just for test",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40329/test-quest%401.0.0/bundle.zip"
     }
   ]
 }
