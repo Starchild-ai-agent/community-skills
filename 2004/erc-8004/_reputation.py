@@ -111,9 +111,9 @@ def get_summary(
     contract = get_contract("ReputationRegistry", chain)
     addrs = [Web3.to_checksum_address(a) for a in client_addresses]
     count, sval, sdec = contract.functions.getSummary(agent_id, addrs, tag1, tag2).call()
-    avg = None
-    if count > 0:
-        avg = (sval / count) / (10 ** sdec)
+    # avg is 0.0 (not None) when count==0 — keeps the field numeric so callers
+    # can f-string format it without a None check.
+    avg = (sval / count) / (10 ** sdec) if count > 0 else 0.0
     return {
         "count": count,
         "summary_value": sval,

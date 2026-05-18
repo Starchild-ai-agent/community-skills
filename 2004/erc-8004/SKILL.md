@@ -1,6 +1,6 @@
 ---
 name: "@2004/erc-8004"
-version: 0.1.0
+version: 0.1.1
 description: "ERC-8004 Trustless Agents — register agent identity on-chain, publish reputation, discover other agents. Standardized agent infra for the open agent economy (Ethereum Foundation dAI team)."
 author: starchild
 tags: [erc-8004, agent, identity, reputation, ethereum, base, web3, agent-economy]

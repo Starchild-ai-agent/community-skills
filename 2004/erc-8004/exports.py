@@ -100,21 +100,27 @@ def discover_agents(
     *,
     chain: str | None = None,
     limit: int = 25,
-    from_id: int = 1,
+    from_id: int = 0,
     include_registration: bool = True,
     filter_tag: str | None = None,
     min_reputation_count: int = 0,
     reviewer_addresses: list[str] | None = None,
+    max_scan: int | None = None,
+    max_consecutive_gaps: int = 200,
 ) -> list[dict[str, Any]]:
     """
-    Enumerate agents in [from_id, from_id+limit). Optional filters layered off-chain.
+    Enumerate agents starting at `from_id`, returning up to `limit` results.
+    Scanning stops after `max_consecutive_gaps` unminted tokenIds in a row
+    (heuristic for end of registry) or `max_scan` total ids checked.
 
     `filter_tag` matches against any service `name` or `supportedTrust` entry in the
     registration file. `min_reputation_count` requires the agent to have at least
     N feedback entries from `reviewer_addresses` (if provided) or any reviewer.
     """
     agents = _identity.discover_agents(
-        chain=chain, limit=limit, from_id=from_id, include_registration=include_registration
+        chain=chain, limit=limit, from_id=from_id,
+        include_registration=include_registration,
+        max_scan=max_scan, max_consecutive_gaps=max_consecutive_gaps,
     )
 
     if filter_tag:
@@ -207,7 +213,7 @@ def get_reputation(
     if reviewer_addresses is None:
         reviewer_addresses = _reputation.get_clients(agent_id, chain=chain)
     if not reviewer_addresses:
-        return {"count": 0, "summary_value": 0, "summary_value_decimals": 0, "avg": None}
+        return {"count": 0, "summary_value": 0, "summary_value_decimals": 0, "avg": 0.0}
     return _reputation.get_summary(
         agent_id, reviewer_addresses, tag1=tag1, tag2=tag2, chain=chain
     )
