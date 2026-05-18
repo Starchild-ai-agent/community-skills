@@ -1,0 +1,42 @@
+{
+  "_comment": "Singleton registry deployments per chain. Source: https://github.com/erc-8004/erc-8004-contracts README. All testnet share the same address triple; all mainnet share another. ValidationRegistry is under TEE-community revision per README; addresses included where known.",
+  "chains": {
+    "base-sepolia": {
+      "chain_id": 84532,
+      "rpc": "https://sepolia.base.org",
+      "explorer": "https://sepolia.basescan.org",
+      "usdc": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "identity_registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+      "reputation_registry": "0x8004B663056A597Dffe9eCcC1965A193B7388713",
+      "validation_registry": null
+    },
+    "base": {
+      "chain_id": 8453,
+      "rpc": "https://mainnet.base.org",
+      "explorer": "https://basescan.org",
+      "usdc": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "identity_registry": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+      "reputation_registry": "0x8004BAa17C55a88189AE136b182e5fdA19dE9b63",
+      "validation_registry": null
+    },
+    "ethereum": {
+      "chain_id": 1,
+      "rpc": "https://eth.llamarpc.com",
+      "explorer": "https://etherscan.io",
+      "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "identity_registry": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+      "reputation_registry": "0x8004BAa17C55a88189AE136b182e5fdA19dE9b63",
+      "validation_registry": null
+    },
+    "ethereum-sepolia": {
+      "chain_id": 11155111,
+      "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+      "explorer": "https://sepolia.etherscan.io",
+      "usdc": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+      "identity_registry": "0x8004A818BFB912233c491871b3d84c89A494BD9e",
+      "reputation_registry": "0x8004B663056A597Dffe9eCcC1965A193B7388713",
+      "validation_registry": null
+    }
+  },
+  "default_chain": "base-sepolia"
+}
