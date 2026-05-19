@@ -1,6 +1,6 @@
 ---
 name: "@2219/reword"
-version: 1.3.0
+version: 1.3.1
 description: >
   Rewrites a user's raw prompt into a clearer, higher-performing prompt they can
   reuse directly. Trigger when the user starts their message with /reword,
@@ -13,6 +13,13 @@ tags:
   - rewriter
   - optimizer
   - efficiency
+
+metadata:
+  starchild:
+    emoji: "✍️"
+    skillKey: reword
+    displayName: "Reword"
+
 user-invocable: true
 ---
 
