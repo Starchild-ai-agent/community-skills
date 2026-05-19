@@ -1,12 +1,7 @@
 ---
 name: "@2219/reword"
-version: 1.3.1
-description: >
-  Rewrites a user's raw prompt into a clearer, higher-performing prompt they can
-  reuse directly. Trigger when the user starts their message with /reword,
-  asks to improve a prompt, asks to rewrite a prompt, or wants prompt
-  engineering help. When triggered by /reword, do not execute the task itself.
-  Return only the improved prompt in a copy-ready format.
+version: 1.3.2
+description: "Rewrites a user's raw prompt into a clearer, higher-performing prompt they can reuse directly. Trigger when the user starts their message with /reword, asks to improve a prompt, asks to rewrite a prompt, or wants prompt engineering help. When triggered by /reword, do not execute the task itself. Return only the improved prompt in a copy-ready format."
 author: starchild
 tags:
   - prompt-engineering
