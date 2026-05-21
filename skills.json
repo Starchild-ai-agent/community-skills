@@ -781,6 +781,14 @@
       "description": "derive",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%404657/derive%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@4544/hr-screen-brief",
+      "path": "4544/hr-screen-brief/SKILL.md",
+      "version": "1.0.0",
+      "description": "Objective HR-screen candidate brief. Use when the user provides interview/screen notes and wants reusable, business-ready Chinese feedback for hiring managers (standard + compressed), without subjective hiring conclusions.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%404544/hr-screen-brief%401.0.0/bundle.zip"
     }
   ]
 }
