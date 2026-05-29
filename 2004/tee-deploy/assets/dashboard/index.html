@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starchild on TEE · Chat</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="logo">🛡️</span>
+    <div>
+      <h1>Starchild on TEE</h1>
+      <span class="sub">Agent running inside Intel TDX confidential VM · Phala Cloud</span>
+    </div>
+  </div>
+  <div id="status-pill" class="pill pending" title="click for attestation details">
+    <span class="dot"></span><span id="status-text">Connecting…</span>
+  </div>
+</header>
+
+<main>
+  <aside id="sidebar">
+    <section>
+      <h3>CVM</h3>
+      <div class="kv"><label>app_id</label><code id="app-id">—</code></div>
+      <div class="kv"><label>node</label><code id="node">—</code></div>
+      <div class="kv"><label>uptime</label><code id="uptime">—</code></div>
+      <div class="kv"><label>compose hash</label><code id="compose-hash" title="">—</code></div>
+    </section>
+    <section>
+      <h3>Last reply attestation</h3>
+      <div class="kv"><label>bound to nonce</label><code id="att-nonce">—</code></div>
+      <div class="kv"><label>quote bytes</label><code id="att-quote-bytes">—</code></div>
+      <div class="kv"><label>report_data binding</label><code id="att-binding">—</code></div>
+      <button id="view-quote-btn" disabled>View raw quote</button>
+    </section>
+    <section>
+      <h3>Tools available</h3>
+      <ul id="tool-list" class="tools"></ul>
+    </section>
+    <section>
+      <h3>Workspace</h3>
+      <button id="refresh-ws">Refresh</button>
+      <ul id="ws-files" class="files"></ul>
+    </section>
+    <section>
+      <h3>Settings</h3>
+      <label class="check"><input type="checkbox" id="use-tools" checked> Enable tool calling</label>
+      <label class="kv"><label>Endpoint</label></label>
+      <input id="endpoint" type="text" value="__CVM_URL__">
+    </section>
+  </aside>
+
+  <section id="chat">
+    <div id="messages"></div>
+    <form id="input-form">
+      <textarea id="prompt" placeholder="Ask Starchild-TEE anything. Enter to send, Shift+Enter for newline." rows="2"></textarea>
+      <button type="submit" id="send-btn">Send</button>
+    </form>
+    <div class="hint">
+      Every reply binds <code>sha256(reply ‖ nonce)</code> into the TDX quote.
+      Click the status pill to see the latest quote.
+    </div>
+  </section>
+</main>
+
+<dialog id="quote-modal">
+  <h2>TDX Attestation Quote</h2>
+  <div class="kv"><label>nonce</label><code id="m-nonce"></code></div>
+  <div class="kv"><label>expected report_data</label><code id="m-expected"></code></div>
+  <div class="kv"><label>actual report_data</label><code id="m-actual"></code></div>
+  <div class="kv"><label>match</label><code id="m-match"></code></div>
+  <h3>Raw quote (first 1024 hex chars)</h3>
+  <pre id="m-quote"></pre>
+  <h3>Event log (first 600 chars)</h3>
+  <pre id="m-eventlog"></pre>
+  <form method="dialog"><button>Close</button></form>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
