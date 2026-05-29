@@ -842,6 +842,14 @@
         "swaps"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%404885/opensea%401.1.0/bundle.zip"
+    },
+    {
+      "name": "@2004/tee-deploy",
+      "path": "2004/tee-deploy/SKILL.md",
+      "version": "0.2.0",
+      "description": "Onboard a user to Phala Cloud and deploy a verifiable Starchild TEE agent — a minimal FastAPI runtime running inside an Intel TDX confidential VM, plus a published chat dashboard with attestation verification. Use when the user wants to \"try TEE\", \"run an agent in a confidential VM\", \"deploy to Phala\", or replicate the internal Starchild TEE test setup.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/tee-deploy%400.2.0/bundle.zip"
     }
   ]
 }
