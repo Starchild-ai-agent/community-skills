@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#3a3230; --soft:#6f635d; --gold:#c9963f; --rose:#d98a7b;
+    --paper:#fbf6ee; --paper2:#f4ead9; --line:#e6d8c3;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:{{FONT_STACK}};
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #fff7ea 0%, rgba(255,247,234,0) 60%),
+      linear-gradient(180deg,#fdf8f0 0%, #f6ecdd 100%);
+    line-height:1.95; font-size:18px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px; margin:0 auto; padding:64px 26px 96px;}
+
+  /* cover */
+  .cover{text-align:center; padding:40px 0 28px; position:relative;}
+  .stars{font-size:26px; letter-spacing:.5em; color:var(--gold); opacity:.85;}
+  h1{
+    font-size:clamp(30px,6vw,46px); font-weight:700; margin:.35em 0 .15em;
+    letter-spacing:.04em;
+    background:linear-gradient(90deg,#b9802f,#d98a7b 60%,#c9963f);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .subtitle{color:var(--soft); font-size:17px; margin:.2em 0 0; font-style:italic;}
+  .rule{width:84px; height:2px; margin:30px auto 8px;
+        background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+
+  /* story */
+  .story-text p{margin:0 0 1.35em; text-align:justify;}
+  .story-text p:first-letter{}
+  .story-text em{color:var(--rose); font-style:italic;}
+  .story-text strong{color:var(--gold); font-weight:600;}
+
+  figure.story-illus{
+    margin:42px -10px; text-align:center;
+  }
+  figure.story-illus img{
+    width:100%; max-width:680px; border-radius:18px;
+    box-shadow:0 18px 50px -18px rgba(120,80,40,.45);
+    border:6px solid #fff;
+  }
+  figure.story-illus figcaption{
+    margin-top:12px; font-size:14.5px; color:var(--soft); font-style:italic;
+  }
+
+  .dedication{
+    margin:56px auto 0; max-width:560px; text-align:center;
+    padding:30px 28px; border-radius:18px;
+    background:linear-gradient(180deg,#fff9f0, #f7ecda);
+    border:1px solid var(--line);
+  }
+  .dedication p{margin:0; font-size:19px; color:var(--ink); line-height:1.9;}
+
+  footer{
+    margin-top:60px; text-align:center; color:var(--soft); font-size:13.5px;
+  }
+  footer .heart{color:var(--rose);}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="cover">
+      <div class="stars">· ✦ · ✧ · ✦ ·</div>
+      <h1>{{TITLE}}</h1>
+      {{SUBTITLE_BLOCK}}
+      <div class="rule"></div>
+    </header>
+
+    <main>
+      {{BODY}}
+      {{DEDICATION_BLOCK}}
+    </main>
+
+    <footer>
+      <p>{{FOOTER_MADE}} · {{HERO}} <span class="heart">♥</span></p>
+    </footer>
+  </div>
+</body>
+</html>
