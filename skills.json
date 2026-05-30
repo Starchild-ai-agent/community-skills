@@ -850,6 +850,21 @@
       "description": "Onboard a user to Phala Cloud and deploy a verifiable Starchild TEE agent — a minimal FastAPI runtime running inside an Intel TDX confidential VM, plus a published chat dashboard with attestation verification. Use when the user wants to \"try TEE\", \"run an agent in a confidential VM\", \"deploy to Phala\", or replicate the internal Starchild TEE test setup.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/tee-deploy%400.2.0/bundle.zip"
+    },
+    {
+      "name": "@3182/if-never-born",
+      "path": "3182/if-never-born/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [
+        "story",
+        "fairy-tale",
+        "gift",
+        "healing",
+        "illustration",
+        "storybook"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/if-never-born%401.0.0/bundle.zip"
     }
   ]
 }
