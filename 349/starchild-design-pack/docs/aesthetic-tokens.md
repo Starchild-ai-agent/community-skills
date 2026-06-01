@@ -1,17 +1,29 @@
 # Starchild Design System
 
-This skill defines the core aesthetic for all Starchild interfaces. 
+This skill defines the core aesthetic for all Starchild interfaces.
+
+> **Source of truth:** the hosted Brand Registry at
+> https://community.iamstarchild.com/1892-starchild-brand/
+> (`brand.json` / `tokens.css`). If anything here disagrees with the registry,
+> the registry wins. Fetch it before generating brand assets.
 
 ## Visual Identity
 
 ### Colors
-- **Primary:** `#F84600` (Vibrant, warm orange)
-- **Background:** `#000000` (Deep black)
-- **Containers:** Dark charcoal/gray (for cards and containers)
-- **Text:** `#FFFFFF` (Pure white)
+- **Primary / Accent:** `#F84600` (Starchild Orange, Orange/400)
+- **Background:** `#FFFFFF` (default light root background)
+- **Text:** `#151515` (primary text on light)
+- **Black:** `#050505` (true black for dark surfaces/backgrounds)
+- **Containers:** dark charcoal on dark layouts; subtle tinted surfaces on light
+- **Orange scale:** `#FFF0DB` · `#FFA940` · `#F97300` · `#E25C00` · `#F84600` · `#C63A00` · `#8F2A00`
+
+The brand ships **both light and dark/orange** surfaces. Prefer the registry's
+ready-made backgrounds (black grid, orange grid, monolith, pixelburst) over invented gradients.
 
 ### Typography
-- **Font:** Sans-serif (Inter or similar)
+- **Headline:** Power Grotesk (display/headlines)
+- **Body / UI:** Google Sans
+- **Fallback:** `Inter, system-ui, sans-serif`
 - **Hierarchy:**
   - **Headers:** 600-700 (Semibold/Bold)
   - **Body:** 400 (Regular)
