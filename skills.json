@@ -334,8 +334,17 @@
     {
       "name": "@349/starchild-design-pack",
       "path": "349/starchild-design-pack/SKILL.md",
-      "version": "1.0.0",
-      "description": "Complete UI/UX design + implementation skillset for vibe coders. Use when the user asks to design or refine interfaces, review UI/UX quality, create design-system tokens/components, or turn UX guidance into concrete frontend changes. Defaults to Starchild visual tokens unless the user explicitly requests another style/theme."
+      "version": "1.1.0",
+      "description": "Complete UI/UX design + implementation skillset for vibe coders. Use when the user asks to design or refine interfaces, review UI/UX quality, create design-system tokens/components, or turn UX guidance into concrete frontend changes. Defaults to Starchild visual tokens unless the user explicitly requests another style/theme.",
+      "tags": [
+        "design",
+        "ui",
+        "ux",
+        "frontend",
+        "design-system",
+        "vibe-coding"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40349/starchild-design-pack%401.1.0/bundle.zip"
     },
     {
       "name": "@349/starchild-strategies",
