@@ -1,6 +1,6 @@
 ---
 name: "@3182/if-never-born"
-version: 1.0.0
+version: 1.0.1
 author: Agentway
 tags: [story, fairy-tale, gift, healing, illustration, storybook]
 description: |
