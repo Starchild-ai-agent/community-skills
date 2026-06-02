@@ -863,7 +863,7 @@
     {
       "name": "@3182/if-never-born",
       "path": "3182/if-never-born/SKILL.md",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "|",
       "tags": [
         "story",
@@ -873,7 +873,7 @@
         "illustration",
         "storybook"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/if-never-born%401.0.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/if-never-born%401.0.1/bundle.zip"
     },
     {
       "name": "@3182/zodiac-pastlife-myth",
