@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{TITLE}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg1: #090b1a;
+      --bg2: #19142e;
+      --gold: #d9b56f;
+      --ink: #efe7d5;
+      --soft: #bda983;
+      --line: rgba(217,181,111,0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Serif SC", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 50% -20%, #2a214d 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      line-height: 1.95;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 22px 90px;
+    }
+    header { text-align: center; margin-bottom: 24px; }
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 6vw, 50px);
+      background: linear-gradient(90deg, #f4dfb2, #d9b56f, #f4dfb2);
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: 0.06em;
+    }
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--soft);
+      font-style: italic;
+      font-size: 16px;
+    }
+    .meta {
+      margin: 14px auto 0;
+      color: var(--soft);
+      font-size: 14px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: inline-block;
+      padding: 8px 12px;
+    }
+    .illus {
+      margin: 28px 0 26px;
+      text-align: center;
+    }
+    .illus img {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+    }
+    .illus figcaption {
+      margin-top: 10px;
+      color: var(--soft);
+      font-size: 14px;
+    }
+    .story {
+      background: rgba(17, 13, 32, 0.55);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px 20px;
+    }
+    .story p { margin: 0 0 1.2em; text-align: justify; }
+    .poem {
+      margin-top: 24px;
+      background: rgba(217,181,111,0.08);
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .poem h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #f1d8a5;
+      letter-spacing: 0.04em;
+    }
+    .poem p { margin: 6px 0; text-align: center; }
+    .closing {
+      margin-top: 16px;
+      text-align: center;
+      color: #f1d8a5;
+      font-size: 17px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>{{TITLE}}</h1>
+      {{SUBTITLE_BLOCK}}
+      {{META_BLOCK}}
+    </header>
+
+    {{IMAGE_BLOCK}}
+
+    <section class="story">
+      {{STORY_HTML}}
+    </section>
+
+    <section class="poem">
+      <h2>命运预言</h2>
+      {{POEM_HTML}}
+    </section>
+
+    {{CLOSING_BLOCK}}
+  </div>
+</body>
+</html>
