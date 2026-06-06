@@ -753,7 +753,7 @@
     {
       "name": "@2004/erc-8004",
       "path": "2004/erc-8004/SKILL.md",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "description": "ERC-8004 Trustless Agents — register agent identity on-chain, publish reputation, discover other agents. Standardized agent infra for the open agent economy (Ethereum Foundation dAI team).",
       "tags": [
         "erc-8004",
@@ -765,7 +765,7 @@
         "web3",
         "agent-economy"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/erc-8004%400.1.1/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/erc-8004%400.2.0/bundle.zip"
     },
     {
       "name": "@2219/reword",
