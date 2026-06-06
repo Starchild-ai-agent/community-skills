@@ -889,6 +889,18 @@
         "chinese-style"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/zodiac-pastlife-myth%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@3182/regime-aware-entry-engine",
+      "path": "3182/regime-aware-entry-engine/SKILL.md",
+      "version": "1.0.0",
+      "description": "Build a regime-aware entry plan that outputs a 9-column execution table with first buy, add levels, stop, target, and action tags.",
+      "tags": [
+        "trading",
+        "risk-management",
+        "entries"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/regime-aware-entry-engine%401.0.0/bundle.zip"
     }
   ]
 }
