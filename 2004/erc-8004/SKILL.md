@@ -1,12 +1,14 @@
 ---
 name: "@2004/erc-8004"
-version: 0.1.1
+version: 0.2.0
 description: "ERC-8004 Trustless Agents — register agent identity on-chain, publish reputation, discover other agents. Standardized agent infra for the open agent economy (Ethereum Foundation dAI team)."
 author: starchild
 tags: [erc-8004, agent, identity, reputation, ethereum, base, web3, agent-economy]
 ---
 
 # 🪪 ERC-8004 Skill
+
+**Community edition** — updated for Starchild skill marketplace.
 
 Implementation of the **ERC-8004 Trustless Agents** standard — the Ethereum Foundation
 dAI team's on-chain Identity + Reputation + Validation layer for AI agents.
@@ -129,3 +131,8 @@ from the corresponding faucet first (Base Sepolia: coinbase / alchemy / quicknod
 See `output/eth-hk-demo/` for a full scripted demo combining this skill with:
 - ERC-8183 (Agentic Commerce) for escrow + evaluator-attested completion
 - x402 for HTTP-native USDC micropayments
+
+## Changelog (v0.2.0)
+- Bumped for community marketplace publish
+- Added "Community edition" header
+- Minor doc cleanup for discoverability
