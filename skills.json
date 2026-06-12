@@ -917,6 +917,14 @@
       "description": "",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405312/delta-strategy%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@5312/fvg-delta-crypto-engine-build",
+      "path": "5312/fvg-delta-crypto-engine-build/SKILL.md",
+      "version": "6.0.0",
+      "description": "Builds and app/bot to print Crypto Futures Signals based on a Strategy.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405312/fvg-delta-crypto-engine-build%406.0.0/bundle.zip"
     }
   ]
 }
