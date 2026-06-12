@@ -933,6 +933,21 @@
       "description": "",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405322/fvg-engine%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@2195/quotesim-tape-validation",
+      "path": "2195/quotesim-tape-validation/SKILL.md",
+      "version": "1.0.0",
+      "description": "Turn a low QuoteSim trust score into a real validated $/day number with zero CLI for the user. When the user wants to \"validate\" an asset, \"get a real number\", \"make it trustworthy\", or asks how to run the shadow logger, this skill sets up real-tape collection + scoring as scheduled tasks and reports back automatically when the readiness gate clears.",
+      "tags": [
+        "quotesim",
+        "market-making",
+        "validation",
+        "trading",
+        "hyperliquid",
+        "orderly"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402195/quotesim-tape-validation%401.0.0/bundle.zip"
     }
   ]
 }
