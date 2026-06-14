@@ -956,6 +956,14 @@
       "description": "",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405326/fvg-delta-forex-engine%406.0.0/bundle.zip"
+    },
+    {
+      "name": "@5343/fvg-delta",
+      "path": "5343/fvg-delta/SKILL.md",
+      "version": "6.0.0",
+      "description": "",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405343/fvg-delta%406.0.0/bundle.zip"
     }
   ]
 }
