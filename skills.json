@@ -996,6 +996,14 @@
       "description": "",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405396/fvg-delta-crypto-skill%406.0.0/bundle.zip"
+    },
+    {
+      "name": "@3182/ai-learning-coach",
+      "path": "3182/ai-learning-coach/SKILL.md",
+      "version": "0.1.0",
+      "description": "|",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/ai-learning-coach%400.1.0/bundle.zip"
     }
   ]
 }
