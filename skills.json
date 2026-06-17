@@ -1012,6 +1012,14 @@
       "description": "",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405400/trading-bot-create%406.1.0/bundle.zip"
+    },
+    {
+      "name": "@5409/fvg-delta-crypto-core",
+      "path": "5409/fvg-delta-crypto-core/SKILL.md",
+      "version": "7.0.0",
+      "description": "",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405409/fvg-delta-crypto-core%407.0.0/bundle.zip"
     }
   ]
 }
