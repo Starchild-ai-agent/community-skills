@@ -1020,6 +1020,14 @@
       "description": "",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%405409/fvg-delta-crypto-core%407.0.0/bundle.zip"
+    },
+    {
+      "name": "@1977/jobseeker",
+      "path": "1977/jobseeker/SKILL.md",
+      "version": "1.0.0",
+      "description": "Aims to help you find the right jobs for you right on time.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401977/jobseeker%401.0.0/bundle.zip"
     }
   ]
 }
