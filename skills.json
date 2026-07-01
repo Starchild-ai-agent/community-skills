@@ -1036,6 +1036,23 @@
       "description": "|",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/decision-journal%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@3182/thesis-falsifier",
+      "path": "3182/thesis-falsifier/SKILL.md",
+      "version": "1.0.0",
+      "description": "逆向证伪器 — take any investment thesis (\"I should buy X because Y\") and systematically try to destroy it before you act. Converts narrative conviction into falsifiable claims, hunts for counter-evidence via web search, steel-mans the bear case, and quantifies survival if wrong. Use BEFORE acting on any thesis you feel strongly about. Works on stocks, crypto, macro bets, any decision with a thesis.",
+      "tags": [
+        "investing",
+        "decision-making",
+        "critical-thinking",
+        "risk-management",
+        "thesis",
+        "falsification",
+        "stocks",
+        "crypto"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/thesis-falsifier%401.0.0/bundle.zip"
     }
   ]
 }
