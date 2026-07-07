@@ -1065,8 +1065,8 @@
     {
       "name": "@3182/earnings-surprise-detector",
       "path": "3182/earnings-surprise-detector/SKILL.md",
-      "version": "1.0.0",
-      "description": "|",
+      "version": "1.0.1",
+      "description": "Verify actual quarterly earnings (扣非归母净利润同比/营收同比/EPS) against analyst/research expectations BEFORE acting on a stock recommendation. Pulls real data via mx-data (东方财富), compares to expected growth, gates with PASS/WARN/FAIL. Use when evaluating any A-share recommendation that cites expected earnings growth, before stating entry prices or position sizing. Prevents expensive failures (太辰光 actual -17% vs research +80-120%, 英维克 -82% vs +150%).",
       "tags": [
         "investing",
         "a-shares",
@@ -1076,7 +1076,7 @@
         "mx-data",
         "earnings-surprise"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/earnings-surprise-detector%401.0.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/earnings-surprise-detector%401.0.1/bundle.zip"
     }
   ]
 }
