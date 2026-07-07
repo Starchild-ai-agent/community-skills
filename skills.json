@@ -1053,6 +1053,14 @@
         "crypto"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/thesis-falsifier%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@554/web-crawler",
+      "path": "554/web-crawler/SKILL.md",
+      "version": "2.6.0",
+      "description": "Web scraping plus social data: YouTube, TikTok, Instagram, LinkedIn,",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/web-crawler%402.6.0/bundle.zip"
     }
   ]
 }
