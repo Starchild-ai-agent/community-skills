@@ -1061,6 +1061,22 @@
       "description": "Web scraping plus social data: YouTube, TikTok, Instagram, LinkedIn,",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40554/web-crawler%402.6.0/bundle.zip"
+    },
+    {
+      "name": "@3182/earnings-surprise-detector",
+      "path": "3182/earnings-surprise-detector/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [
+        "investing",
+        "a-shares",
+        "earnings",
+        "verification",
+        "risk-management",
+        "mx-data",
+        "earnings-surprise"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/earnings-surprise-detector%401.0.0/bundle.zip"
     }
   ]
 }
