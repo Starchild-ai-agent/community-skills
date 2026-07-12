@@ -1081,7 +1081,7 @@
     {
       "name": "@2004/realtime-voice-preview",
       "path": "2004/realtime-voice-preview/SKILL.md",
-      "version": "1.4.0",
+      "version": "1.4.1",
       "description": "|",
       "tags": [
         "openai",
@@ -1090,7 +1090,7 @@
         "webrtc",
         "agent"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/realtime-voice-preview%401.4.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/realtime-voice-preview%401.4.1/bundle.zip"
     }
   ]
 }
