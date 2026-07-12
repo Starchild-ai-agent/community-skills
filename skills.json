@@ -1077,6 +1077,20 @@
         "earnings-surprise"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/earnings-surprise-detector%401.0.1/bundle.zip"
+    },
+    {
+      "name": "@2004/realtime-voice-preview",
+      "path": "2004/realtime-voice-preview/SKILL.md",
+      "version": "1.4.0",
+      "description": "|",
+      "tags": [
+        "openai",
+        "realtime",
+        "voice",
+        "webrtc",
+        "agent"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/realtime-voice-preview%401.4.0/bundle.zip"
     }
   ]
 }
