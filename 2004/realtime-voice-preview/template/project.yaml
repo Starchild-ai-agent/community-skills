@@ -1,6 +1,6 @@
 name: realtime-voice-preview
 type: service
-version: 1.4.0
+version: 1.4.1
 description: |
   Starchild Live: an OpenAI Realtime API (WebRTC) voice interface for Starchild
   agents. Uses one temporary-first thread route list and supports synchronous or
@@ -38,7 +38,6 @@ tags:
   - agent-bridge
   - background-jobs
   - thread-selection
-  - opus-2025
   - byok
 publisher:
   code_slug: realtime-voice-preview

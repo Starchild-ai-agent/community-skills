@@ -23,7 +23,7 @@ async def main():
         await ws.send(json.dumps({
             "type": "conversation.item.create",
             "item": {"type": "message", "role": "user",
-                     "content": [{"type": "input_text", "text": "Say hello to Leon and confirm the realtime link works, in English then Chinese."}]}}))
+                     "content": [{"type": "input_text", "text": "Say hello and confirm the realtime link works."}]}}))
         await ws.send(json.dumps({"type": "response.create"}))
         async for msg in ws:
             ev = json.loads(msg); t = ev["type"]

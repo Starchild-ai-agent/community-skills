@@ -1,6 +1,6 @@
 ---
 name: "@2004/realtime-voice-preview"
-version: 1.4.0
+version: 1.4.1
 description: |
   One-click Starchild Live Preview: an OpenAI Realtime API voice interface connected
   to a Starchild Agent through ask_starchild. Supports a temporary-first work-thread
@@ -176,6 +176,22 @@ saved URL.
 - Base64-wrap SDP in JSON across the Preview proxy.
 - UI strings remain English; no hardcoded machine-specific public URL.
 - Public publishing is optional and must use the `community-publish` skill.
+
+## Full-screen usage (全屏使用)
+
+Always instruct the user to test in a **separate, full-screen browser tab**, never inside
+the embedded Preview iframe:
+
+- The voice UI needs **microphone permission** (`getUserMedia`). Browsers restrict or
+  deny this inside embedded/sandboxed iframes, so the embedded Preview panel may silently
+  fail to capture audio even when the page loads fine.
+- Use the Preview panel's open-in-new-tab / pop-out action to get a top-level tab, then
+  click **Allow** when the browser prompts for the microphone.
+- Permission is bound to the origin (host + port). A stable Preview ID (constant serve
+  `title`) means the user grants it once; a renamed title mints a new ID and re-prompts.
+- Full-screen also keeps the Connect button and jobs panel unobstructed during testing.
+
+Include this guidance every time you hand the Preview URL to a user.
 
 ## Troubleshooting
 
