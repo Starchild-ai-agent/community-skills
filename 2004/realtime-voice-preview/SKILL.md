@@ -1,6 +1,6 @@
 ---
 name: "@2004/realtime-voice-preview"
-version: 1.4.1
+version: 1.4.2
 description: |
   One-click Starchild Live Preview: an OpenAI Realtime API voice interface connected
   to a Starchild Agent through ask_starchild. Supports a temporary-first work-thread
@@ -21,9 +21,11 @@ disable-model-invocation: false
 
 ## What this skill does
 
-Creates **Starchild Live**, a WebRTC voice UI that leaves speech/VAD/interruption to
-OpenAI Realtime and delegates Agent reasoning, files, memory, tools and workspace work
-through one gateway tool: `ask_starchild`.
+Creates **Starchild Live**, the user's realtime voice proxy. It listens, responds, and
+acts as one natural assistant while using the user's Starchild context, files, memory,
+tools, and work threads as internal capabilities. OpenAI Realtime handles the live voice
+experience; `ask_starchild` remains an implementation detail, not something narrated to
+the user.
 
 The skill bundles the complete project under `template/`. Its setup script creates or
 updates the user's own copy at `output/projects/realtime-voice-preview/`; it does not rely

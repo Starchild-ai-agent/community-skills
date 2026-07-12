@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Starchild Live — Realtime Agent Control</title>
+  <title>My Realtime Voice Assistant</title>
   <style>
     :root {
       --bg: #070707;
@@ -220,9 +220,9 @@
 </head>
 <body>
   <header class="topbar" role="banner">
-    <div class="brand" aria-label="Starchild Live">
-      <span class="brand-mark" aria-hidden="true">S</span>
-      <span>Starchild Live</span>
+    <div class="brand" aria-label="My Realtime Voice Assistant">
+      <span class="brand-mark" aria-hidden="true">V</span>
+      <span>Voice Assistant</span>
     </div>
     <div class="topbar-meta" id="topbarMeta" role="status" aria-live="polite">
       <span class="status-chip" id="statusChip" data-kind="">
@@ -236,7 +236,7 @@
 
   <main>
     <section class="stage" aria-label="Voice conversation">
-      <div class="stage-title">Talk with Starchild</div>
+      <div class="stage-title">Talk with your assistant</div>
       <div class="stage-sub" id="stageSub">Click to start, just speak.</div>
       <div class="orb-wrap">
         <button id="btnConnect" class="voice-orb" data-state="idle" aria-describedby="stageSub" aria-label="Start or end the conversation">
@@ -294,14 +294,14 @@
         </div>
       </section>
 
-      <section class="panel" aria-label="Starchild Agent bridge">
-        <h2>Starchild Agent</h2>
+      <section class="panel" aria-label="Assistant connection">
+        <h2>Your Assistant</h2>
         <div class="bridge-line">
-          <span class="lbl">Active routing</span>
+          <span class="lbl">Active context</span>
           <span class="val" id="bridgePanelStatus">Loading Agent and thread…</span>
         </div>
         <p class="hint" style="margin: 10px 0 0;">
-          OpenAI Realtime only handles voice and turn-taking. Starchild handles reasoning, context, and tools through <code>ask_starchild</code>.
+          Your realtime voice assistant can use your Agent context, projects, memory, tools, and selected work thread to act on your behalf.
         </p>
         <details class="agent-settings" id="agentSettings">
           <summary>Agent settings</summary>
@@ -310,7 +310,7 @@
               <input id="cfgAgentId" maxlength="128" value="main" autocomplete="off">
             </label>
             <label>Main model
-              <select id="cfgModel"><option value="">Starchild default</option></select>
+              <select id="cfgModel"><option value="">Assistant default</option></select>
             </label>
             <label>Thread route
               <select id="cfgThreadRoute">
@@ -641,9 +641,9 @@
       if (!terminalJob(job) || deliveredRuns.has(job.run_id)) return false;
       if (!dc || dc.readyState !== "open") return false;
       let text;
-      if (job.status === "completed") text = "Background Starchild job " + job.run_id + " completed. Verified result:\n" + (job.result || "No result text was returned.");
-      else if (job.status === "cancelled") text = "Background Starchild job " + job.run_id + " was cancelled.";
-      else text = "Background Starchild job " + job.run_id + " failed: " + (job.error || "unknown error");
+      if (job.status === "completed") text = "Task finished. Here's the result:\n" + (job.result || "No result text was returned.");
+      else if (job.status === "cancelled") text = "That task was cancelled before it finished.";
+      else text = "That task failed: " + (job.error || "unknown error");
       const sent = sendEvent({ type: "conversation.item.create", item: { type: "message", role: "user", content: [{ type: "input_text", text }] } });
       if (!sent) return false;
       deliveredRuns.add(job.run_id);
@@ -915,13 +915,13 @@
             }
             if (r.status === 202 && data.ok && data.accepted && data.run_id) {
               rememberJob(data);
-              output = { ok: true, accepted: true, run_id: data.run_id, status: data.status, message: "Starchild accepted this as a background job. Tell the user it is running; the verified result will be delivered automatically." };
-              activityAdd("tool", "Background job accepted: " + data.run_id);
+              output = "It's running. I'll update you when it's done.";
+              activityAdd("tool", "Background task accepted");
               log("bridge background accepted", { run_id: data.run_id, status: data.status });
             } else {
-              if (!r.ok || !data.ok || !data.result) throw new Error(data.error || ("Starchild Agent HTTP " + r.status));
+              if (!r.ok || !data.ok || !data.result) throw new Error(data.error || ("Assistant HTTP " + r.status));
               output = data.result;
-              activityAdd("tool", "Starchild returned a real result");
+              activityAdd("tool", "Returned a real result");
               log("bridge result", { ok: true, agent_id: data.agent_id, turns: data.turns, usage: data.usage });
             }
           } catch (e) {

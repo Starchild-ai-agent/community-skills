@@ -182,7 +182,7 @@ class BackgroundJobsTest(unittest.TestCase):
         cfg = {"agent_id": "main", "model": None, "thread_mode": "selected", "system_prompt": ""}
         with patch.object(server, "urlopen", side_effect=fake_urlopen):
             server._dispatch_chat_call("thread-test", False, "spoken request", cfg)
-        self.assertIn("[Starchild Live Voice Agent]", captured["message"])
+        self.assertIn("[User request via Starchild Live]", captured["message"])
         self.assertIn("[Spoken user request]\nspoken request", captured["message"])
 
     def test_http_background_lifecycle_and_unknown_404(self):

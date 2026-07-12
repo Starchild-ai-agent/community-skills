@@ -2,11 +2,11 @@
 
 ## What
 
-A WebRTC realtime voice interface that connects OpenAI's Realtime API to your
-Starchild Agent. OpenAI handles speech capture, VAD (voice activity detection —
-when the user starts and stops speaking), interruption and turn-taking only.
-Every Agent capability (reasoning, tools, memory, files, workspace) is reached
-through one gateway tool: `ask_starchild`.
+Starchild Live is the user's realtime voice proxy: one natural assistant that listens,
+responds, and acts on the user's behalf. OpenAI Realtime provides the live speech,
+voice-activity detection, interruption, and turn-taking experience. The proxy uses the
+user's Starchild context, reasoning, tools, memory, files, workspace, and selected work
+thread internally, without narrating handoffs or implementation details.
 
 > **This is OpenAI Realtime, not Grok.** The model, the URL namespace
 > (`wss://api.openai.com/...`) and the audio-codec conventions all belong to

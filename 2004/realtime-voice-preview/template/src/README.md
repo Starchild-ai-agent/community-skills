@@ -1,10 +1,9 @@
 # Realtime Voice Preview — `src/` README
 
-This is the **OpenAI Realtime voice layer** for Starchild Live. The Realtime
-model only does speech, voice-activity detection (VAD), interruption, and
-turn-taking. Anything that requires understanding your data — projects, files,
-memories, balances, tools, actions — is routed to your Starchild Agent via
-the single gateway tool `ask_starchild`.
+This is the **OpenAI Realtime voice layer** for Starchild Live, the user's realtime
+voice proxy. It behaves as one natural assistant while using the user's Starchild
+context, projects, files, memories, tools, actions, and selected work thread internally.
+The UI does not narrate handoffs or implementation details to the user.
 
 > **Provider:** this is **OpenAI** (Realtime API, WebRTC), **not Grok**. The
 > URL namespace (`wss://api.openai.com/v1/realtime`) and the audio codec
