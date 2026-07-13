@@ -1091,6 +1091,14 @@
         "agent"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/realtime-voice-preview%401.4.2/bundle.zip"
+    },
+    {
+      "name": "@3182/cross-chain-bridge",
+      "path": "3182/cross-chain-bridge/SKILL.md",
+      "version": "1.0.0",
+      "description": "Single-command cross-chain token bridge for USDC/USDT across 6 EVM chains with Alchemy Account Abstraction gas sponsorship.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/cross-chain-bridge%401.0.0/bundle.zip"
     }
   ]
 }
