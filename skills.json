@@ -1099,6 +1099,23 @@
       "description": "Single-command cross-chain token bridge for USDC/USDT across 6 EVM chains with Alchemy Account Abstraction gas sponsorship.",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/cross-chain-bridge%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6171/pendulum-g-experiment",
+      "path": "6171/pendulum-g-experiment/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [
+        "esp32",
+        "esp8266",
+        "pendulum",
+        "physics-experiment",
+        "hall-sensor",
+        "reed-switch",
+        "gravity",
+        "teaching"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/pendulum-g-experiment%401.0.0/bundle.zip"
     }
   ]
 }
