@@ -1,0 +1,12 @@
+name: experiment-research-lab
+version: 1.0.0
+description: 自动搜索全网前沿实验方案，评估可行性后生成完整实现（BOM/代码/电路图/3D打印/仪表盘/教学文档）。
+author: tea
+type: skill
+tags:
+- experiment
+- research
+- physics
+- maker
+- DIY
+- solution-finder
