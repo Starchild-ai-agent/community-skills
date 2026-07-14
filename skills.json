@@ -1116,6 +1116,22 @@
         "teaching"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/pendulum-g-experiment%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6171/experiment-research-lab",
+      "path": "6171/experiment-research-lab/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [
+        "experiment",
+        "research",
+        "physics",
+        "maker",
+        "DIY",
+        "solution-finder",
+        "implementation"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/experiment-research-lab%401.0.0/bundle.zip"
     }
   ]
 }
