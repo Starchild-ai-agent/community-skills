@@ -1,0 +1,13 @@
+name: pendulum-g-experiment
+version: 1.1.0
+description: ESP8266/ESP32 + 磁簧开关/霍尔传感器 单摆测重力加速度实验套件。硬件搭建→固件烧录→数据采集→Web仪表盘→g值计算→教学文档，一站式完成。
+author: tea
+type: skill
+tags:
+- esp32
+- esp8266
+- pendulum
+- physics
+- reed-switch
+- gravity
+- teaching
