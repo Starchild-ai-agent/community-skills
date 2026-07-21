@@ -1132,6 +1132,24 @@
         "implementation"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/experiment-research-lab%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6171/physics-lab-experiment-suite",
+      "path": "6171/physics-lab-experiment-suite/SKILL.md",
+      "version": "1.0.0",
+      "description": "中学物理实验教学参赛方案套件。包含四个完整实验（单摆测g、声悬浮测声速、向心力定量演示仪、电磁阻尼定量研究），每套含固件源码、3D打印图纸、教学PPT、教学文稿、采购清单、调试手册、视频分镜脚本、模拟器。Use when a teacher/student needs a complete, classroom-ready physics experiment package for competition or teaching.",
+      "tags": [
+        "physics",
+        "education",
+        "experiment",
+        "arduino",
+        "esp32",
+        "esp8266",
+        "3d-printing",
+        "teaching",
+        "competition"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/physics-lab-experiment-suite%401.0.0/bundle.zip"
     }
   ]
 }
