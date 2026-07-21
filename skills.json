@@ -1154,7 +1154,7 @@
     {
       "name": "@1892/starchild-blog",
       "path": "1892/starchild-blog/SKILL.md",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "End-to-end workflow for the Starchild Blog — create/import drafts, format articles, set titles and (mandatory) hero images, add SEO structures, preview, and publish to the protected production slug. Use for any Starchild blog article work: new posts, importing community/X articles, editing, or shipping live.",
       "tags": [
         "blog",
@@ -1164,7 +1164,7 @@
         "starchild",
         "static-site"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/starchild-blog%401.0.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/starchild-blog%401.0.1/bundle.zip"
     }
   ]
 }
