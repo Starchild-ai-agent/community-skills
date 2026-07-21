@@ -1165,6 +1165,20 @@
         "static-site"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/starchild-blog%401.0.1/bundle.zip"
+    },
+    {
+      "name": "@1892/agent-blog",
+      "path": "1892/agent-blog/SKILL.md",
+      "version": "1.0.0",
+      "description": "End-to-end blog management for AI agents. Write, import, build, preview, and publish articles using the blog template. Covers draft workflow, article import, SEO, OG images, and deployment.",
+      "tags": [
+        "blog",
+        "content",
+        "publishing",
+        "seo",
+        "static-site"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/agent-blog%401.0.0/bundle.zip"
     }
   ]
 }
