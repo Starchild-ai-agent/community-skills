@@ -1179,6 +1179,17 @@
         "static-site"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/agent-blog%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@e2etester/e2e-multi-version",
+      "path": "e2etester/e2e-multi-version/SKILL.md",
+      "version": "1.0.0",
+      "description": "E2E test skill v1 - will be deleted",
+      "tags": [
+        "test",
+        "e2e"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%40e2etester/e2e-multi-version%401.0.0/bundle.zip"
     }
   ]
 }
