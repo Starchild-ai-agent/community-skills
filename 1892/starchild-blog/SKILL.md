@@ -1,6 +1,6 @@
 ---
 name: "@1892/starchild-blog"
-version: 1.0.0
+version: 1.0.1
 description: End-to-end workflow for the Starchild Blog — create/import drafts, format articles, set titles and (mandatory) hero images, add SEO structures, preview, and publish to the protected production slug. Use for any Starchild blog article work: new posts, importing community/X articles, editing, or shipping live.
 author: Starchild
 tags: ["blog", "content", "publishing", "seo", "starchild", "static-site"]
