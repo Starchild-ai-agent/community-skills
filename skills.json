@@ -236,12 +236,6 @@
       "description": "Autonomous USDC yield optimization across DeFi protocols. Scans 60+ pools on 6 chains (Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche) across 8+ protocols (Aave V3, Morpho, Pendle, Compound V3, Spark, Fluid, Euler). Auto-routes deposits to the highest-yielding protocol per chain. Includes a full web UI with multi-protocol deposit/withdraw. Use when the user asks about yield farming, best stablecoin rates, DeFi yields, where to deposit USDC, or wants autonomous yield management."
     },
     {
-      "name": "@329/test-skill",
-      "path": "329/test-skill/SKILL.md",
-      "version": "1.0.2",
-      "description": "test-skill-test-skill-test-skill"
-    },
-    {
       "name": "@332/test-skill",
       "path": "332/test-skill/SKILL.md",
       "version": "1.0.0",
