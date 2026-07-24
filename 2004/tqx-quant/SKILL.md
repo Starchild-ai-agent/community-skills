@@ -1,10 +1,10 @@
 ---
 name: "@2004/tqx-quant"
-version: 1.0.0
+version: 2.0.0
 description: |
-  TQX (tqx.trade) HK/US stock quant workflow via tqx-cli: cross-sectional factor analysis and event-driven strategy backtests on the panda_backtest engine.
+  TQX (tqx.trade) HK/US stock quant workflow via tqx-cli: cross-sectional factor analysis, event-driven strategy backtests on the panda_backtest engine, and agent-driven automated paper trading.
 
-  Use when the user wants to run factor IC/IR analysis or backtest a Python trading strategy on Hong Kong or US stocks (e.g. "backtest a moving-average strategy on AAPL", "analyze a momentum factor on HK stocks").
+  Use when the user wants to run factor IC/IR analysis, backtest a Python trading strategy on Hong Kong or US stocks, or set up agent-automated trading (e.g. "backtest a moving-average strategy on AAPL", "analyze a momentum factor on HK stocks", "let the agent trade my paper account").
 author: starchild-2004
 tags: [quant, backtest, factor-analysis, stocks, tqx, trading]
 ---
@@ -13,14 +13,23 @@ tags: [quant, backtest, factor-analysis, stocks, tqx, trading]
 
 TQX (https://www.tqx.trade) is a HK/US stock quant platform. This skill drives it through the official `tqx-cli` pip package. Everything below was verified end-to-end against the live service.
 
-## Setup
+**Docs routing:** TQX maintains official online skill docs — treat those as the source of truth for the full API surface; this skill adds the verified onboarding flow, working templates, and a failure-mode table that the official docs do not cover. (Official doc links: see tqx.trade — the site is a JS SPA, so if `web_fetch` returns empty content, fall back to the reference material in this skill.)
+
+## User onboarding (first-time setup, ~3 minutes)
+
+1. **Register** at https://www.tqx.trade (email signup). A PAPER (simulation) account is provisioned automatically — all workflows below are safe to run on it.
+2. **Collect credentials securely**: agents must use `request_env_input` for `TQX_EMAIL` and `TQX_PASSWORD` — never ask for credentials in chat.
+3. **Install + login + verify**:
 
 ```bash
 pip install tqx-cli
 tqx-cli login --email "$TQX_EMAIL" --password "$TQX_PASSWORD"
+tqx-cli --json balance        # non-error response = onboarding complete
 ```
 
-Credentials come from env vars (collect via secure input, never chat). Token is cached in `~/.tqx/config.yaml`.
+Token is cached in `~/.tqx/config.yaml`.
+
+4. **First quick win** (recommended demo): run the "5d momentum" factor analysis from §1 below — completes in ~1–2 min and produces IC/IR/Sharpe numbers you can show immediately.
 
 **⚠️ Token expiry gotcha (verified):** both accessToken AND refresh_token can expire together. Do NOT only match one specific error string — re-login on ANY response containing `LOGIN_REQUIRED`, `均已失效`, or `Please log in to continue`. A strict matcher silently fails and every later call returns auth errors.
 
@@ -127,3 +136,46 @@ for l in get_run_logs(cfg, token, uid, run_id).get("logs") or []:
 ## Cost & pacing
 
 Backtests are billed in TQX compute credits (`tqx-cli balance`). A 6-month daily-frequency single-stock backtest takes ~2 minutes wall time. Poll `strategy_result` every 3s; don't fire concurrent runs of the same workflow.
+
+## 3. Templates (copy-paste starting points)
+
+### T1 — Momentum factor (cross-sectional, whole market)
+
+```bash
+tqx-cli --json factor_create --market us --name "5d momentum" \
+  --formula "close/ref(close,5)-1" \
+  --start-date 20250101 --end-date 20250701 --group-number 5
+```
+
+Other verified formulas: mean reversion `-(close/ref(close,5)-1)`, volume surge `volume/mean(volume,20)`.
+Factor mode is whole-market cross-sectional only (`--market hk|us`) — it CANNOT target one stock; for single-stock questions use a strategy backtest (T2).
+
+### T2 — Single-stock backtest (SMA cross on AAPL)
+
+Use the strategy code contract in §2 verbatim — it IS the template. Change `context.symbol` and the signal logic only. Keep the None-bar guard and dynamic account discovery.
+
+### T3 — Agent-driven automated trading loop (paper account)
+
+Pattern verified over a 10-round live run (~21 min, end-to-end):
+
+```
+loop every N minutes:
+  1. fetch live positions + account state
+  2. compute signal (factor value or strategy rule)
+  3. decide: buy / sell / hold  ← agent reasoning step
+  4. place order (paper account, small fixed qty during development)
+  5. journal the decision: {ts, reasoning, tool_calls, params, result, position_delta}
+```
+
+Hard rules for automation:
+- **PAPER account only** until the user explicitly approves real trading; cap order size during development.
+- **Journal every decision** (JSONL is enough) — users must be able to audit why each trade happened.
+- **Re-login on ANY auth-ish error string** (see token gotcha above); a mid-loop token expiry must self-heal, not kill the loop.
+- **Check compute balance before each backtest-class call** to avoid silent overdraft.
+
+### T4 — Studio architecture blueprint (optional companion UI)
+
+If the user wants a dashboard on top, the layered split that works:
+- **UI layer**: expose only high-frequency params (formula, market, date range, group count, rebalance period, factor direction) + account switcher + NAV curve + decision timeline.
+- **Agent layer**: everything complex (custom Python strategy code, stock pools, commission/slippage, execution) goes through conversation — the agent has the full CLI surface, the UI does not need it.
+- **Audit layer**: decision journal + backtest history persisted to disk (`index.json` + per-run JSON), each record tagged with source = manual | agent, loadable and comparable.
