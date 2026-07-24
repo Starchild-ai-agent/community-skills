@@ -1,6 +1,6 @@
 ---
 name: "@2004/tqx-quant"
-version: 2.0.0
+version: 2.1.0
 description: |
   TQX (tqx.trade) HK/US stock quant workflow via tqx-cli: cross-sectional factor analysis, event-driven strategy backtests on the panda_backtest engine, and agent-driven automated paper trading.
 
@@ -13,7 +13,25 @@ tags: [quant, backtest, factor-analysis, stocks, tqx, trading]
 
 TQX (https://www.tqx.trade) is a HK/US stock quant platform. This skill drives it through the official `tqx-cli` pip package. Everything below was verified end-to-end against the live service.
 
-**Docs routing:** TQX maintains official online skill docs — treat those as the source of truth for the full API surface; this skill adds the verified onboarding flow, working templates, and a failure-mode table that the official docs do not cover. (Official doc links: see tqx.trade — the site is a JS SPA, so if `web_fetch` returns empty content, fall back to the reference material in this skill.)
+## Official TQX skills (source of truth — read these first)
+
+TQX publishes two official skills. Fetch the raw URLs directly (the repo UI is a JS SPA; only `/-/git/raw/` URLs return content):
+
+**1. tqx-research** — factor analysis, strategy backtest, workflow management (Python `tqx-cli`, email/password login):
+- Main: `https://cnb.cool/liangyunzhijing/clis/-/git/raw/main/skills/tqx-research/SKILL.md`
+- References (read before generating code — do NOT guess APIs):
+  - commands: `.../skills/tqx-research/references/commands.md`
+  - strategy templates: `.../skills/tqx-research/references/strategy_templates.md`
+  - US API: `.../skills/tqx-research/references/stock_us_api.md`
+  - HK API: `.../skills/tqx-research/references/stock_hk_api.md`
+  - tqx_data: `.../skills/tqx-research/references/tqx_data_usage.md`
+  (replace `...` with `https://cnb.cool/liangyunzhijing/clis/-/git/raw/main`)
+
+**2. tqx-trading** — account/positions/orders/trades queries + authorized order placement (TypeScript `@tqx-ai/cli@0.1.3`, API-key auth, pin the version):
+- Main: `https://cnb.cool/liangyunzhijing/clis/-/git/raw/main/skills/tqx-trading/SKILL.md`
+- OpenAPI: `https://www.tqx.trade/openapi/v1/openapi.json` (interactive: `/openapi/v1/scalar`)
+
+**Routing rule:** research/backtest/factor work → tqx-research (`tqx-cli`, Python). Live account state & order execution → tqx-trading (`tqx`, TS CLI). They use DIFFERENT CLIs and DIFFERENT auth (email login vs `TQX_API_KEY`) — don't mix them. This skill below adds what the official docs don't cover: verified onboarding, failure-mode table, and agent-automation patterns.
 
 ## User onboarding (first-time setup, ~3 minutes)
 
