@@ -1158,6 +1158,21 @@
         "static-site"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401892/agent-blog%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@2004/tqx-quant",
+      "path": "2004/tqx-quant/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [
+        "quant",
+        "backtest",
+        "factor-analysis",
+        "stocks",
+        "tqx",
+        "trading"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/tqx-quant%401.0.0/bundle.zip"
     }
   ]
 }
