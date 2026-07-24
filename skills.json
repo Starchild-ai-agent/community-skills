@@ -1162,7 +1162,7 @@
     {
       "name": "@2004/tqx-quant",
       "path": "2004/tqx-quant/SKILL.md",
-      "version": "2.2.0",
+      "version": "2.3.0",
       "description": "|",
       "tags": [
         "quant",
@@ -1172,7 +1172,7 @@
         "tqx",
         "trading"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/tqx-quant%402.2.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/tqx-quant%402.3.0/bundle.zip"
     }
   ]
 }
