@@ -1,6 +1,6 @@
 ---
 name: "@2004/tqx-quant"
-version: 2.1.0
+version: 2.2.0
 description: |
   TQX (tqx.trade) HK/US stock quant workflow via tqx-cli: cross-sectional factor analysis, event-driven strategy backtests on the panda_backtest engine, and agent-driven automated paper trading.
 
@@ -86,34 +86,46 @@ tqx-cli --json strategy_run <strategy_id>
 ### Strategy code contract (ALL verified the hard way)
 
 ```python
-from panda_backtest.api.stock_us_api import *   # US market — MANDATORY
+from panda_backtest.api.api import *            # common trading API — MANDATORY
+from panda_backtest.api.stock_us_api import *   # US market data API — MANDATORY
 # HK market: from panda_backtest.api.stock_hk_api import *
+import tqx_data
 
 def initialize(context):
     # Account ID is per-user — discover it once, do NOT hardcode.
     # The '8888' from CN-market docs does NOT exist for HK/US backtests.
     context.account = list(context.stock_account_dict.keys())[0]
-    context.symbol = 'AAPL.US'   # symbol format: TICKER.US / 00700.HK
-    context.prices = []
-    context.holding = False
+    context.symbol = 'AAPL.NB'   # symbol format: US = TICKER.NB (NOT .US!), HK = 00700.HK
+    context.closes = []
 
-def handle_data(context, bar_dict):
-    bar = bar_dict[context.symbol]
-    # bar CAN be None on some days — unguarded access kills the run (error 10070)
-    if bar is None or getattr(bar, 'close', None) is None or bar.close <= 0:
+def handle_data(context, data):
+    account = context.stock_account_dict.get(context.account)
+    if account is None:
         return
-    context.prices.append(bar.close)
-    if len(context.prices) < 20:
+    bar = data.get(context.symbol)
+    # bar CAN be None — with a WRONG suffix it is None EVERY day (silent 0-trade run)
+    if bar is None or getattr(bar, 'close', None) is None or float(bar.close) <= 0:
         return
-    s = sum(context.prices[-5:]) / 5
-    l = sum(context.prices[-20:]) / 20
-    if s > l and not context.holding:
-        order_shares(context.account, context.symbol, 500)   # 3 args: account, symbol, qty
-        context.holding = True
-    elif s < l and context.holding:
-        order_shares(context.account, context.symbol, -500)
-        context.holding = False
+    price = float(bar.close)
+    context.closes.append(price)
+    if len(context.closes) < 20:
+        return
+    fast = sum(context.closes[-5:]) / 5
+    slow = sum(context.closes[-20:]) / 20
+    position = account.positions.get(context.symbol)
+    quantity = 0 if position is None else position.quantity
+    sellable = 0 if position is None else position.sellable
+    if fast > slow and quantity == 0:
+        buy_qty = int(account.cash * 0.9 // price)
+        if buy_qty > 0:
+            order_shares(context.account, context.symbol, buy_qty, style=MarketOrderStyle)
+            print(f"BUY {buy_qty} @ {price:.2f}")   # print() = strategy log; SRLog is FORBIDDEN
+    elif fast < slow and quantity > 0 and sellable > 0:
+        order_shares(context.account, context.symbol, -sellable, style=MarketOrderStyle)
+        print(f"SELL {sellable} @ {price:.2f}")
 ```
+
+Verified live (2026-07): this exact code on AAPL.NB, 20250101–20251231, produced 18 real fills (check with `backtest_result <backtest_id> --section trade --all-pages`).
 
 Hard rules learned from real failures:
 
@@ -122,7 +134,9 @@ Hard rules learned from real failures:
 | `禁止使用危险函数 dir()` | Security filter blocks introspection | Never use `dir()`/`eval()`/`exec`; to inspect context, `raise Exception(str(...))` and read the error_detail in run logs |
 | `访问了不存在的键` on order | Wrong account ID (e.g. `'8888'`) | Use `list(context.stock_account_dict.keys())[0]` |
 | `order_shares() missing 1 required positional argument` | Called with 2 args | Signature is `order_shares(account, symbol, quantity)` |
-| `股票X不属于当前股票回测市场` | Wrong symbol suffix | US = `TICKER.US`, HK = `XXXXX.HK`; `.O`/`.N`/bare tickers are rejected |
+| `股票X不属于当前股票回测市场` | Wrong symbol suffix | US = `TICKER.NB` (NOT `.US`!), HK = `XXXXX.HK`; `.O`/`.N`/bare tickers are rejected |
+| Backtest SUCCESS but 0 trades, 0 log lines, profit = 0.0 | Symbol suffix `.US` (or any wrong suffix) → every bar returns None → defensive guard skips all days silently | Use `TICKER.NB` for US stocks. ALWAYS verify via `backtest_result <id> --section trade` — SUCCESS ≠ trades executed |
+| Run FAILED immediately (~0.3s, node failed) | `SRLog` is not a valid API in strategy code | Use plain `print()` for strategy logging (visible in `--section log`) |
 | Backtest SUCCESS but 0 trades, `标的不在当前回测数据集内` | Date range beyond ingested market data (recent months may not be loaded even though the benchmark series exists) | Shift the window earlier (e.g. use last year's range); verify trades>0 in the `trade` section before trusting metrics |
 | `frequency` rejected | Only `1d` and `1M` are valid | — |
 
