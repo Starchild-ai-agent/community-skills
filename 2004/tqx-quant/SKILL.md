@@ -1,6 +1,6 @@
 ---
 name: "@2004/tqx-quant"
-version: 2.2.0
+version: 2.3.0
 description: |
   TQX (tqx.trade) HK/US stock quant workflow via tqx-cli: cross-sectional factor analysis, event-driven strategy backtests on the panda_backtest engine, and agent-driven automated paper trading.
 
@@ -137,6 +137,7 @@ Hard rules learned from real failures:
 | `股票X不属于当前股票回测市场` | Wrong symbol suffix | US = `TICKER.NB` (NOT `.US`!), HK = `XXXXX.HK`; `.O`/`.N`/bare tickers are rejected |
 | Backtest SUCCESS but 0 trades, 0 log lines, profit = 0.0 | Symbol suffix `.US` (or any wrong suffix) → every bar returns None → defensive guard skips all days silently | Use `TICKER.NB` for US stocks. ALWAYS verify via `backtest_result <id> --section trade` — SUCCESS ≠ trades executed |
 | Run FAILED immediately (~0.3s, node failed) | `SRLog` is not a valid API in strategy code | Use plain `print()` for strategy logging (visible in `--section log`) |
+| Run status FAILED but NO failed node (all nodes success/pending) | Transient TQX queue/scheduler error, not your code | Resubmit the same workflow once — typically succeeds in ~30s. Only debug strategy code if a node actually failed |
 | Backtest SUCCESS but 0 trades, `标的不在当前回测数据集内` | Date range beyond ingested market data (recent months may not be loaded even though the benchmark series exists) | Shift the window earlier (e.g. use last year's range); verify trades>0 in the `trade` section before trusting metrics |
 | `frequency` rejected | Only `1d` and `1M` are valid | — |
 
@@ -205,9 +206,33 @@ Hard rules for automation:
 - **Re-login on ANY auth-ish error string** (see token gotcha above); a mid-loop token expiry must self-heal, not kill the loop.
 - **Check compute balance before each backtest-class call** to avoid silent overdraft.
 
-### T4 — Studio architecture blueprint (optional companion UI)
+### T4 — Studio: ready-to-run companion UI (`templates/studio/`)
 
-If the user wants a dashboard on top, the layered split that works:
-- **UI layer**: expose only high-frequency params (formula, market, date range, group count, rebalance period, factor direction) + account switcher + NAV curve + decision timeline.
-- **Agent layer**: everything complex (custom Python strategy code, stock pools, commission/slippage, execution) goes through conversation — the agent has the full CLI surface, the UI does not need it.
-- **Audit layer**: decision journal + backtest history persisted to disk (`index.json` + per-run JSON), each record tagged with source = manual | agent, loadable and comparable.
+A complete, tested web workbench ships with this skill — do NOT build a dashboard from scratch. Copy `templates/studio/` into the user's workspace, start it, and adapt.
+
+**Files:**
+| File | Role |
+|---|---|
+| `server.py` | Stdlib HTTP backend (port 8090, no pip deps). Proxies `tqx-cli`, auto re-login on token expiry, serves all `/api/*` routes |
+| `index.html` | Single-file frontend: factor analysis, backtest submit/history, positions, agent decision timeline |
+| `agent.py` | Agent trading loop (LLM via `proxied_post` + tool calls), JSONL decision journal |
+| `backtests.py` / `strategies.py` / `journal.py` | Disk persistence modules (see data spec below) |
+| `styles/index.html` | Alternate theme variant for user selection |
+
+**Run:** `python3 server.py` from the studio dir (background), then `preview(action="serve")` on it. Credentials come from `TQX_EMAIL` / `TQX_PASSWORD` env vars (collect via secure input — never hardcode).
+
+**Design spec (keep when restyling):**
+- Minimalist quant-tech aesthetic: dark-first, monospace numerals, dense tables, no decorative graphics. Bright/cyberpunk themes have been explicitly rejected by users.
+- UI exposes only high-frequency params (formula, market, date range, groups, rebalance, direction) + account switcher + NAV curve + decision timeline. Everything complex (custom strategy code, stock pools, commission/slippage) stays in the conversation layer — the agent has the full CLI surface, the UI must not duplicate it.
+- Amounts: format gold/cash values with a single dedicated formatter (a past bug: two formatters colliding produced wrong displays). Check dark-mode contrast on every card.
+
+**Data storage spec:**
+- `data/backtests/index.json` + one JSON per run — MUST persist the full strategy code string (not a truncated preview) so any run can be reloaded and re-edited.
+- `data/journal/*.jsonl` — one line per agent decision, tagged `source: manual | agent`, append-only, never rewritten.
+- `data/strategies/` — named saved strategies. All state is plain JSON on disk; no DB.
+
+**Testing spec (before declaring the studio 'working'):**
+1. `curl localhost:8090/api/health` (or any GET route) returns JSON — backend alive.
+2. Submit one REAL backtest through the UI and confirm it appears in the history panel with full code + metrics. A rendered page alone is NOT verification.
+3. Verify fills exist via `backtest_result <id> --section trade` — SUCCESS status with 0 trades means a symbol-suffix bug (see failure table).
+4. Kill/restart `server.py` and confirm history persists (disk, not memory).
