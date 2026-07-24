@@ -1,6 +1,6 @@
 ---
 name: "@2004/tqx-quant"
-version: 2.3.0
+version: 2.3.1
 description: |
   TQX (tqx.trade) HK/US stock quant workflow via tqx-cli: cross-sectional factor analysis, event-driven strategy backtests on the panda_backtest engine, and agent-driven automated paper trading.
 
@@ -223,6 +223,7 @@ A complete, tested web workbench ships with this skill — do NOT build a dashbo
 
 **Design spec (keep when restyling):**
 - Minimalist quant-tech aesthetic: dark-first, monospace numerals, dense tables, no decorative graphics. Bright/cyberpunk themes have been explicitly rejected by users.
+- History rows must be loadable: clicking 载入 on any history record re-displays its full result in the top result area (factor runs → factor metrics/charts via `loadBt`; strategy runs → dedicated strategy-result card via `loadStgBt`: return vs benchmark, annualized, Sharpe, max drawdown, trade count, params + code link). A history table that only lists rows without load-back is incomplete.
 - UI exposes only high-frequency params (formula, market, date range, groups, rebalance, direction) + account switcher + NAV curve + decision timeline. Everything complex (custom strategy code, stock pools, commission/slippage) stays in the conversation layer — the agent has the full CLI surface, the UI must not duplicate it.
 - Amounts: format gold/cash values with a single dedicated formatter (a past bug: two formatters colliding produced wrong displays). Check dark-mode contrast on every card.
 

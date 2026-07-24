@@ -231,6 +231,22 @@ details.manual .mbody{padding:0 14px 14px;display:grid;grid-template-columns:rep
       <div class="mcell"><div class="ml">组1 夏普<span class="tip">?<span class="tiptext"><b>Sharpe Ratio</b> — 每单位风险的超额收益。&gt;1 良好，&gt;2 优秀。</span></span></div><div class="mv mono" id="m-sharpe">—</div><div class="ms" id="m-sharpe-s">风险调整</div></div>
     </div>
 
+    <!-- strategy backtest result (populated when a strategy run is loaded from history) -->
+    <div class="card" id="stgres" style="display:none;margin-bottom:14px">
+      <div class="card-h" style="display:flex;justify-content:space-between;align-items:center">
+        <span>策略回测结果 — <b id="stgres-name" class="mono" style="font-size:11px">—</b></span>
+        <span><span class="link" onclick="showCode(window._stgresId)">查看代码</span>　<span class="link" onclick="document.getElementById('stgres').style.display='none'">收起 ✕</span></span>
+      </div>
+      <div class="metrics" style="padding:10px 14px">
+        <div class="mcell"><div class="ml">区间收益</div><div class="mv mono" id="sr-ret">—</div><div class="ms" id="sr-ret-s">—</div></div>
+        <div class="mcell"><div class="ml">基准收益</div><div class="mv mono" id="sr-bench">—</div><div class="ms">买入持有</div></div>
+        <div class="mcell"><div class="ml">年化</div><div class="mv mono" id="sr-ann">—</div><div class="ms">Annualized</div></div>
+        <div class="mcell"><div class="ml">夏普</div><div class="mv mono" id="sr-sharpe">—</div><div class="ms">风险调整</div></div>
+        <div class="mcell"><div class="ml">最大回撤</div><div class="mv mono" id="sr-mdd">—</div><div class="ms">Max Drawdown</div></div>
+      </div>
+      <div style="padding:0 14px 12px;font-size:11px;color:var(--dim)" class="mono" id="sr-meta">—</div>
+    </div>
+
     <div class="charts">
       <div class="card"><div class="card-h">分组累计收益</div><div class="chart-box"><canvas id="chartReturns"></canvas></div></div>
       <div class="card"><div class="card-h">多空组合利差</div><div class="chart-box"><canvas id="chartLS"></canvas></div></div>
@@ -430,7 +446,7 @@ function renderBtHistory(){
       <td>${running?'':fmtn(m.sharpe,2)}</td>
       <td class="${sign(m.annual_return!=null?m.annual_return:m.total_return)}">${running?'':(isStg?pctS(m.annual_return!=null?m.annual_return:m.total_return):pct(m.annual_return))}</td>
       <td class="dim">${h.source==='agent'?'Agent':'手动'}</td>
-      <td>${running?'<span class="dim">运行中</span>':(isStg?`<span class="link" onclick="showCode('${h.run_id}')">代码</span>`:`<span class="link" onclick="loadBt('${h.run_id}')">载入</span>`)}</td>
+      <td>${running?'<span class="dim">运行中</span>':(isStg?`<span class="link" onclick="loadStgBt('${h.run_id}')">载入</span>　<span class="link" onclick="showCode('${h.run_id}')">代码</span>`:`<span class="link" onclick="loadBt('${h.run_id}')">载入</span>`)}</td>
     </tr>`;}).join('');
 }
 function showCode(rid){
@@ -445,6 +461,23 @@ function showCode(rid){
       <b>${esc(p.name||'策略代码')}</b>
       <span class="link" onclick="document.getElementById('code-overlay').remove()">关闭 ✕</span></div>
     <pre class="mono" style="font-size:11px;white-space:pre-wrap;margin:0">${esc(code)}</pre></div>`;
+}
+function loadStgBt(rid){
+  const h=btHist.find(x=>x.run_id===rid);if(!h)return;
+  const m=h.metrics||{},p=h.params||{};
+  window._stgresId=rid;
+  const set=(id,v,cls)=>{const e=document.getElementById(id);e.innerText=v==null?'—':v;if(cls!=null)e.className='mv mono '+cls;};
+  set('stgres-name',p.name||p.formula||rid.slice(0,12));
+  const ret=m.total_return!=null?m.total_return:m.annual_return;
+  set('sr-ret',pctS(ret),sign(ret));
+  document.getElementById('sr-ret-s').innerText=m.trade_count!=null?('成交 '+m.trade_count+' 笔'):'—';
+  set('sr-bench',pctS(m.benchmark_return),sign(m.benchmark_return));
+  set('sr-ann',pctS(m.annual_return),sign(m.annual_return));
+  set('sr-sharpe',m.sharpe!=null?fmtn(m.sharpe,2):(m.information_ratio!=null?fmtn(m.information_ratio,2)+' (IR)':'—'));
+  set('sr-mdd',pctS(m.max_drawdown),sign(m.max_drawdown));
+  document.getElementById('sr-meta').innerText=`${(p.market||'').toUpperCase()} · ${p.start_date||'?'} ~ ${p.end_date||'?'} · 初始资金 ${p.start_capital||'—'} · ${h.ts||''} · 来源 ${h.source==='agent'?'Agent':'手动'}`;
+  document.getElementById('stgres').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function updateCmpBtn(){const n=document.querySelectorAll('.bth-ck:checked').length;const b=document.getElementById('cmp-btn');b.disabled=n<2;b.innerText=`对比选中 (${n})`;}
 function loadBt(rid){
