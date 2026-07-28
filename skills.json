@@ -1173,6 +1173,14 @@
         "trading"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402004/tqx-quant%402.3.1/bundle.zip"
+    },
+    {
+      "name": "@6817/fuanas",
+      "path": "6817/fuanas/SKILL.md",
+      "version": "1.0.0",
+      "description": "",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406817/fuanas%401.0.0/bundle.zip"
     }
   ]
 }
