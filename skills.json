@@ -1181,6 +1181,20 @@
       "description": "",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406817/fuanas%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@2860/nft-signal-scanner",
+      "path": "2860/nft-signal-scanner/SKILL.md",
+      "version": "0.1.0",
+      "description": "|",
+      "tags": [
+        "nft",
+        "ethereum",
+        "signals",
+        "paper-trading",
+        "opensea"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402860/nft-signal-scanner%400.1.0/bundle.zip"
     }
   ]
 }
