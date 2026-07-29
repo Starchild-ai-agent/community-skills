@@ -1,6 +1,6 @@
 ---
 name: "@3182/thesis-falsifier"
-version: 1.0.0
+version: 1.0.1
 description: 逆向证伪器 — take any investment thesis ("I should buy X because Y") and systematically try to destroy it before you act. Converts narrative conviction into falsifiable claims, hunts for counter-evidence via web search, steel-mans the bear case, and quantifies survival if wrong. Use BEFORE acting on any thesis you feel strongly about. Works on stocks, crypto, macro bets, any decision with a thesis.
 author: agentway
 tags: [investing, decision-making, critical-thinking, risk-management, thesis, falsification, stocks, crypto]
