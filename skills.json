@@ -1195,6 +1195,14 @@
         "opensea"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%402860/nft-signal-scanner%400.1.0/bundle.zip"
+    },
+    {
+      "name": "@6171/pdf-toolkit",
+      "path": "6171/pdf-toolkit/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/pdf-toolkit%401.0.0/bundle.zip"
     }
   ]
 }
