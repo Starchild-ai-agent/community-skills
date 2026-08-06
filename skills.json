@@ -1227,6 +1227,14 @@
       "description": "deep research guidelines",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/deepresearch%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6522/tangtrades",
+      "path": "6522/tangtrades/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/tangtrades%401.0.0/bundle.zip"
     }
   ]
 }
