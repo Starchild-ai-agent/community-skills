@@ -1235,6 +1235,23 @@
       "description": "|",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/tangtrades%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6171/doc-to-markdown",
+      "path": "6171/doc-to-markdown/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [
+        "document",
+        "converter",
+        "markdown",
+        "pdf",
+        "docx",
+        "pptx",
+        "xlsx",
+        "extraction"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/doc-to-markdown%401.0.0/bundle.zip"
     }
   ]
 }
