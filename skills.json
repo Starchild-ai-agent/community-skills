@@ -1252,6 +1252,14 @@
         "extraction"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/doc-to-markdown%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6942/starchild-quests",
+      "path": "6942/starchild-quests/SKILL.md",
+      "version": "1.0.0",
+      "description": "Complete Starchild quests (daily/weekly/onboarding) via API — check-in, AgentX likes/comments/posts, page previews + community publish, skill install/run/create/publish, scheduled push. Use when the user asks to do \"les quêtes\", \"quests\", \"daily quests\", or \"all available quests\".",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406942/starchild-quests%401.0.0/bundle.zip"
     }
   ]
 }
