@@ -1260,6 +1260,21 @@
       "description": "Complete Starchild quests (daily/weekly/onboarding) via API — check-in, AgentX likes/comments/posts, page previews + community publish, skill install/run/create/publish, scheduled push. Use when the user asks to do \"les quêtes\", \"quests\", \"daily quests\", or \"all available quests\".",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406942/starchild-quests%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6171/drift-detector",
+      "path": "6171/drift-detector/SKILL.md",
+      "version": "1.0.0",
+      "description": "Compare two JSON or CSV snapshots by primary key and report added, removed, and changed records. Use for billing reconciliation, external-system sync checks, data quality audits, and scheduled drift monitoring.",
+      "tags": [
+        "reconciliation",
+        "drift-detection",
+        "json",
+        "csv",
+        "data-quality",
+        "monitoring"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/drift-detector%401.0.0/bundle.zip"
     }
   ]
 }
