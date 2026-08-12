@@ -1279,7 +1279,7 @@
     {
       "name": "@1365/xfree02",
       "path": "1365/xfree02/SKILL.md",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Query sponsored Nansen on-chain intelligence endpoints through an open, no-API-key gateway. No wallet, no signup, no signature required from the caller.",
       "tags": [
         "nansen",
@@ -1288,7 +1288,7 @@
         "sponsored",
         "open"
       ],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401365/xfree02%401.1.0/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401365/xfree02%401.1.1/bundle.zip"
     }
   ]
 }
