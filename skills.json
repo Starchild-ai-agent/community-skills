@@ -1289,6 +1289,21 @@
         "open"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%401365/xfree02%401.1.1/bundle.zip"
+    },
+    {
+      "name": "@6522/tangcore-agent",
+      "path": "6522/tangcore-agent/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [
+        "crypto",
+        "underwriting",
+        "due-diligence",
+        "quant",
+        "research",
+        "tokenomics"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/tangcore-agent%401.0.0/bundle.zip"
     }
   ]
 }
