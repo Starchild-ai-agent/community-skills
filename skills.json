@@ -1290,6 +1290,14 @@
         "tokenomics"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/tangcore-agent%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@3182/world-news-digest",
+      "path": "3182/world-news-digest/SKILL.md",
+      "version": "1.0.0",
+      "description": "|",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/world-news-digest%401.0.0/bundle.zip"
     }
   ]
 }
