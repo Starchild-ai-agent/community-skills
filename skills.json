@@ -1298,6 +1298,20 @@
       "description": "|",
       "tags": [],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/world-news-digest%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6171/agent-change-ledger",
+      "path": "6171/agent-change-ledger/SKILL.md",
+      "version": "1.0.0",
+      "description": ">-",
+      "tags": [
+        "agents",
+        "software-engineering",
+        "audit",
+        "change-management",
+        "developer-tools"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/agent-change-ledger%401.0.0/bundle.zip"
     }
   ]
 }
