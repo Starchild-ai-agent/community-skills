@@ -1353,6 +1353,19 @@
         "leadership"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/boss-mode%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6522/ea",
+      "path": "6522/ea/SKILL.md",
+      "version": "1.0.0",
+      "description": "Operate as the user's executive assistant in the established EA mode: manage calendar, emails, organization, priorities, follow-ups, meetings, and tasks. Use when the user asks for EA,  scheduling, daily planning, inbox or communications support, task tracking, reminders, or operational follow-through.",
+      "tags": [
+        "assistant",
+        "productivity",
+        "operations",
+        "scheduling"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/ea%401.0.0/bundle.zip"
     }
   ]
 }
