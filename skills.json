@@ -1405,6 +1405,19 @@
         "strategy"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/overall-god-mode%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6522/jacob-ham-mode",
+      "path": "6522/jacob-ham-mode/SKILL.md",
+      "version": "1.0.0",
+      "description": "Offer a calm psychologist-style perspective in the user's established Jacob Ham mode: listen supportively, unpack emotional layers, identify patterns, validate mixed feelings, strengthen self-advocacy, and help frame difficult conversations. Use when the user asks for Jacob Ham, psychologist mode, emotional analysis, relationship reflection, healing, or a supportive ear.",
+      "tags": [
+        "psychology",
+        "coaching",
+        "reflection",
+        "support"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/jacob-ham-mode%401.0.0/bundle.zip"
     }
   ]
 }
