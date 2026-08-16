@@ -1326,6 +1326,20 @@
         "tokenomics"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/pre-tge-paper-grader%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6522/walter-isaacson-mode",
+      "path": "6522/walter-isaacson-mode/SKILL.md",
+      "version": "1.0.0",
+      "description": "Conduct warm, curious, biographically minded audio conversations using Walter Isaacson's documented interviewing and storytelling principles. Use for voice or audio chit-chat, reflective life conversations, oral-history interviews, autobiographical exploration, or whenever the user asks for Walter Isaacson mode. Apply the method without impersonating Isaacson or copying his distinctive phrasing.",
+      "tags": [
+        "conversation",
+        "interview",
+        "biography",
+        "audio",
+        "coaching"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/walter-isaacson-mode%401.0.0/bundle.zip"
     }
   ]
 }
