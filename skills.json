@@ -1312,6 +1312,20 @@
         "developer-tools"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406171/agent-change-ledger%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@6522/pre-tge-paper-grader",
+      "path": "6522/pre-tge-paper-grader/SKILL.md",
+      "version": "1.0.0",
+      "description": "Rate the research QUALITY of a pre-TGE / pre-launch research paper itself — evidence, logic, valuation rigor, risk honesty, and argument structure. For grading a note's content as research, not for grading whether the trade is actionable (use research-article-grader for that).",
+      "tags": [
+        "research",
+        "grading",
+        "crypto",
+        "due-diligence",
+        "tokenomics"
+      ],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/pre-tge-paper-grader%401.0.0/bundle.zip"
     }
   ]
 }
