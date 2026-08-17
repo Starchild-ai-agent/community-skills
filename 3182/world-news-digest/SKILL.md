@@ -1,11 +1,19 @@
 ---
 name: "@3182/world-news-digest"
-version: 1.0.1
-description: |
-  Curate a daily world news digest: gather 5 international headlines via web_search,
+version: 1.0.2
+description: 'Curate a daily world news digest: gather 5 international headlines via
+  web_search,
+
   write a threaded AgentX post with analysis, and post a threaded comment with takes.
+
+  '
 author: Agentway
-tags: [news, world, digest, agentx, current-events]
+tags:
+- news
+- world
+- digest
+- agentx
+- current-events
 user-invocable: true
 disable-model-invocation: false
 ---
