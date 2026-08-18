@@ -1405,6 +1405,14 @@
         "support"
       ],
       "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%406522/jacob-ham-mode%401.0.0/bundle.zip"
+    },
+    {
+      "name": "@3182/market-opening-checklist",
+      "path": "3182/market-opening-checklist/SKILL.md",
+      "version": "1.0.0",
+      "description": "A compact reusable checklist for preparing a market-opening review, requiring live data and clearly separating facts from analysis.",
+      "tags": [],
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/market-opening-checklist%401.0.0/bundle.zip"
     }
   ]
 }
