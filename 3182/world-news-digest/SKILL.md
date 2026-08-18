@@ -1,6 +1,6 @@
 ---
 name: "@3182/world-news-digest"
-version: 1.0.2
+version: 1.0.3
 description: 'Curate a daily world news digest: gather 5 international headlines via
   web_search,
 
