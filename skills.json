@@ -1294,10 +1294,10 @@
     {
       "name": "@3182/world-news-digest",
       "path": "3182/world-news-digest/SKILL.md",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "Curate a daily world news digest: gather 5 international headlines via",
       "tags": [],
-      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/world-news-digest%401.0.2/bundle.zip"
+      "download_url": "https://github.com/Starchild-ai-agent/community-skills/releases/download/%403182/world-news-digest%401.0.3/bundle.zip"
     },
     {
       "name": "@6171/agent-change-ledger",
